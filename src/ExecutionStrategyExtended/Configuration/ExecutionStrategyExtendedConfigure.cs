@@ -3,19 +3,19 @@ using Microsoft.Extensions.Options;
 
 namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
-internal class ExecutionStrategyExtendedConfigure : IConfigureOptions<ExecutionStrategyExtendedConfiguration>
+internal class ExecutionStrategyExtendedConfigure : IConfigureOptions<ExecutionStrategyExtendedExtendedConfigurationBuilder>
 {
     private readonly IServiceProvider _serviceProvider;
-    private readonly Action<IServiceProvider, IExecutionStrategyPublicConfiguration> _action;
+    private readonly Action<IServiceProvider, IExecutionStrategyConfigurationBuilder> _action;
 
-    public ExecutionStrategyExtendedConfigure(IServiceProvider serviceProvider, Action<IServiceProvider, IExecutionStrategyPublicConfiguration> action)
+    public ExecutionStrategyExtendedConfigure(IServiceProvider serviceProvider, Action<IServiceProvider, IExecutionStrategyConfigurationBuilder> action)
     {
         _serviceProvider = serviceProvider;
         _action = action;
     }
     
-    public void Configure(ExecutionStrategyExtendedConfiguration configuration)
+    public void Configure(ExecutionStrategyExtendedExtendedConfigurationBuilder extendedConfigurationBuilder)
     {
-        _action(_serviceProvider, configuration);
+        _action(_serviceProvider, extendedConfigurationBuilder);
     }
 }

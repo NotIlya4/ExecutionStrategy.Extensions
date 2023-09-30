@@ -2,7 +2,7 @@
 
 namespace EntityFrameworkCore.ExecutionStrategyExtended.Interfaces;
 
-internal interface IExecutionStrategyInternalConfiguration
+internal interface IExecutionStrategyExtendedConfiguration
 {
     ISystemClock SystemClock { get; }
     DbContextRetrierConfiguration DbContextRetrierConfiguration { get; }

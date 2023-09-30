@@ -15,7 +15,7 @@ public static class DependencyInjectionExtensions
     }
 
     public static IServiceCollection AddExecutionStrategyExtended<TDbContext>(this IServiceCollection services,
-        Action<IExecutionStrategyPublicConfiguration> action) where TDbContext : DbContext
+        Action<IExecutionStrategyConfigurationBuilder> action) where TDbContext : DbContext
     {
         services.AddExecutionStrategyExtended<TDbContext>((_, options) => action(options));
 
@@ -23,23 +23,23 @@ public static class DependencyInjectionExtensions
     }
 
     public static IServiceCollection AddExecutionStrategyExtended<TDbContext>(this IServiceCollection services,
-        Action<IServiceProvider, IExecutionStrategyPublicConfiguration> action) where TDbContext : DbContext
+        Action<IServiceProvider, IExecutionStrategyConfigurationBuilder> action) where TDbContext : DbContext
     {
         var lifetimeOverride = ServiceLifetime.Scoped;
         
         services.AddOptions();
 
         services
-            .AddTransient<IConfigureOptions<ExecutionStrategyExtendedConfiguration>,
+            .AddTransient<IConfigureOptions<ExecutionStrategyExtendedExtendedConfigurationBuilder>,
                 ExecutionStrategyExtendedConfigure>(
                 provider => new ExecutionStrategyExtendedConfigure(provider, action));
 
         services.Add(new ServiceDescriptor(typeof(ActualDbContextProvider<TDbContext>), typeof(ActualDbContextProvider<TDbContext>), lifetimeOverride));
         services.Add(new ServiceDescriptor(typeof(IActualDbContextProvider<TDbContext>), typeof(ActualDbContextProvider<TDbContext>), lifetimeOverride));
         
-        services.Add(new ServiceDescriptor(typeof(ExecutionStrategyExtendedConfiguration), Factory, lifetimeOverride));
-        services.Add(new ServiceDescriptor(typeof(IExecutionStrategyInternalConfiguration), Factory, lifetimeOverride));
-        services.Add(new ServiceDescriptor(typeof(IExecutionStrategyPublicConfiguration), Factory, lifetimeOverride));
+        services.Add(new ServiceDescriptor(typeof(ExecutionStrategyExtendedExtendedConfigurationBuilder), Factory, lifetimeOverride));
+        services.Add(new ServiceDescriptor(typeof(IExecutionStrategyExtendedConfiguration), Factory, lifetimeOverride));
+        services.Add(new ServiceDescriptor(typeof(IExecutionStrategyConfigurationBuilder), Factory, lifetimeOverride));
 
         services.Add(new ServiceDescriptor(typeof(MainFactory<TDbContext>), typeof(MainFactory<TDbContext>), lifetimeOverride));
 
@@ -52,9 +52,9 @@ public static class DependencyInjectionExtensions
         return services;
     }
 
-    private static ExecutionStrategyExtendedConfiguration Factory(IServiceProvider provider)
+    private static ExecutionStrategyExtendedExtendedConfigurationBuilder Factory(IServiceProvider provider)
     {
-        var factory = provider.GetRequiredService<IOptionsFactory<ExecutionStrategyExtendedConfiguration>>();
+        var factory = provider.GetRequiredService<IOptionsFactory<ExecutionStrategyExtendedExtendedConfigurationBuilder>>();
         return factory.Create(Options.DefaultName);
     }
 }

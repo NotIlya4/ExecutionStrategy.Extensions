@@ -5,10 +5,10 @@ namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 internal class MainFactory<TDbContext> where TDbContext : DbContext
 {
-    public MainFactory(IExecutionStrategyInternalConfiguration configuration, IDbContextFactory<TDbContext> factory)
+    public MainFactory(IExecutionStrategyExtendedConfiguration extendedConfiguration, IDbContextFactory<TDbContext> factory)
     {
-        IdempotencyToken = new IdempotencyTokenFactoryPart(configuration);
-        ExecutionStrategy = new ExecutionStrategyFactoryPart<TDbContext>(configuration, factory);
+        IdempotencyToken = new IdempotencyTokenFactoryPart(extendedConfiguration);
+        ExecutionStrategy = new ExecutionStrategyFactoryPart<TDbContext>(extendedConfiguration, factory);
     }
     
     public IdempotencyTokenFactoryPart IdempotencyToken { get; }

@@ -6,21 +6,21 @@ namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 internal class ExecutionStrategyFactoryPart<TDbContext> where TDbContext : DbContext
 {
-    private readonly IExecutionStrategyInternalConfiguration _configuration;
+    private readonly IExecutionStrategyExtendedConfiguration _extendedConfiguration;
     private readonly IDbContextFactory<TDbContext> _dbContextFactory;
 
-    public ExecutionStrategyFactoryPart(IExecutionStrategyInternalConfiguration configuration, IDbContextFactory<TDbContext> dbContextFactory)
+    public ExecutionStrategyFactoryPart(IExecutionStrategyExtendedConfiguration extendedConfiguration, IDbContextFactory<TDbContext> dbContextFactory)
     {
-        _configuration = configuration;
+        _extendedConfiguration = extendedConfiguration;
         _dbContextFactory = dbContextFactory;
     }
     
     public IDbContextRetrier<TDbContext> CreateDbContextRetrier(TDbContext mainContext)
     {
-        return _configuration.DbContextRetrierConfiguration.DbContextRetrierType switch
+        return _extendedConfiguration.DbContextRetrierConfiguration.DbContextRetrierType switch
         {
             DbContextRetrierType.CreateNew => new CreateNewDbContextRetrier<TDbContext>(
-                _configuration.DbContextRetrierConfiguration.DisposePreviousContext, _dbContextFactory, mainContext),
+                _extendedConfiguration.DbContextRetrierConfiguration.DisposePreviousContext, _dbContextFactory, mainContext),
             DbContextRetrierType.ClearChangeTracker => new ClearChangeTrackerRetrier<TDbContext>(mainContext),
             DbContextRetrierType.UseSame => new UseSameDbContextRetrier<TDbContext>(mainContext),
             _ => throw new ArgumentOutOfRangeException()

@@ -9,7 +9,7 @@ public static class EntityFrameworkExtensions
         return context.Set<IdempotencyToken>();
     }
     
-    public static void AddIdempotencyTokens(this ModelBuilder builder, IdempotencyTokenTableConfiguration? options = null)
+    public static void AddIdempotencyTokensTable(this ModelBuilder builder, IdempotencyTokenTableConfiguration? options = null)
     {
         options ??= new IdempotencyTokenTableConfiguration();
         

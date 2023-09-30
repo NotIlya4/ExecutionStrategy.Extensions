@@ -5,26 +5,26 @@ namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 internal class IdempotencyTokenFactoryPart
 {
-    private readonly IExecutionStrategyInternalConfiguration _configuration;
+    private readonly IExecutionStrategyExtendedConfiguration _extendedConfiguration;
 
-    public IdempotencyTokenFactoryPart(IExecutionStrategyInternalConfiguration configuration)
+    public IdempotencyTokenFactoryPart(IExecutionStrategyExtendedConfiguration extendedConfiguration)
     {
-        _configuration = configuration;
+        _extendedConfiguration = extendedConfiguration;
     }
 
     public IdempotencyTokenManager CreateManager()
     {
-        return new IdempotencyTokenManager(_configuration.SystemClock, _configuration.ResponseSerializer);
+        return new IdempotencyTokenManager(_extendedConfiguration.SystemClock, _extendedConfiguration.ResponseSerializer);
     }
 
     public IdempotencyTokenRepository CreateRepository(DbContext context)
     {
-        if (_configuration.IdempotenceViolationDetector is null)
+        if (_extendedConfiguration.IdempotenceViolationDetector is null)
         {
             throw new InvalidOperationException($"You need to provide {nameof(IIdempotenceViolationDetector)} to work with idempotent transactions");
         }
         
-        return new IdempotencyTokenRepository(context, _configuration.IdempotenceViolationDetector);
+        return new IdempotencyTokenRepository(context, _extendedConfiguration.IdempotenceViolationDetector);
     }
 
     public IdempotencyTokenService CreateService(DbContext context)
