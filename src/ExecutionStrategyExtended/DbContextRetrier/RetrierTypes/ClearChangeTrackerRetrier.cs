@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace ExecutionStrategyExtended.DbContextRetrier.RetrierTypes;
+namespace EntityFrameworkCore.ExecutionStrategyExtended.RetrierTypes;
 
 internal class ClearChangeTrackerRetrier<TDbContext> : IDbContextRetrier<TDbContext>
     where TDbContext : DbContext

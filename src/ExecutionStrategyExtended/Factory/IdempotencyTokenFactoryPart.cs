@@ -1,9 +1,7 @@
-﻿using ExecutionStrategyExtended.Configuration.Interfaces;
-using ExecutionStrategyExtended.IdempotenceToken;
-using ExecutionStrategyExtended.ViolationDetector;
+﻿using EntityFrameworkCore.ExecutionStrategyExtended.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExecutionStrategyExtended.Factory;
+namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 internal class IdempotencyTokenFactoryPart
 {

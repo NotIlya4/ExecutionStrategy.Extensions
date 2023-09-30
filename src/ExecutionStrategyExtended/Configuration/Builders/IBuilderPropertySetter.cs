@@ -1,4 +1,4 @@
-﻿namespace ExecutionStrategyExtended.Configuration.Builders;
+﻿namespace EntityFrameworkCore.ExecutionStrategyExtended.Builders;
 
 public interface IBuilderPropertySetter<in TProperty, out TReturn>
 {

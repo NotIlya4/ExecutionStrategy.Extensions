@@ -1,4 +1,4 @@
-﻿namespace ExecutionStrategyExtended.IdempotenceToken;
+﻿namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 public record IdempotencyToken
 {

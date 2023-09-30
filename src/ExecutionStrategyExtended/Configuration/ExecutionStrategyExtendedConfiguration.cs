@@ -1,11 +1,8 @@
-﻿using ExecutionStrategyExtended.Configuration.Builders;
-using ExecutionStrategyExtended.Configuration.Interfaces;
-using ExecutionStrategyExtended.DbContextRetrier;
-using ExecutionStrategyExtended.StrategyExtended;
-using ExecutionStrategyExtended.ViolationDetector;
+﻿using EntityFrameworkCore.ExecutionStrategyExtended.Builders;
+using EntityFrameworkCore.ExecutionStrategyExtended.Interfaces;
 using Microsoft.Extensions.Internal;
 
-namespace ExecutionStrategyExtended.Configuration;
+namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 internal record ExecutionStrategyExtendedConfiguration : IExecutionStrategyPublicConfiguration, IExecutionStrategyInternalConfiguration
 {

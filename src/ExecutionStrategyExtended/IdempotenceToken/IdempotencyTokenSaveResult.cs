@@ -1,4 +1,4 @@
-﻿namespace ExecutionStrategyExtended.IdempotenceToken;
+﻿namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 internal class IdempotencyTokenSaveResult
 {

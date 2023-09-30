@@ -1,4 +1,4 @@
-﻿namespace ExecutionStrategyExtended.Configuration;
+﻿namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 public record IdempotencyTokenTableConfiguration
 {

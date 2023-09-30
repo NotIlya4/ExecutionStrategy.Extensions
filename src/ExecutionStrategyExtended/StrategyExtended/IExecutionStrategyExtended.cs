@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExecutionStrategyExtended.StrategyExtended;
+namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 public interface IExecutionStrategyExtended<TDbContext> where TDbContext : DbContext
 {

@@ -1,10 +1,7 @@
-﻿using ExecutionStrategyExtended.Configuration.Builders;
-using ExecutionStrategyExtended.DbContextRetrier;
-using ExecutionStrategyExtended.StrategyExtended;
-using ExecutionStrategyExtended.ViolationDetector;
+﻿using EntityFrameworkCore.ExecutionStrategyExtended.Builders;
 using Microsoft.Extensions.Internal;
 
-namespace ExecutionStrategyExtended.Configuration.Interfaces;
+namespace EntityFrameworkCore.ExecutionStrategyExtended.Interfaces;
 
 public interface IExecutionStrategyPublicConfiguration
 {

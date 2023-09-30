@@ -1,7 +1,7 @@
-﻿using ExecutionStrategyExtended.Configuration.Interfaces;
+﻿using EntityFrameworkCore.ExecutionStrategyExtended.Interfaces;
 using Microsoft.Extensions.Options;
 
-namespace ExecutionStrategyExtended.Configuration;
+namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 internal class ExecutionStrategyExtendedConfigure : IConfigureOptions<ExecutionStrategyExtendedConfiguration>
 {

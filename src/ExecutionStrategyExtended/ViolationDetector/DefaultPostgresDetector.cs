@@ -1,8 +1,7 @@
-﻿using ExecutionStrategyExtended.Configuration;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
-namespace ExecutionStrategyExtended.ViolationDetector;
+namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 public class DefaultPostgresDetector : IIdempotenceViolationDetector
 {

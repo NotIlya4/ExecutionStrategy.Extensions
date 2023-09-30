@@ -1,8 +1,6 @@
-﻿using ExecutionStrategyExtended.Extensions;
-using ExecutionStrategyExtended.ViolationDetector;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace ExecutionStrategyExtended.IdempotenceToken;
+namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 internal class IdempotencyTokenRepository
 {

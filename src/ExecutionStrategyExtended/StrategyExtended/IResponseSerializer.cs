@@ -1,4 +1,4 @@
-﻿namespace ExecutionStrategyExtended.StrategyExtended;
+﻿namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 public interface IResponseSerializer
 {

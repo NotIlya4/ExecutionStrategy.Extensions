@@ -1,8 +1,6 @@
-﻿using ExecutionStrategyExtended.Configuration;
-using ExecutionStrategyExtended.IdempotenceToken;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace ExecutionStrategyExtended.Extensions;
+namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 public static class EntityFrameworkExtensions
 {

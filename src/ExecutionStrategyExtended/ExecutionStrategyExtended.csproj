@@ -11,6 +11,8 @@
         <IncludeSymbols>true</IncludeSymbols>
         <Copyright>MIT</Copyright>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <AssemblyName>EntityFrameworkCore.ExecutionStrategyExtended</AssemblyName>
+        <RootNamespace>EntityFrameworkCore.ExecutionStrategyExtended</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

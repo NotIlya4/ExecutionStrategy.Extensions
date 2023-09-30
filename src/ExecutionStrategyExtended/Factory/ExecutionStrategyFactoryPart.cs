@@ -1,10 +1,8 @@
-﻿using ExecutionStrategyExtended.Configuration.Interfaces;
-using ExecutionStrategyExtended.DbContextRetrier;
-using ExecutionStrategyExtended.DbContextRetrier.RetrierTypes;
+﻿using EntityFrameworkCore.ExecutionStrategyExtended.Interfaces;
+using EntityFrameworkCore.ExecutionStrategyExtended.RetrierTypes;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace ExecutionStrategyExtended.Factory;
+namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 internal class ExecutionStrategyFactoryPart<TDbContext> where TDbContext : DbContext
 {

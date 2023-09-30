@@ -1,12 +1,9 @@
-﻿using ExecutionStrategyExtended.Configuration;
-using ExecutionStrategyExtended.Configuration.Interfaces;
-using ExecutionStrategyExtended.Factory;
-using ExecutionStrategyExtended.StrategyExtended;
+﻿using EntityFrameworkCore.ExecutionStrategyExtended.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace ExecutionStrategyExtended.Extensions;
+namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 public static class DependencyInjectionExtensions
 {

@@ -1,7 +1,7 @@
-﻿using ExecutionStrategyExtended.Configuration.Interfaces;
+﻿using EntityFrameworkCore.ExecutionStrategyExtended.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExecutionStrategyExtended.Factory;
+namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 internal class MainFactory<TDbContext> where TDbContext : DbContext
 {

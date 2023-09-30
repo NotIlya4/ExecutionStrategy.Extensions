@@ -1,9 +1,7 @@
 ﻿using System.Data;
-using ExecutionStrategyExtended.Factory;
-using ExecutionStrategyExtended.IdempotenceToken;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExecutionStrategyExtended.StrategyExtended;
+namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 internal class ExecutionStrategyExtended<TDbContext> : IExecutionStrategyExtended<TDbContext>
     where TDbContext : DbContext

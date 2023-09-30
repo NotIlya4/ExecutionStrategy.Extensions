@@ -1,4 +1,4 @@
-﻿namespace ExecutionStrategyExtended.DbContextRetrier;
+﻿namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 public static class DbContextRetriers
 {

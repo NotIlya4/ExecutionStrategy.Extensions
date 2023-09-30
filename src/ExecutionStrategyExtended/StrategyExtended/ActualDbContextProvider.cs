@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace ExecutionStrategyExtended;
+namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
 internal class ActualDbContextProvider<TDbContext> : IActualDbContextProvider<TDbContext> where TDbContext : DbContext
 {
