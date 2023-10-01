@@ -1,6 +1,6 @@
-﻿namespace EntityFrameworkCore.ExecutionStrategyExtended;
+﻿namespace EntityFrameworkCore.ExecutionStrategyExtended.DbContextRetrier;
 
-public class DbContextRetrierConfiguration
+internal class DbContextRetrierConfiguration
 {
     internal DbContextRetrierConfiguration()
     {

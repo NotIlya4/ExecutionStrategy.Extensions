@@ -1,6 +1,6 @@
-﻿namespace EntityFrameworkCore.ExecutionStrategyExtended;
+﻿namespace EntityFrameworkCore.ExecutionStrategyExtended.DbContextRetrier;
 
-public static class DbContextRetriers
+internal static class DbContextRetriers
 {
     public static DbContextRetrierConfiguration NewDbContextRetrier(bool disposePreviousContext = true)
     {

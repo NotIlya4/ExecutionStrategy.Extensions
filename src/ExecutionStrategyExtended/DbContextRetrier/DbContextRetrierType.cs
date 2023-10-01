@@ -1,6 +1,6 @@
-﻿namespace EntityFrameworkCore.ExecutionStrategyExtended;
+﻿namespace EntityFrameworkCore.ExecutionStrategyExtended.DbContextRetrier;
 
-public enum DbContextRetrierType
+internal enum DbContextRetrierType
 {
     UseSame,
     ClearChangeTracker,
