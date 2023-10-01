@@ -2,7 +2,7 @@
 
 internal static class DbContextRetriers
 {
-    public static DbContextRetrierConfiguration NewDbContextRetrier(bool disposePreviousContext = true)
+    public static DbContextRetrierConfiguration CreateNewDbContextRetrier(bool disposePreviousContext = true)
     {
         return new DbContextRetrierConfiguration()
         {

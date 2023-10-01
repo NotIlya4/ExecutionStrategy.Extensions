@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\ExecutionStrategyExtended\ExecutionStrategyExtended.csproj" />
+      <ProjectReference Include="..\ExecutionStrategyExtended\ExecutionStrategyExtended.csproj" />
     </ItemGroup>
 
 </Project>

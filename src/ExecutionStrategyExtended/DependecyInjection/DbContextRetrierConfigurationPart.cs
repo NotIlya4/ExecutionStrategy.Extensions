@@ -12,9 +12,9 @@ public struct DbContextRetrierConfigurationPart
         _configuration = configuration;
     }
     
-    public IExecutionStrategyExtendedConfiguration UseNewDbContextRetrier(bool disposePreviousContext = true)
+    public IExecutionStrategyExtendedConfiguration UseCreateNewDbContextRetrier(bool disposePreviousContext = true)
     {
-        _configuration.RetrierConfiguration(DbContextRetriers.NewDbContextRetrier(disposePreviousContext));
+        _configuration.RetrierConfiguration(DbContextRetriers.CreateNewDbContextRetrier(disposePreviousContext));
         return _configuration;
     }
     
