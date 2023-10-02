@@ -5,12 +5,12 @@ namespace EntityFrameworkCore.ExecutionStrategyExtended.Options;
 
 public record ExecutionStrategyExtendedOptions<TDbContext> where TDbContext : DbContext
 {
-    public ExecutionStrategyExtendedData Data { get; } = new();
+    public ExecutionStrategyExtendedData Data { get; }
 
-    public TDbContext MainContext
+    public ActualDbContextProvider<TDbContext> ActualDbContextProvider
     {
-        get => Data.MainContext<TDbContext>();
-        set => Data.MainContext(value);
+        get => Data.ActualDbContextProvider<TDbContext>();
+        set => Data.ActualDbContextProvider(value);
     }
 
     public IDbContextRetryBehaviorFactory<TDbContext> DbContextRetryBehaviorFactory
@@ -19,21 +19,23 @@ public record ExecutionStrategyExtendedOptions<TDbContext> where TDbContext : Db
         set => Data.DbContextRetryBehaviorFactory(value);
     }
 
-    public ActualDbContextProvider<TDbContext> ActualDbContextProvider
-    {
-        get => Data.ActualDbContextProvider<TDbContext>();
-        set => Data.ActualDbContextProvider(value);
-    }
-
     internal ExecutionStrategyExtendedOptions()
     {
-        
+        Data = new ExecutionStrategyExtendedData();
     }
 
-    public ExecutionStrategyExtendedOptions(TDbContext mainContext, IDbContextRetryBehaviorFactory<TDbContext> retryBehaviorFactory, ActualDbContextProvider<TDbContext> actualDbContextProvider)
+    public ExecutionStrategyExtendedOptions(ActualDbContextProvider<TDbContext> actualDbContextProvider,
+        IDbContextRetryBehaviorFactory<TDbContext> retryBehaviorFactory) : this(new ExecutionStrategyExtendedData(),
+        actualDbContextProvider, retryBehaviorFactory)
     {
-        MainContext = mainContext;
-        DbContextRetryBehaviorFactory = retryBehaviorFactory;
+    }
+
+    public ExecutionStrategyExtendedOptions(ExecutionStrategyExtendedData data,
+        ActualDbContextProvider<TDbContext> actualDbContextProvider,
+        IDbContextRetryBehaviorFactory<TDbContext> retryBehaviorFactory)
+    {
+        Data = data;
         ActualDbContextProvider = actualDbContextProvider;
+        DbContextRetryBehaviorFactory = retryBehaviorFactory;
     }
 }

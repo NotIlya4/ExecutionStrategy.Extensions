@@ -33,4 +33,14 @@ public static class ExecutionStrategyExtendedDataExtensions
     {
         data[nameof(Core.ActualDbContextProvider<TDbContext>)] = factory;
     }
+    
+    public static IServiceProvider ServiceProvider(this ExecutionStrategyExtendedData data)
+    {
+        return (IServiceProvider)data[nameof(IServiceProvider)];
+    }
+    
+    public static void ServiceProvider(this ExecutionStrategyExtendedData data, IServiceProvider serviceProvider)
+    {
+        data[nameof(IServiceProvider)] = serviceProvider;
+    }
 }

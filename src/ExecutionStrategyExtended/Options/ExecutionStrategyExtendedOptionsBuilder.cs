@@ -6,17 +6,26 @@ namespace EntityFrameworkCore.ExecutionStrategyExtended.Options;
 
 public class ExecutionStrategyExtendedOptionsBuilder<TDbContext> where TDbContext : DbContext
 {
-    public ExecutionStrategyExtendedOptions<TDbContext> Options { get; }
-    public IServiceProvider ServiceProvider { get; }
-    public DbContextRetryBehaviorBuilderPart<TDbContext> DbContextRetryBehavior { get; }
-    
-    public ExecutionStrategyExtendedOptionsBuilder(IServiceProvider serviceProvider, ExecutionStrategyExtendedOptions<TDbContext> options, TDbContext mainContext, ActualDbContextProvider<TDbContext> actualDbContextProvider)
+    public ExecutionStrategyExtendedOptions<TDbContext> Options { get; set; }
+
+    public IServiceProvider ServiceProvider
     {
-        options.MainContext = mainContext;
-        options.ActualDbContextProvider = actualDbContextProvider;
-        
+        get => Options.Data.ServiceProvider();
+        set => Options.Data.ServiceProvider(value);
+    }
+
+    public DbContextRetryBehaviorBuilderPart<TDbContext> DbContextRetryBehavior { get; set; }
+
+    public ExecutionStrategyExtendedOptionsBuilder(IServiceProvider serviceProvider,
+        ActualDbContextProvider<TDbContext> actualDbContextProvider,
+        ExecutionStrategyExtendedOptions<TDbContext> options)
+    {
+        options.Data.ActualDbContextProvider(actualDbContextProvider);
+
         ServiceProvider = serviceProvider;
         Options = options;
         DbContextRetryBehavior = new DbContextRetryBehaviorBuilderPart<TDbContext>(this);
+
+        DbContextRetryBehavior.UseClearChangeTrackerRetryBehavior();
     }
 }

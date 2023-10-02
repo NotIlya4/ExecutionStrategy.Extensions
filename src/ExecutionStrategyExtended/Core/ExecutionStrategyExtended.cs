@@ -7,23 +7,23 @@ namespace EntityFrameworkCore.ExecutionStrategyExtended.Core;
 public class ExecutionStrategyExtended<TDbContext> : IExecutionStrategyExtended<TDbContext>
     where TDbContext : DbContext
 {
-    private readonly IDbContextRetryBehaviorFactory<TDbContext> _retryBehaviorFactory;
-    private readonly ActualDbContextProvider<TDbContext> _actualDbContextProvider;
+    private readonly ExecutionStrategyExtendedOptions<TDbContext> _options;
     public ExecutionStrategyExtendedData Data { get; }
+    private IDbContextRetryBehaviorFactory<TDbContext> RetryBehaviorFactory => _options.DbContextRetryBehaviorFactory;
+    private ActualDbContextProvider<TDbContext> ActualDbContextProvider => _options.ActualDbContextProvider;
 
     public ExecutionStrategyExtended(ExecutionStrategyExtendedOptions<TDbContext> options)
     {
+        _options = options;
         Data = options.Data;
-        _retryBehaviorFactory = options.DbContextRetryBehaviorFactory;
-        _actualDbContextProvider = options.ActualDbContextProvider;
     }
 
     public async Task<TResponse> ExecuteAsync<TResponse>(Func<TDbContext, Task<TResponse>> action,
         TDbContext mainContext)
     {
-        _actualDbContextProvider.DbContext = mainContext;
+        ActualDbContextProvider.DbContext = mainContext;
 
-        var retrier = _retryBehaviorFactory.Create(mainContext);
+        var retrier = RetryBehaviorFactory.Create(mainContext);
         var strategy = retrier.CreateExecutionStrategy();
         var retryNumber = 1;
 
@@ -31,7 +31,7 @@ public class ExecutionStrategyExtended<TDbContext> : IExecutionStrategyExtended<
             async () =>
             {
                 var context = await retrier.ProvideDbContextForRetry(retryNumber);
-                _actualDbContextProvider.DbContext = context;
+                ActualDbContextProvider.DbContext = context;
 
                 retryNumber += 1;
                 return await action(context);
