@@ -1,6 +1,5 @@
 using EntityFrameworkCore.ExecutionStrategyExtended.Core;
-using EntityFrameworkCore.ExecutionStrategyExtended.DependecyInjection;
-using ExecutionStrategyExtended.Demo;
+using EntityFrameworkCore.ExecutionStrategyExtended.DependencyInjection;
 using ExecutionStrategyExtended.Demo.EntityFramework;
 using ExecutionStrategyExtended.Demo.Models;
 using ExecutionStrategyExtended.Demo.Services;

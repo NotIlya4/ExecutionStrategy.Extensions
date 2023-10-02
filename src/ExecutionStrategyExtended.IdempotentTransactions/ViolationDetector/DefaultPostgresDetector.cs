@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Npgsql;
 
 namespace ExecutionStrategyExtended.IdempotentTransactions.ViolationDetector;
 

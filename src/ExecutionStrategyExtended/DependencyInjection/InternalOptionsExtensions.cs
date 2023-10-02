@@ -1,8 +1,7 @@
 ﻿using EntityFrameworkCore.ExecutionStrategyExtended.Core;
-using EntityFrameworkCore.ExecutionStrategyExtended.DbContextRetrier;
 using Microsoft.EntityFrameworkCore;
 
-namespace EntityFrameworkCore.ExecutionStrategyExtended.DependecyInjection;
+namespace EntityFrameworkCore.ExecutionStrategyExtended.DependencyInjection;
 
 internal static class InternalOptionsExtensions
 {

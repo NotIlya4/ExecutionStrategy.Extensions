@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace EntityFrameworkCore.ExecutionStrategyExtended.DependecyInjection;
+namespace EntityFrameworkCore.ExecutionStrategyExtended.DependencyInjection;
 
 public static class DependencyInjectionExtensions
 {
@@ -54,6 +54,6 @@ public static class DependencyInjectionExtensions
         where TDbContext : DbContext
     {
         var factory = provider.GetRequiredService<IOptionsFactory<ExecutionStrategyExtendedOptions<TDbContext>>>();
-        return factory.Create(Options.DefaultName);
+        return factory.Create(Microsoft.Extensions.Options.Options.DefaultName);
     }
 }

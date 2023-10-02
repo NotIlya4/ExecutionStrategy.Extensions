@@ -4,7 +4,7 @@ using EntityFrameworkCore.ExecutionStrategyExtended.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EntityFrameworkCore.ExecutionStrategyExtended.DependecyInjection;
+namespace EntityFrameworkCore.ExecutionStrategyExtended.DependencyInjection;
 
 public struct DbContextRetryBehaviorBuilderPart<TDbContext> where TDbContext : DbContext
 {

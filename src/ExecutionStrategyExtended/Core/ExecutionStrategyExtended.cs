@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using EntityFrameworkCore.ExecutionStrategyExtended.DependecyInjection;
 using EntityFrameworkCore.ExecutionStrategyExtended.Options;
 using Microsoft.EntityFrameworkCore;
 
