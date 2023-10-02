@@ -17,7 +17,7 @@ services.AddDbContextFactory<AppDbContext>(optionsBuilder =>
 services.AddExecutionStrategyExtended<AppDbContext>(configuration =>
 {
     configuration
-        .DbContextRetrierConfiguration().UseCreateNewDbContextRetrier();
+        .DbContextRetryBehaviorOptions().UseCreateNewDbContextRetrier();
 });
 services.AddScoped<UserService>();
 

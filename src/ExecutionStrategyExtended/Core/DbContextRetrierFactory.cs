@@ -6,24 +6,24 @@ namespace EntityFrameworkCore.ExecutionStrategyExtended.Core;
 
 internal class DbContextRetrierFactory<TDbContext> where TDbContext : DbContext
 {
-    private readonly DbContextRetrierConfiguration _retrierConfiguration;
+    private readonly DbContextRetryBehaviorOptions _retryBehaviorOptions;
     private readonly IDbContextFactory<TDbContext> _dbContextFactory;
 
-    public DbContextRetrierFactory(DbContextRetrierConfiguration retrierConfiguration, IDbContextFactory<TDbContext> dbContextFactory)
+    public DbContextRetrierFactory(DbContextRetryBehaviorOptions retryBehaviorOptions, IDbContextFactory<TDbContext> dbContextFactory)
     {
-        _retrierConfiguration = retrierConfiguration;
+        _retryBehaviorOptions = retryBehaviorOptions;
         _dbContextFactory = dbContextFactory;
     }
 
-    public IDbContextRetrier<TDbContext> Create(TDbContext mainContext)
+    public IDbContextRetryBehavior<TDbContext> Create(TDbContext mainContext)
     {
-        return _retrierConfiguration.DbContextRetrierType switch
+        return _retryBehaviorOptions.DbContextRetryBehaviorType switch
         {
-            DbContextRetrierType.CreateNew =>
-                new CreateNewDbContextRetrier<TDbContext>(_retrierConfiguration.DisposePreviousContext,
+            DbContextRetryBehaviorType.CreateNew =>
+                new CreateNewDbContextRetryBehavior<TDbContext>(_retryBehaviorOptions.DisposePreviousContext,
                     _dbContextFactory, mainContext),
-            DbContextRetrierType.ClearChangeTracker => new ClearChangeTrackerRetrier<TDbContext>(mainContext),
-            DbContextRetrierType.UseSame => new UseSameDbContextRetrier<TDbContext>(mainContext),
+            DbContextRetryBehaviorType.ClearChangeTracker => new ClearChangeTrackerRetryBehavior<TDbContext>(mainContext),
+            DbContextRetryBehaviorType.UseSame => new UseSameDbContextRetryBehavior<TDbContext>(mainContext),
             _ => throw new ArgumentOutOfRangeException()
         };
     }

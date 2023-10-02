@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExecutionStrategyExtended.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExecutionStrategyExtended.IdempotentTransactions", "src\ExecutionStrategyExtended.IdempotentTransactions\ExecutionStrategyExtended.IdempotentTransactions.csproj", "{FE337A67-8769-4EFB-831C-3EF2A6A9A349}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExecutionStrategyExtended.UnitTests", "src\ExecutionStrategyExtended.UnitTests\ExecutionStrategyExtended.UnitTests.csproj", "{F55D5542-34A2-4B57-9A93-FA05F9D8738C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{FE337A67-8769-4EFB-831C-3EF2A6A9A349}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE337A67-8769-4EFB-831C-3EF2A6A9A349}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE337A67-8769-4EFB-831C-3EF2A6A9A349}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F55D5542-34A2-4B57-9A93-FA05F9D8738C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F55D5542-34A2-4B57-9A93-FA05F9D8738C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F55D5542-34A2-4B57-9A93-FA05F9D8738C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F55D5542-34A2-4B57-9A93-FA05F9D8738C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection

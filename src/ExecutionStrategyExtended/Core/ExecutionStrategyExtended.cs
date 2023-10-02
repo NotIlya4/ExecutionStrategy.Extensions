@@ -10,15 +10,15 @@ internal class ExecutionStrategyExtended<TDbContext> : IExecutionStrategyExtende
     private readonly DbContextRetrierFactory<TDbContext> _retrierFactory;
     private readonly ActualDbContextProvider<TDbContext> _actualDbContextProvider;
     public TDbContext MainContext { get; }
-    public IExecutionStrategyExtendedConfiguration Configuration { get; }
+    public IExecutionStrategyExtendedOptionsBuilder OptionsBuilder { get; }
 
     public ExecutionStrategyExtended(DbContextRetrierFactory<TDbContext> retrierFactory, TDbContext mainContext,
-        IExecutionStrategyExtendedConfiguration configuration,
+        IExecutionStrategyExtendedOptionsBuilder optionsBuilder,
         ActualDbContextProvider<TDbContext> actualDbContextProvider)
     {
         _retrierFactory = retrierFactory;
         MainContext = mainContext;
-        Configuration = configuration;
+        OptionsBuilder = optionsBuilder;
         _actualDbContextProvider = actualDbContextProvider;
     }
 
