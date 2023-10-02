@@ -8,7 +8,7 @@ public static class ExecutionStrategyExtendedExtensions
     public static Task<TResponse> ExecuteAsync<TDbContext, TResponse>(
         this IExecutionStrategyExtended<TDbContext> strategyExtended, Func<TDbContext, Task<TResponse>> action) where TDbContext : DbContext
     {
-        return strategyExtended.ExecuteAsync(action, strategyExtended.Options.MainContext);
+        return strategyExtended.ExecuteAsync(action, strategyExtended.Data.MainContext<TDbContext>());
     }
     
     public static async Task ExecuteAsync<TDbContext>(
@@ -35,7 +35,7 @@ public static class ExecutionStrategyExtendedExtensions
         this IExecutionStrategyExtended<TDbContext> strategyExtended, Func<TDbContext, Task<TResponse>> action, IsolationLevel isolationLevel)
         where TDbContext : DbContext
     {
-        return strategyExtended.ExecuteInTransactionAsync(action, strategyExtended.Options.MainContext, isolationLevel);
+        return strategyExtended.ExecuteInTransactionAsync(action, strategyExtended.Data.MainContext<TDbContext>(), isolationLevel);
     }
 
     public static Task ExecuteInTransactionAsync<TDbContext>(

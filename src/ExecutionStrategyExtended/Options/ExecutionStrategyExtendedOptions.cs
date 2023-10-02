@@ -1,12 +1,11 @@
 ﻿using EntityFrameworkCore.ExecutionStrategyExtended.Core;
-using EntityFrameworkCore.ExecutionStrategyExtended.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore.ExecutionStrategyExtended.Options;
 
 public record ExecutionStrategyExtendedOptions<TDbContext> where TDbContext : DbContext
 {
-    public Dictionary<object, object> Data { get; } = new();
+    public ExecutionStrategyExtendedData Data { get; } = new();
 
     public TDbContext MainContext
     {
@@ -16,14 +15,14 @@ public record ExecutionStrategyExtendedOptions<TDbContext> where TDbContext : Db
 
     public IDbContextRetryBehaviorFactory<TDbContext> DbContextRetryBehaviorFactory
     {
-        get => Data.RetryBehaviorFactory<TDbContext>();
-        set => Data.RetryBehaviorFactory(value);
+        get => Data.DbContextRetryBehaviorFactory<TDbContext>();
+        set => Data.DbContextRetryBehaviorFactory(value);
     }
 
     public ActualDbContextProvider<TDbContext> ActualDbContextProvider
     {
-        get => Data.DbContextProvider<TDbContext>();
-        set => Data.DbContextProvider(value);
+        get => Data.ActualDbContextProvider<TDbContext>();
+        set => Data.ActualDbContextProvider(value);
     }
 
     internal ExecutionStrategyExtendedOptions()

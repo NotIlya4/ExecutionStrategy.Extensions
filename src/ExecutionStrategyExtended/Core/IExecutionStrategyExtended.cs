@@ -1,12 +1,11 @@
 ﻿using System.Data;
-using EntityFrameworkCore.ExecutionStrategyExtended.Options;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore.ExecutionStrategyExtended.Core;
 
 public interface IExecutionStrategyExtended<TDbContext> where TDbContext : DbContext
 {
-    ExecutionStrategyExtendedOptions<TDbContext> Options { get; }
+    ExecutionStrategyExtendedData Data { get; }
     
     Task<TResponse> ExecuteAsync<TResponse>(Func<TDbContext, Task<TResponse>> action,
         TDbContext mainContext);

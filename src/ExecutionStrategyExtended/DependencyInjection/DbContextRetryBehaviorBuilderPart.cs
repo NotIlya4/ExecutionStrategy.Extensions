@@ -1,5 +1,4 @@
 ﻿using EntityFrameworkCore.ExecutionStrategyExtended.Core;
-using EntityFrameworkCore.ExecutionStrategyExtended.DbContextRetrier;
 using EntityFrameworkCore.ExecutionStrategyExtended.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +16,7 @@ public struct DbContextRetryBehaviorBuilderPart<TDbContext> where TDbContext : D
 
     public ExecutionStrategyExtendedOptionsBuilder<TDbContext> Use(IDbContextRetryBehaviorFactory<TDbContext> factory)
     {
-        Builder.Options.Data.RetryBehaviorFactory(factory);
+        Builder.Options.Data.DbContextRetryBehaviorFactory(factory);
         return Builder;
     }
 

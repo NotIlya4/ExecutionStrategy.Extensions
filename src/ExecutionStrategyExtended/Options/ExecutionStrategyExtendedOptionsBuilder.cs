@@ -1,4 +1,5 @@
-﻿using EntityFrameworkCore.ExecutionStrategyExtended.DependencyInjection;
+﻿using EntityFrameworkCore.ExecutionStrategyExtended.Core;
+using EntityFrameworkCore.ExecutionStrategyExtended.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore.ExecutionStrategyExtended.Options;
@@ -7,18 +8,15 @@ public class ExecutionStrategyExtendedOptionsBuilder<TDbContext> where TDbContex
 {
     public ExecutionStrategyExtendedOptions<TDbContext> Options { get; }
     public IServiceProvider ServiceProvider { get; }
-
-    public ExecutionStrategyExtendedOptionsBuilder(IServiceProvider serviceProvider) : this(serviceProvider, new ExecutionStrategyExtendedOptions<TDbContext>())
-    {
-        
-    }
+    public DbContextRetryBehaviorBuilderPart<TDbContext> DbContextRetryBehavior { get; }
     
-    public ExecutionStrategyExtendedOptionsBuilder(IServiceProvider serviceProvider, ExecutionStrategyExtendedOptions<TDbContext> options)
+    public ExecutionStrategyExtendedOptionsBuilder(IServiceProvider serviceProvider, ExecutionStrategyExtendedOptions<TDbContext> options, TDbContext mainContext, ActualDbContextProvider<TDbContext> actualDbContextProvider)
     {
+        options.MainContext = mainContext;
+        options.ActualDbContextProvider = actualDbContextProvider;
+        
         ServiceProvider = serviceProvider;
         Options = options;
         DbContextRetryBehavior = new DbContextRetryBehaviorBuilderPart<TDbContext>(this);
     }
-    
-    public DbContextRetryBehaviorBuilderPart<TDbContext> DbContextRetryBehavior { get; }
 }

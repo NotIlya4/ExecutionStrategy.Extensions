@@ -1,5 +1,4 @@
-﻿using EntityFrameworkCore.ExecutionStrategyExtended.DbContextRetrier;
-using EntityFrameworkCore.ExecutionStrategyExtended.DbContextRetrier.Implementations;
+﻿using EntityFrameworkCore.ExecutionStrategyExtended.Core.DbContextRetryBehaviorImplementations;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore.ExecutionStrategyExtended.Core;

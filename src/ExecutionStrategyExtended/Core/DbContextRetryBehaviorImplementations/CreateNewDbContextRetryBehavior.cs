@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace EntityFrameworkCore.ExecutionStrategyExtended.DbContextRetrier.Implementations;
+namespace EntityFrameworkCore.ExecutionStrategyExtended.Core.DbContextRetryBehaviorImplementations;
 
 internal class CreateNewDbContextRetryBehavior<TDbContext> : IDbContextRetryBehavior<TDbContext> where TDbContext : DbContext
 {

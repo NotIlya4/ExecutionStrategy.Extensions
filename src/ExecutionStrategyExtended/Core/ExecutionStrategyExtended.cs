@@ -9,11 +9,11 @@ public class ExecutionStrategyExtended<TDbContext> : IExecutionStrategyExtended<
 {
     private readonly IDbContextRetryBehaviorFactory<TDbContext> _retryBehaviorFactory;
     private readonly ActualDbContextProvider<TDbContext> _actualDbContextProvider;
-    public ExecutionStrategyExtendedOptions<TDbContext> Options { get; }
+    public ExecutionStrategyExtendedData Data { get; }
 
     public ExecutionStrategyExtended(ExecutionStrategyExtendedOptions<TDbContext> options)
     {
-        Options = options;
+        Data = options.Data;
         _retryBehaviorFactory = options.DbContextRetryBehaviorFactory;
         _actualDbContextProvider = options.ActualDbContextProvider;
     }

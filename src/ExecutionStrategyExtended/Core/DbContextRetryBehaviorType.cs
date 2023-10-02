@@ -1,4 +1,4 @@
-﻿namespace EntityFrameworkCore.ExecutionStrategyExtended.DbContextRetrier;
+﻿namespace EntityFrameworkCore.ExecutionStrategyExtended.Core;
 
 internal enum DbContextRetryBehaviorType
 {
