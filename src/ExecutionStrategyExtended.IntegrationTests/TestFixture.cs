@@ -20,31 +20,3 @@ public class TestFixture
         Services = serviceCollection.BuildServiceProvider();
     }
 }
-
-public class AppDbContext : DbContext
-{
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-    {
-        
-    }
-}
-
-public interface IDbContextConfigurator
-{
-    public void ConfigureDbContext();
-}
-
-public interface IDbBootstrapper
-{
-    Task Bootstrap();
-    Task Destroy();
-    Task Clean();
-}
-
-public record PostgresConn
-{
-    public string Username { get; set; } = "postgres";
-    public string Password { get; set; } = "pgpass";
-    public int Port { get; set; } = 5432;
-    public string Server { get; set; } = "localhost";
-}

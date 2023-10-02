@@ -4,34 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExecutionStrategyExtended.UnitTests;
 
-public record PostgresContainerOptions
-{
-    public string Image { get; set; } = "postgres:latest";
-    public string Password { get; set; } = "pgpass";
-    public int Port { get; set; } = 8888;
-    public string ContainerName { get; set; } = "postgres-test";
-}
-
-public record FluentDockerOptions
-{
-    public required PostgresContainerOptions PostgresContainerOptions { get; set; }
-    public required FluentDockerOnClean OnClean { get; set; }
-}
-
-public enum FluentDockerOnClean
-{
-    RecreateContainer,
-    RecreateDb,
-    CleanTables
-}
-
 public class FluentDockerDbBootstrapper : IDbBootstrapper
 {
     private readonly FluentDockerOptions _options;
-    private readonly DbContext _context;
+    private readonly AppDbContext _context;
     private IContainerService? _container;
 
-    public FluentDockerDbBootstrapper(FluentDockerOptions options, DbContext context)
+    public FluentDockerDbBootstrapper(FluentDockerOptions options, AppDbContext context)
     {
         _options = options;
         _context = context;
@@ -66,16 +45,29 @@ public class FluentDockerDbBootstrapper : IDbBootstrapper
     {
         switch (_options.OnClean)
         {
-            case FluentDockerOnClean.RecreateContainer:
+            case FluentDockerOptions.OnCleanType.RecreateContainer:
                 await Bootstrap();
                 break;
-            case FluentDockerOnClean.RecreateDb:
+            case FluentDockerOptions.OnCleanType.RecreateDb:
                 await _context.Database.EnsureDeletedAsync();
                 await _context.Database.EnsureCreatedAsync();
+                break;
+            case FluentDockerOptions.OnCleanType.CleanTables:
+                await _context.CleanTables();
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
                 break;
         }
+    }
+
+    public void Dispose()
+    {
+        DisposeAsync().GetAwaiter().GetResult();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await Destroy();
     }
 }

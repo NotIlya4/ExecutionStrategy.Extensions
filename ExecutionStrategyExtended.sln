@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExecutionStrategyExtended.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExecutionStrategyExtended.IdempotentTransactions", "src\ExecutionStrategyExtended.IdempotentTransactions\ExecutionStrategyExtended.IdempotentTransactions.csproj", "{FE337A67-8769-4EFB-831C-3EF2A6A9A349}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExecutionStrategyExtended.UnitTests", "src\ExecutionStrategyExtended.UnitTests\ExecutionStrategyExtended.UnitTests.csproj", "{F55D5542-34A2-4B57-9A93-FA05F9D8738C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExecutionStrategyExtended.IntegrationTests", "src\ExecutionStrategyExtended.IntegrationTests\ExecutionStrategyExtended.IntegrationTests.csproj", "{F55D5542-34A2-4B57-9A93-FA05F9D8738C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

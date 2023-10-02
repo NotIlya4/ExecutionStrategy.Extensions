@@ -1011,24 +1011,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\NotIlya\\.nuget\\packages\\": {}
+    "C:\\Users\\ikrpt\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\NotIlya\\Documents\\Projects\\ExecutionStrategyExtended\\src\\ExecutionStrategyExtended.Demo\\ExecutionStrategyExtended.Demo.csproj",
+      "projectUniqueName": "D:\\Projects\\Programming\\cs\\ExecutionStrategyExtended\\src\\ExecutionStrategyExtended.Demo\\ExecutionStrategyExtended.Demo.csproj",
       "projectName": "ExecutionStrategyExtended.Demo",
-      "projectPath": "C:\\Users\\NotIlya\\Documents\\Projects\\ExecutionStrategyExtended\\src\\ExecutionStrategyExtended.Demo\\ExecutionStrategyExtended.Demo.csproj",
-      "packagesPath": "C:\\Users\\NotIlya\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\NotIlya\\Documents\\Projects\\ExecutionStrategyExtended\\src\\ExecutionStrategyExtended.Demo\\obj\\",
+      "projectPath": "D:\\Projects\\Programming\\cs\\ExecutionStrategyExtended\\src\\ExecutionStrategyExtended.Demo\\ExecutionStrategyExtended.Demo.csproj",
+      "packagesPath": "C:\\Users\\ikrpt\\.nuget\\packages\\",
+      "outputPath": "D:\\Projects\\Programming\\cs\\ExecutionStrategyExtended\\src\\ExecutionStrategyExtended.Demo\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\NotIlya\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\ikrpt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {},
         "https://nuget.pkg.github.com/mindbox-cloud/index.json": {}
       },
@@ -1036,8 +1038,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\NotIlya\\Documents\\Projects\\ExecutionStrategyExtended\\src\\ExecutionStrategyExtended\\ExecutionStrategyExtended.csproj": {
-              "projectPath": "C:\\Users\\NotIlya\\Documents\\Projects\\ExecutionStrategyExtended\\src\\ExecutionStrategyExtended\\ExecutionStrategyExtended.csproj"
+            "D:\\Projects\\Programming\\cs\\ExecutionStrategyExtended\\src\\ExecutionStrategyExtended\\ExecutionStrategyExtended.csproj": {
+              "projectPath": "D:\\Projects\\Programming\\cs\\ExecutionStrategyExtended\\src\\ExecutionStrategyExtended\\ExecutionStrategyExtended.csproj"
             }
           }
         }
@@ -1090,7 +1092,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

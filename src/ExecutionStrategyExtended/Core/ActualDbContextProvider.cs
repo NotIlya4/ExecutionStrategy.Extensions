@@ -2,10 +2,10 @@
 
 namespace EntityFrameworkCore.ExecutionStrategyExtended.Core;
 
-internal class ActualDbContextProvider<TDbContext> : IActualDbContextProvider<TDbContext> where TDbContext : DbContext
+public class ActualDbContextProvider<TDbContext> : IActualDbContextProvider<TDbContext> where TDbContext : DbContext
 {
-    private readonly List<Action<TDbContext>> _subscribers = new();
     private TDbContext _dbContext;
+    private event Action<TDbContext> InternalNewContextAssigned = _ => { }; 
 
     public TDbContext DbContext
     {
@@ -18,18 +18,23 @@ internal class ActualDbContextProvider<TDbContext> : IActualDbContextProvider<TD
             }
             
             _dbContext = value;
-            _subscribers.ForEach(action => action(value));
+            InternalNewContextAssigned(value);
         }
     }
 
     public ActualDbContextProvider(TDbContext dbContext)
     {
         _dbContext = dbContext;
+        NewContextAssigned += _ => { };
     }
 
-    public void OnNewContextAssigned(Action<TDbContext> action)
+    public event Action<TDbContext> NewContextAssigned
     {
-        _subscribers.Add(action);
-        action(DbContext);
+        add
+        {
+            value(_dbContext);
+            InternalNewContextAssigned += value;
+        }
+        remove => InternalNewContextAssigned -= value;
     }
 }

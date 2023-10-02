@@ -1,25 +1,22 @@
 ﻿using System.Data;
 using EntityFrameworkCore.ExecutionStrategyExtended.Configuration;
+using EntityFrameworkCore.ExecutionStrategyExtended.DependecyInjection;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore.ExecutionStrategyExtended.Core;
 
-internal class ExecutionStrategyExtended<TDbContext> : IExecutionStrategyExtended<TDbContext>
+public class ExecutionStrategyExtended<TDbContext> : IExecutionStrategyExtended<TDbContext>
     where TDbContext : DbContext
 {
-    private readonly DbContextRetrierFactory<TDbContext> _retrierFactory;
+    private readonly IDbContextRetryBehaviorFactory<TDbContext> _retryBehaviorFactory;
     private readonly ActualDbContextProvider<TDbContext> _actualDbContextProvider;
-    public TDbContext MainContext { get; }
-    public IExecutionStrategyExtendedOptionsBuilder OptionsBuilder { get; }
+    public ExecutionStrategyExtendedOptions<TDbContext> Options { get; }
 
-    public ExecutionStrategyExtended(DbContextRetrierFactory<TDbContext> retrierFactory, TDbContext mainContext,
-        IExecutionStrategyExtendedOptionsBuilder optionsBuilder,
-        ActualDbContextProvider<TDbContext> actualDbContextProvider)
+    public ExecutionStrategyExtended(ExecutionStrategyExtendedOptions<TDbContext> options)
     {
-        _retrierFactory = retrierFactory;
-        MainContext = mainContext;
-        OptionsBuilder = optionsBuilder;
-        _actualDbContextProvider = actualDbContextProvider;
+        Options = options;
+        _retryBehaviorFactory = options.DbContextRetryBehaviorFactory;
+        _actualDbContextProvider = options.ActualDbContextProvider;
     }
 
     public async Task<TResponse> ExecuteAsync<TResponse>(Func<TDbContext, Task<TResponse>> action,
@@ -27,7 +24,7 @@ internal class ExecutionStrategyExtended<TDbContext> : IExecutionStrategyExtende
     {
         _actualDbContextProvider.DbContext = mainContext;
 
-        var retrier = _retrierFactory.Create(mainContext);
+        var retrier = _retryBehaviorFactory.Create(mainContext);
         var strategy = retrier.CreateExecutionStrategy();
         var retryNumber = 1;
 

@@ -6,8 +6,7 @@ namespace EntityFrameworkCore.ExecutionStrategyExtended.Core;
 
 public interface IExecutionStrategyExtended<TDbContext> where TDbContext : DbContext
 {
-    IExecutionStrategyExtendedOptionsBuilder OptionsBuilder { get; }
-    TDbContext MainContext { get; }
+    ExecutionStrategyExtendedOptions<TDbContext> Options { get; }
     
     Task<TResponse> ExecuteAsync<TResponse>(Func<TDbContext, Task<TResponse>> action,
         TDbContext mainContext);

@@ -4,23 +4,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore.ExecutionStrategyExtended.Core;
 
-internal class DbContextRetrierFactory<TDbContext> where TDbContext : DbContext
+internal class DbContextRetryBehaviorFactory<TDbContext> : IDbContextRetryBehaviorFactory<TDbContext> where TDbContext : DbContext
 {
-    private readonly DbContextRetryBehaviorOptions _retryBehaviorOptions;
+    private readonly DbContextRetryBehaviorType _dbContextRetryBehaviorType;
+    private readonly bool _disposePreviousContext;
     private readonly IDbContextFactory<TDbContext> _dbContextFactory;
 
-    public DbContextRetrierFactory(DbContextRetryBehaviorOptions retryBehaviorOptions, IDbContextFactory<TDbContext> dbContextFactory)
+    public DbContextRetryBehaviorFactory(DbContextRetryBehaviorType retryBehaviorType, bool disposePreviousContext, IDbContextFactory<TDbContext> dbContextFactory)
     {
-        _retryBehaviorOptions = retryBehaviorOptions;
+        _dbContextRetryBehaviorType = retryBehaviorType;
+        _disposePreviousContext = disposePreviousContext;
         _dbContextFactory = dbContextFactory;
     }
 
     public IDbContextRetryBehavior<TDbContext> Create(TDbContext mainContext)
     {
-        return _retryBehaviorOptions.DbContextRetryBehaviorType switch
+        return _dbContextRetryBehaviorType switch
         {
             DbContextRetryBehaviorType.CreateNew =>
-                new CreateNewDbContextRetryBehavior<TDbContext>(_retryBehaviorOptions.DisposePreviousContext,
+                new CreateNewDbContextRetryBehavior<TDbContext>(_disposePreviousContext,
                     _dbContextFactory, mainContext),
             DbContextRetryBehaviorType.ClearChangeTracker => new ClearChangeTrackerRetryBehavior<TDbContext>(mainContext),
             DbContextRetryBehaviorType.UseSame => new UseSameDbContextRetryBehavior<TDbContext>(mainContext),
