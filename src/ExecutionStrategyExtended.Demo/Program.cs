@@ -1,7 +1,9 @@
 using EntityFrameworkCore.ExecutionStrategyExtended.Core;
 using EntityFrameworkCore.ExecutionStrategyExtended.DependecyInjection;
 using ExecutionStrategyExtended.Demo;
+using ExecutionStrategyExtended.Demo.EntityFramework;
 using ExecutionStrategyExtended.Demo.Models;
+using ExecutionStrategyExtended.Demo.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

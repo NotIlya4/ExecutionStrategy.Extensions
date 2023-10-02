@@ -1,6 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ExecutionStrategyExtended.UnitTests.DbContextConfigurator;
+using ExecutionStrategyExtended.UnitTests.PostgresBootstrapping;
+using ExecutionStrategyExtended.UnitTests.PostgresBootstrapping.ExistingDb;
+using ExecutionStrategyExtended.UnitTests.PostgresBootstrapping.FluentDocker;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace ExecutionStrategyExtended.UnitTests;
+namespace ExecutionStrategyExtended.UnitTests.TestRuntimeClass;
 
 public class DbBootstrapperBuilderPart
 {

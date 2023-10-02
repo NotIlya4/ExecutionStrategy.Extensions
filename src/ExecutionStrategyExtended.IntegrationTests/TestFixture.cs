@@ -1,4 +1,5 @@
 using EntityFrameworkCore.ExecutionStrategyExtended.DependecyInjection;
+using ExecutionStrategyExtended.UnitTests.DbContextConfigurator;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

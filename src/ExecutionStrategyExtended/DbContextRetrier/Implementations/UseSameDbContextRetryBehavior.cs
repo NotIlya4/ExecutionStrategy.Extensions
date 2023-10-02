@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace EntityFrameworkCore.ExecutionStrategyExtended.DbContextRetrier.RetrierTypes;
+namespace EntityFrameworkCore.ExecutionStrategyExtended.DbContextRetrier.Implementations;
 
 internal class UseSameDbContextRetryBehavior<TDbContext> : IDbContextRetryBehavior<TDbContext>
     where TDbContext : DbContext

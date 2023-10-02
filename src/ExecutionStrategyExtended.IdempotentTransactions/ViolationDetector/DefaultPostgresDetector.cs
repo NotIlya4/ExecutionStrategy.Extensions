@@ -1,5 +1,4 @@
-﻿using EntityFrameworkCore.ExecutionStrategyExtended.Configuration;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
 namespace ExecutionStrategyExtended.IdempotentTransactions.ViolationDetector;

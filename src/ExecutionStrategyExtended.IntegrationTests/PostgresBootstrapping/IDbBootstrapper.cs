@@ -1,4 +1,4 @@
-﻿namespace ExecutionStrategyExtended.UnitTests;
+﻿namespace ExecutionStrategyExtended.UnitTests.PostgresBootstrapping;
 
 public interface IDbBootstrapper : IDisposable, IAsyncDisposable
 {

@@ -1,4 +1,4 @@
-﻿namespace ExecutionStrategyExtended.UnitTests;
+﻿namespace ExecutionStrategyExtended.UnitTests.TestRuntimeClass;
 
 public enum DbBootstrapperType
 {

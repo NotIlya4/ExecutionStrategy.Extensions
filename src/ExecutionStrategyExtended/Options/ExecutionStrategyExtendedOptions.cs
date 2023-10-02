@@ -2,7 +2,7 @@
 using EntityFrameworkCore.ExecutionStrategyExtended.DependecyInjection;
 using Microsoft.EntityFrameworkCore;
 
-namespace EntityFrameworkCore.ExecutionStrategyExtended.Configuration;
+namespace EntityFrameworkCore.ExecutionStrategyExtended.Options;
 
 public record ExecutionStrategyExtendedOptions<TDbContext> where TDbContext : DbContext
 {

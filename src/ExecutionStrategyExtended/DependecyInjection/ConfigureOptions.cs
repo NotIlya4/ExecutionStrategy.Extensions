@@ -1,4 +1,4 @@
-﻿using EntityFrameworkCore.ExecutionStrategyExtended.Configuration;
+﻿using EntityFrameworkCore.ExecutionStrategyExtended.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 

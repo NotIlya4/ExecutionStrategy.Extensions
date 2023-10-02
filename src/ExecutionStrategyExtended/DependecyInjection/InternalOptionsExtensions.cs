@@ -1,5 +1,4 @@
-﻿using EntityFrameworkCore.ExecutionStrategyExtended.Configuration;
-using EntityFrameworkCore.ExecutionStrategyExtended.Core;
+﻿using EntityFrameworkCore.ExecutionStrategyExtended.Core;
 using EntityFrameworkCore.ExecutionStrategyExtended.DbContextRetrier;
 using Microsoft.EntityFrameworkCore;
 

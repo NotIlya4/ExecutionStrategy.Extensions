@@ -1,8 +1,8 @@
 ﻿using Ductus.FluentDocker.Builders;
 using Ductus.FluentDocker.Services;
-using Microsoft.EntityFrameworkCore;
+using ExecutionStrategyExtended.UnitTests.DbContextConfigurator;
 
-namespace ExecutionStrategyExtended.UnitTests;
+namespace ExecutionStrategyExtended.UnitTests.PostgresBootstrapping.FluentDocker;
 
 public class FluentDockerDbBootstrapper : IDbBootstrapper
 {

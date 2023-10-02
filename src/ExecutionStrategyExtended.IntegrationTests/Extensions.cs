@@ -1,4 +1,6 @@
-﻿namespace ExecutionStrategyExtended.UnitTests;
+﻿using ExecutionStrategyExtended.UnitTests.DbContextConfigurator;
+
+namespace ExecutionStrategyExtended.UnitTests;
 
 public static class Extensions
 {

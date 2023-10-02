@@ -1,5 +1,5 @@
 ﻿using System.Data;
-using EntityFrameworkCore.ExecutionStrategyExtended.Configuration;
+using EntityFrameworkCore.ExecutionStrategyExtended.Options;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore.ExecutionStrategyExtended.Core;

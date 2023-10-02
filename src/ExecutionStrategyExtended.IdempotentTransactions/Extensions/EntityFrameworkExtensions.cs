@@ -1,5 +1,4 @@
-﻿using EntityFrameworkCore.ExecutionStrategyExtended.Configuration;
-using ExecutionStrategyExtended.IdempotentTransactions.IdempotenceToken;
+﻿using ExecutionStrategyExtended.IdempotentTransactions.IdempotenceToken;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExecutionStrategyExtended.IdempotentTransactions.Extensions;

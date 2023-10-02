@@ -1,5 +1,5 @@
-﻿using EntityFrameworkCore.ExecutionStrategyExtended.Configuration;
-using EntityFrameworkCore.ExecutionStrategyExtended.Core;
+﻿using EntityFrameworkCore.ExecutionStrategyExtended.Core;
+using EntityFrameworkCore.ExecutionStrategyExtended.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
