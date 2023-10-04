@@ -2,8 +2,8 @@
 
 namespace EntityFrameworkCore.ExecutionStrategyExtended.Core;
 
-public interface IActualDbContextProvider<out TDbContext> where TDbContext : DbContext
+public interface IActualDbContextProvider<TDbContext> where TDbContext : DbContext
 {
     TDbContext DbContext { get; }
-    event Action<TDbContext> NewContextAssigned;
+    event EventHandler<TDbContext> NewContextAssigned;
 }

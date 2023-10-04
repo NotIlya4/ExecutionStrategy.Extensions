@@ -1,55 +1,64 @@
 ﻿using System.Data;
 using EntityFrameworkCore.ExecutionStrategyExtended.Options;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EntityFrameworkCore.ExecutionStrategyExtended.Core;
 
-public class ExecutionStrategyExtended<TDbContext> : IExecutionStrategyExtended<TDbContext>
-    where TDbContext : DbContext
+public class ExecutionStrategyExtended<TDbContext> : IExecutionStrategy where TDbContext : DbContext
 {
-    private readonly ExecutionStrategyExtendedOptions<TDbContext> _options;
-    public ExecutionStrategyExtendedData Data { get; }
-    private IDbContextRetryBehaviorFactory<TDbContext> RetryBehaviorFactory => _options.DbContextRetryBehaviorFactory;
-    private ActualDbContextProvider<TDbContext> ActualDbContextProvider => _options.ActualDbContextProvider;
+    public IExecutionStrategy Strategy { get; set; }
 
-    public ExecutionStrategyExtended(ExecutionStrategyExtendedOptions<TDbContext> options)
+    public ExecutionStrategyExtended(IExecutionStrategy strategy)
     {
-        _options = options;
-        Data = options.Data;
+        Strategy = strategy;
     }
 
-    public async Task<TResponse> ExecuteAsync<TResponse>(Func<TDbContext, Task<TResponse>> action,
-        TDbContext mainContext)
+    public TResult Execute<TState, TResult>(
+        TState state, 
+        Func<DbContext, TState, TResult> operation, 
+        Func<DbContext, TState, ExecutionResult<TResult>>? verifySucceeded)
     {
-        ActualDbContextProvider.DbContext = mainContext;
-
-        var retrier = RetryBehaviorFactory.Create(mainContext);
-        var strategy = retrier.CreateExecutionStrategy();
         var retryNumber = 1;
 
-        return await strategy.ExecuteAsync(
-            async () =>
+        return Strategy.Execute(
+            state,
+            (actionContext, actionState) =>
             {
-                var context = await retrier.ProvideDbContextForRetry(retryNumber);
-                ActualDbContextProvider.DbContext = context;
-
+                var factory = actionContext.GetRetryBehavior();
+                var retryBehavior = factory.Create((TDbContext)actionContext);
+                
+                var context = retryBehavior.ProvideDbContextForRetry(retryNumber).GetAwaiter().GetResult();
                 retryNumber += 1;
-                return await action(context);
-            });
+                
+                return operation(context, actionState);
+            },
+            verifySucceeded);
     }
 
-    public async Task<TResponse> ExecuteInTransactionAsync<TResponse>(Func<TDbContext, Task<TResponse>> action,
-        TDbContext mainContext, IsolationLevel isolationLevel)
+    public async Task<TResult> ExecuteAsync<TState, TResult>(
+        TState state,
+        Func<DbContext, TState, CancellationToken, Task<TResult>> operation,
+        Func<DbContext, TState, CancellationToken, Task<ExecutionResult<TResult>>>? verifySucceeded,
+        CancellationToken cancellationToken = default)
     {
-        return await ExecuteAsync(async context =>
-        {
-            await using var transaction = await context.Database.BeginTransactionAsync(isolationLevel);
+        var retryNumber = 1;
 
-            var response = await action(context);
-
-            await transaction.CommitAsync();
-
-            return response;
-        }, mainContext);
+        return await Strategy.ExecuteAsync(
+            state,
+            async (actionContext, actionState, actionCancellationToken) =>
+            {
+                var factory = actionContext.GetRetryBehavior();
+                var retryBehavior = factory.Create((TDbContext)actionContext);
+                
+                var context = await retryBehavior.ProvideDbContextForRetry(retryNumber);
+                retryNumber += 1;
+                
+                return await operation(context, actionState, actionCancellationToken);
+            },
+            verifySucceeded,
+            cancellationToken);
     }
+
+    public bool RetriesOnFailure { get; set; } = true;
 }

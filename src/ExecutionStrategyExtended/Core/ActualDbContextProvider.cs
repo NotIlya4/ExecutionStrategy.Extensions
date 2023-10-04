@@ -5,7 +5,7 @@ namespace EntityFrameworkCore.ExecutionStrategyExtended.Core;
 public class ActualDbContextProvider<TDbContext> : IActualDbContextProvider<TDbContext> where TDbContext : DbContext
 {
     private TDbContext _dbContext;
-    private event Action<TDbContext> InternalNewContextAssigned = _ => { }; 
+    private event EventHandler<TDbContext>? InternalNewContextAssigned; 
 
     public TDbContext DbContext
     {
@@ -18,21 +18,20 @@ public class ActualDbContextProvider<TDbContext> : IActualDbContextProvider<TDbC
             }
             
             _dbContext = value;
-            InternalNewContextAssigned(value);
+            InternalNewContextAssigned?.Invoke(this, value);
         }
     }
 
     public ActualDbContextProvider(TDbContext dbContext)
     {
         _dbContext = dbContext;
-        NewContextAssigned += _ => { };
     }
 
-    public event Action<TDbContext> NewContextAssigned
+    public event EventHandler<TDbContext> NewContextAssigned
     {
         add
         {
-            value(_dbContext);
+            value(this, _dbContext);
             InternalNewContextAssigned += value;
         }
         remove => InternalNewContextAssigned -= value;

@@ -8,13 +8,15 @@ internal class CreateNewDbContextRetryBehavior<TDbContext> : IDbContextRetryBeha
     private readonly bool _disposePreviousContext;
     private readonly IDbContextFactory<TDbContext> _factory;
     private readonly TDbContext _mainContext;
+    private readonly ActualDbContextProvider<TDbContext> _actualDbContextProvider;
     private TDbContext? _previousContext;
 
-    public CreateNewDbContextRetryBehavior(bool disposePreviousContext, IDbContextFactory<TDbContext> factory, TDbContext mainContext)
+    public CreateNewDbContextRetryBehavior(bool disposePreviousContext, IDbContextFactory<TDbContext> factory, TDbContext mainContext, ActualDbContextProvider<TDbContext> actualDbContextProvider)
     {
         _disposePreviousContext = disposePreviousContext;
         _factory = factory;
         _mainContext = mainContext;
+        _actualDbContextProvider = actualDbContextProvider;
     }
 
     public IExecutionStrategy CreateExecutionStrategy()
@@ -29,6 +31,7 @@ internal class CreateNewDbContextRetryBehavior<TDbContext> : IDbContextRetryBeha
         var context = await _factory.CreateDbContextAsync();
         _previousContext = context;
 
+        _actualDbContextProvider.DbContext = context;
         return context;
     }
 

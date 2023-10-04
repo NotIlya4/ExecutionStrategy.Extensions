@@ -1,3 +1,4 @@
+using EntityFrameworkCore.ExecutionStrategyExtended;
 using EntityFrameworkCore.ExecutionStrategyExtended.Core;
 using EntityFrameworkCore.ExecutionStrategyExtended.DependencyInjection;
 using ExecutionStrategyExtended.Demo.EntityFramework;
@@ -23,6 +24,11 @@ services.AddExecutionStrategyExtended<AppDbContext>(configuration =>
 services.AddScoped<UserService>();
 
 var app = builder.Build();
+
+var context = app.Services.GetRequiredService<AppDbContext>();
+var strategy = context.Database.CreateExecutionStrategy();
+
+strategy.ExecuteExtendedAsync<AppDbContext, List<User>>(async dbContext => await dbContext.Users.ToListAsync());
 
 app.MapGet("/", () => "Hello World!");
 
