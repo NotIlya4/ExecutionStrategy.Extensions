@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EntityFrameworkCore.ExecutionStrategyExtended;
 
-// public static class ExecutionStrategyExtensions
+// public static class ExecutionStrategy.Extensions
 // {
 //     public static async Task<TResult> ExecuteAsync<TDbContext, TState, TResult>(
 //         this IExecutionStrategy strategy,

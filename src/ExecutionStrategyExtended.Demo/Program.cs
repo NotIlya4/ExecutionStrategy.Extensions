@@ -48,11 +48,7 @@ context.ExecuteExtendedAsync<AppDbContext, bool, List<User>>(
     },
     builder =>
     {
-        builder
-            .WithCancellationToken(cancellationToken)
-            .WithState(state)
-            .WithVerifySucceeded(verifySucceeded)
-            .WithDbContextOnRetryProvider(args => args.PreviousDbContext);
+        builder.
     });
 
 context.ExecuteExtendedAsync(
