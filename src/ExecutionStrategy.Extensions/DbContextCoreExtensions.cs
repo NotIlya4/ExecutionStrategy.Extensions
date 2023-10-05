@@ -17,8 +17,8 @@ public static class DbContextCoreExtensions
             {
                 attempt += 1;
 
-                var middlewareArgs = new ExecutionStrategyOperationArgs<TDbContext>(options.Data);
-                middlewareArgs.Attempt = attempt;
+                var middlewareArgs = new ExecutionStrategyOperationArgs<TDbContext>(
+                    options.Data, context, attempt, options.CancellationToken);
 
                 var result = await WrapMiddlewares(options.Middlewares, options.Operation)(middlewareArgs);
 
@@ -27,7 +27,8 @@ public static class DbContextCoreExtensions
             options.VerifySucceeded is not null
                 ? async (_, _, _) =>
                 {
-                    var middlewareArgs = new ExecutionStrategyOperationArgs<TDbContext>(options.Data);
+                    var middlewareArgs = new ExecutionStrategyOperationArgs<TDbContext>(
+                        options.Data, context, attempt, options.CancellationToken);
                     return await options.VerifySucceeded(middlewareArgs);
                 }
                 : null,

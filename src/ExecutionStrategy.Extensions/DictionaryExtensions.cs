@@ -22,6 +22,11 @@ public static class DictionaryExtensions
         return default;
     }
     
+    public static void Set<T>(this IExecutionStrategyData dictionary, string key, T value)
+    {
+        dictionary[key] = value!;
+    }
+    
     public static T Get<T>(this IExecutionStrategyData dictionary, string key)
     {
         return (T)dictionary[key];

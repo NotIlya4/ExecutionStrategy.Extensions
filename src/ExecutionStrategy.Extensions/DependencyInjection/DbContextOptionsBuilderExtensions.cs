@@ -31,3 +31,11 @@ internal class ExecutionStrategyExtensionsExtension<TDbContext, TResult> : IDbCo
 
     public DbContextOptionsExtensionInfo Info { get; } = null!;
 }
+
+public class ExecutionStrategyContainer 
+{
+    public ExecutionStrategyContainer()
+    {
+        
+    }
+}
