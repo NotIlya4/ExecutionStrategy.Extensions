@@ -15,6 +15,18 @@ services.AddDbContextFactory<AppDbContext>(optionsBuilder =>
 {
     optionsBuilder.UseNpgsql(config.GetConnectionString("Postgres")!,
         contextOptionsBuilder => contextOptionsBuilder.EnableRetryOnFailure());
+
+    builder.UseExecutionStrategyExtensions(optionsBuilder =>
+    {
+        optionsBuilder
+            .CleanChangeTrackerOnRetry()
+            .WithDbContextOnRetryProvider(args =>
+            {
+                args.MainDbContext.ChangeTracker.Clear();
+                return args.MainDbContext;
+            })
+            .WithActualDbContextProvider(_actualDbConextProvider);
+    });
 });
 services.AddExecutionStrategyExtended<AppDbContext>(configuration =>
 {
@@ -28,7 +40,40 @@ var app = builder.Build();
 var context = app.Services.GetRequiredService<AppDbContext>();
 var strategy = context.Database.CreateExecutionStrategy();
 
-strategy.ExecuteExtendedAsync<AppDbContext, List<User>>(async dbContext => await dbContext.Users.ToListAsync());
+context.ExecuteExtendedAsync<AppDbContext, bool, List<User>>(
+    async (dbContext, state, cancellationToken) =>
+    {
+        // Some usage of dbContext
+        return await dbContext.Users.ToListAsync();
+    },
+    builder =>
+    {
+        builder
+            .WithCancellationToken(cancellationToken)
+            .WithState(state)
+            .WithVerifySucceeded(verifySucceeded)
+            .WithDbContextOnRetryProvider(args => args.PreviousDbContext);
+    });
+
+context.ExecuteExtendedAsync(
+    async (dbContext, cancellationToken) =>
+    {
+        // Some usage of dbContext
+        return await dbContext.Users.ToListAsync();
+    },
+    builder =>
+    {
+        builder
+            .WithCancellationToken(cancellationToken)
+            .WithVerifySucceeded(verifySucceeded)
+            .WithDbContextOnRetryProvider(args =>
+            {
+                args.MainDbContext.ChangeTracker.Clear();
+                return args.MainDbContext;
+            });
+    });
+
+strategy.ExecuteExtendedAsync(async () => await context.Users.ToListAsync());
 
 app.MapGet("/", () => "Hello World!");
 

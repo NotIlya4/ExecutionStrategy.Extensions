@@ -25,7 +25,7 @@ public static class ExecutionStrategyExtendedExtensions
                 previousContext ??= mainContext;
 
                 var retryContext = retryContextProvider(
-                    new DbContextForRetryProviderArguments<TDbContext, TState?, TResult>(previousContext, mainContext, retryNumber, options));
+                    new DbContextForRetryProviderArgs<TDbContext, TState?, TResult>(previousContext, mainContext, retryNumber, options));
                 retryNumber += 1;
 
                 return await operation(retryContext, actionState, actionCancellationToken);
@@ -84,14 +84,14 @@ public class ExecutionStrategyRuntimeOptions<TDbContext, TState, TResult> : Dict
 {
     public Func<TDbContext, TState, CancellationToken, Task<ExecutionResult<TResult>>>? VerifySucceeded { get; set; }
 
-    public Func<DbContextForRetryProviderArguments<TDbContext, TState, TResult>, TDbContext>? DbContextForRetryProvider { get; set; }
+    public Func<DbContextForRetryProviderArgs<TDbContext, TState, TResult>, TDbContext>? DbContextForRetryProvider { get; set; }
 
     public TState? State { get; set; } = default;
 
     public CancellationToken CancellationToken { get; set; } = default;
 }
 
-public record DbContextForRetryProviderArguments<TDbContext, TState, TResult>(TDbContext PreviousContext,
+public record DbContextForRetryProviderArgs<TDbContext, TState, TResult>(TDbContext PreviousContext,
     TDbContext MainContext, int Attempt, ExecutionStrategyRuntimeOptions<TDbContext, TState, TResult> Options)
     where TDbContext : DbContext
 {
