@@ -12,9 +12,11 @@ public record ExecutionStrategyOptions<TDbContext, TResult> : IExecutionStrategy
     public CancellationToken CancellationToken { get; set; }
     public ExecutionStrategyOperation<TDbContext, Task<ExecutionResult<TResult>>>? VerifySucceeded { get; set; }
 
-    public ExecutionStrategyOptions(IExecutionStrategyData data,
+    public ExecutionStrategyOptions(
+        IExecutionStrategyData data,
         List<ExecutionStrategyMiddleware<TDbContext, Task<TResult>>> middlewares,
-        ExecutionStrategyOperation<TDbContext, Task<TResult>> operation, CancellationToken cancellationToken,
+        ExecutionStrategyOperation<TDbContext, Task<TResult>> operation, 
+        CancellationToken cancellationToken,
         ExecutionStrategyOperation<TDbContext, Task<ExecutionResult<TResult>>>? verifySucceeded)
     {
         Data = data;

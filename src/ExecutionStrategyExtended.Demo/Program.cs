@@ -1,3 +1,5 @@
+using EntityFrameworkCore.ExecutionStrategy.Extensions;
+using EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
 using EntityFrameworkCore.ExecutionStrategyExtended;
 using EntityFrameworkCore.ExecutionStrategyExtended.Core;
 using EntityFrameworkCore.ExecutionStrategyExtended.DependencyInjection;
@@ -15,18 +17,6 @@ services.AddDbContextFactory<AppDbContext>(optionsBuilder =>
 {
     optionsBuilder.UseNpgsql(config.GetConnectionString("Postgres")!,
         contextOptionsBuilder => contextOptionsBuilder.EnableRetryOnFailure());
-
-    builder.UseExecutionStrategyExtensions(optionsBuilder =>
-    {
-        optionsBuilder
-            .CleanChangeTrackerOnRetry()
-            .WithDbContextOnRetryProvider(args =>
-            {
-                args.MainDbContext.ChangeTracker.Clear();
-                return args.MainDbContext;
-            })
-            .WithActualDbContextProvider(_actualDbConextProvider);
-    });
 });
 services.AddExecutionStrategyExtended<AppDbContext>(configuration =>
 {
@@ -38,6 +28,7 @@ services.AddScoped<UserService>();
 var app = builder.Build();
 
 var context = app.Services.GetRequiredService<AppDbContext>();
+
 var strategy = context.Database.CreateExecutionStrategy();
 
 context.ExecuteExtendedAsync<AppDbContext, bool, List<User>>(
