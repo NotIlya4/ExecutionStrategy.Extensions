@@ -5,10 +5,10 @@ namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 public class ExecutionStrategyOperationArgs<TDbContext> : IExecutionStrategyOperationArgs<TDbContext>
     where TDbContext : DbContext
 {
-    public IExecutionStrategyData Data { get; set; }
-    public TDbContext Context { get; set; }
-    public int Attempt { get; set; }
-    public CancellationToken CancellationToken { get; set; }
+    public IExecutionStrategyData Data { get; }
+    public TDbContext Context { get; }
+    public int Attempt { get; }
+    public CancellationToken CancellationToken { get; }
 
     public ExecutionStrategyOperationArgs(IExecutionStrategyData data, TDbContext context, int attempt,
         CancellationToken cancellationToken)
@@ -20,10 +20,10 @@ public class ExecutionStrategyOperationArgs<TDbContext> : IExecutionStrategyOper
     }
 }
 
-public interface IExecutionStrategyOperationArgs<TDbContext> where TDbContext : DbContext
+public interface IExecutionStrategyOperationArgs<out TDbContext> where TDbContext : DbContext
 {
-    public TDbContext Context { get; set; }
-    public int Attempt { get; set; }
-    public CancellationToken CancellationToken { get; set; }
-    public IExecutionStrategyData Data { get; set; }
+    public TDbContext Context { get; }
+    public int Attempt { get; }
+    public CancellationToken CancellationToken { get; }
+    public IExecutionStrategyData Data { get; }
 }

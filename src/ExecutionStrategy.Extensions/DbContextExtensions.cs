@@ -6,26 +6,20 @@ namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 public static class DbContextExtensions
 {
     public static Task<TResult> ExecuteExtendedAsync<TDbContext, TResult>(this TDbContext context,
-        Action<IExecutionStrategyOptionsBuilder<TDbContext, TResult>> action) where TDbContext : DbContext
-    {
-        var primaryOptions = context.GetService<ExecutionStrategyOptions<TDbContext, TResult>>();
-        var builder = new ExecutionStrategyOptionsBuilder<TDbContext, TResult>(primaryOptions);
-        
-        action(builder);
-
-        return context.ExecuteExtendedAsync(primaryOptions);
-    }
-
-    public static Task<TResult> ExecuteExtendedAsync<TDbContext, TResult>(this TDbContext context,
         ExecutionStrategyOperation<TDbContext, Task<TResult>> operation,
-        Action<IExecutionStrategyOptionsBuilder<TDbContext, TResult>> action) where TDbContext : DbContext
+        Action<IExecutionStrategyOptionsBuilder<TDbContext, TResult>>? action = null) where TDbContext : DbContext
     {
-        Action<IExecutionStrategyOptionsBuilder<TDbContext, TResult>> newAction = builder =>
-        {
-            builder.WithOperation(operation);
-            action(builder);
-        };
+        var middlewares = context.GetMiddlewares<TDbContext, Task<TResult>>();
+        var options = new ExecutionStrategyOptions<TDbContext, TResult>(
+            new ExecutionStrategyData(),
+            middlewares,
+            operation,
+            default,
+            null);
+        var builder = new ExecutionStrategyOptionsBuilder<TDbContext, TResult>(options);
+        
+        action?.Invoke(builder);
 
-        return context.ExecuteExtendedAsync(newAction);
+        return context.ExecuteExtendedAsync(options);
     }
 }
