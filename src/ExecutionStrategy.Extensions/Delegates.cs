@@ -2,6 +2,8 @@
 
 namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
+public delegate TResult ExecutionStrategyOperation<out TResult>();
+
 public delegate TResult ExecutionStrategyOperation<in TDbContext, out TResult>(
     IExecutionStrategyOperationArgs<TDbContext> args)
     where TDbContext : DbContext;

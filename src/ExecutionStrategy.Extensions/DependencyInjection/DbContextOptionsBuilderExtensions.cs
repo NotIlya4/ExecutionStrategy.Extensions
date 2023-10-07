@@ -17,4 +17,11 @@ public static class DbContextOptionsBuilderExtensions
 
         return builder;
     }
+    
+    public static DbContextOptionsBuilder UseExecutionStrategyExtensions(
+        this DbContextOptionsBuilder builder,
+        Action<IExecutionStrategyPrimaryOptionsBuilder<DbContext>>? action = null)
+    {
+        return builder.UseExecutionStrategyExtensions<DbContext>(action);
+    }
 }

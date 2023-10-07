@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
+namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
 internal class ExecutionStrategyMiddlewaresManager
 {

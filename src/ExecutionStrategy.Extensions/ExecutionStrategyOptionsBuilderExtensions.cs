@@ -5,7 +5,7 @@ namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
 public static class ExecutionStrategyOptionsBuilderExtensions
 {
-    public static TReturn WithTransaction<TDbContext, TResult, TReturn>(this TReturn returnTo, IsolationLevel isolationLevel)
+    public static TReturn WithTransaction<TDbContext, TResult, TReturn>(this IBuilderWithMiddleware<TDbContext, TResult, TReturn> returnTo, IsolationLevel isolationLevel)
         where TReturn : IBuilderWithMiddleware<TDbContext, TResult, TReturn> where TDbContext : DbContext
     {
         return returnTo.WithMiddleware(async (next, args) =>
@@ -16,7 +16,7 @@ public static class ExecutionStrategyOptionsBuilderExtensions
         });
     }
 
-    public static TReturn WithClearChangeTrackerOnRetry<TDbContext, TResult, TReturn>(this TReturn returnTo)
+    public static TReturn WithClearChangeTrackerOnRetry<TDbContext, TResult, TReturn>(this IBuilderWithMiddleware<TDbContext, TResult, TReturn> returnTo)
         where TReturn : IBuilderWithMiddleware<TDbContext, TResult, TReturn> where TDbContext : DbContext
     {
         return returnTo.WithMiddleware(async (next, args) =>

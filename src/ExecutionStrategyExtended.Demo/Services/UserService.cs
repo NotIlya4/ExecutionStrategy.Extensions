@@ -1,5 +1,4 @@
-﻿using EntityFrameworkCore.ExecutionStrategyExtended.Core;
-using ExecutionStrategyExtended.Demo.EntityFramework;
+﻿using ExecutionStrategyExtended.Demo.EntityFramework;
 using ExecutionStrategyExtended.Demo.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,26 +6,26 @@ namespace ExecutionStrategyExtended.Demo.Services;
 
 public class UserService
 {
-    private readonly IActualDbContextProvider<AppDbContext> _context;
+    private readonly AppDbContext _context;
     
-    public UserService(IActualDbContextProvider<AppDbContext> context)
+    public UserService(AppDbContext context)
     {
         _context = context;
     }
 
     public async Task AddUser(User user)
     {
-        _context.DbContext.Add(user);
-        await _context.DbContext.SaveChangesAsync();
+        _context.Add(user);
+        await _context.SaveChangesAsync();
     }
 
     public async Task DeleteUser(int userId)
     {
-        var user = await _context.DbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
         if (user is not null)
         {
-            _context.DbContext.Remove(user);
-            await _context.DbContext.SaveChangesAsync();
+            _context.Remove(user);
+            await _context.SaveChangesAsync();
         }
     }
 }

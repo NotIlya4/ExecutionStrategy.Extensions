@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
+namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
-internal static class ExecutionStrategyMiddlewareDelegateExtensions 
+internal static class ExecutionStrategyDelegateExtensions 
 {
     public static ExecutionStrategyOperation<TDbContext, TResult> CastOperation<TDbContext, TResult>(
         this ExecutionStrategyOperation<DbContext, object> generalOperation) where TDbContext : DbContext
