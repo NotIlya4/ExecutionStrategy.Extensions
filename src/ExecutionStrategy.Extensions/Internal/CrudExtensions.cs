@@ -1,8 +1,8 @@
-using EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
+using EntityFrameworkCore.ExecutionStrategy.Extensions.Container;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
+namespace EntityFrameworkCore.ExecutionStrategy.Extensions.Internal;
 
 internal static class CrudExtensions
 {

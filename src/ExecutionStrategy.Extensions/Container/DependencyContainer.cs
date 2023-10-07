@@ -1,4 +1,4 @@
-namespace EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
+namespace EntityFrameworkCore.ExecutionStrategy.Extensions.Container;
 
 internal class DependencyContainer
 {

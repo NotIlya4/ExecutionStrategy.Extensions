@@ -1,6 +1,7 @@
+using EntityFrameworkCore.ExecutionStrategy.Extensions.Internal;
 using Microsoft.EntityFrameworkCore;
 
-namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
+namespace EntityFrameworkCore.ExecutionStrategy.Extensions.Container;
 
 internal class MiddlewaresManager
 {

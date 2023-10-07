@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EntityFrameworkCore.ExecutionStrategy.Extensions.Internal;
+using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 

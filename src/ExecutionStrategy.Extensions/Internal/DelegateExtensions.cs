@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
+namespace EntityFrameworkCore.ExecutionStrategy.Extensions.Internal;
 
 internal static class DelegateExtensions 
 {

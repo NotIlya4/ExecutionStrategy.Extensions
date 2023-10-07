@@ -1,3 +1,5 @@
+using EntityFrameworkCore.ExecutionStrategy.Extensions.Container;
+using EntityFrameworkCore.ExecutionStrategy.Extensions.Internal;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
