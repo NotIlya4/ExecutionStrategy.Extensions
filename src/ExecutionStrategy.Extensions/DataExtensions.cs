@@ -1,6 +1,6 @@
 ﻿namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
-public static class DictionaryExtensions
+public static class DataExtensions
 {
     public static void Set<T>(this IExecutionStrategyData dictionary, T value)
     {

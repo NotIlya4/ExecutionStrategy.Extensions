@@ -9,11 +9,11 @@ public static class DbContextOptionsBuilderExtensions
         this DbContextOptionsBuilder builder,
         Action<IExecutionStrategyPrimaryOptionsBuilder<TDbContext>>? action = null) where TDbContext : DbContext
     {
-        var container = new ExecutionStrategyContainer(new ExecutionStrategyMiddlewaresManager(), new ExecutionStrategyData());
+        var container = new DependencyContainer(new MiddlewaresManager(), new ExecutionStrategyData());
         action?.Invoke(new ExecutionStrategyPrimaryOptionsBuilder<TDbContext>(container));
 
         ((IDbContextOptionsBuilderInfrastructure)builder).AddOrUpdateExtension(
-            new ExecutionStrategyExtensionsExtension(container));
+            new EfCoreExtension(container));
 
         return builder;
     }

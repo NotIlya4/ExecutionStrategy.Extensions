@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
-internal static class ExecutionStrategyDelegateExtensions 
+internal static class DelegateExtensions 
 {
     public static ExecutionStrategyOperation<DbContext, object> ToGeneric<TDbContext, TResult>(
         this ExecutionStrategyOperation<TDbContext, TResult> operation) where TDbContext : DbContext

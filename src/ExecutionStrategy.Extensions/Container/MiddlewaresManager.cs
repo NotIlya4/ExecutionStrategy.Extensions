@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
-internal class ExecutionStrategyMiddlewaresManager
+internal class MiddlewaresManager
 {
     public List<ExecutionStrategyMiddleware<DbContext, object>> Middlewares { get; } = new();
 

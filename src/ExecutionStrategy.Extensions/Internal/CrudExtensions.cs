@@ -4,18 +4,18 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
-internal static class DbContextCrudExtensions
+internal static class CrudExtensions
 {
     public static List<ExecutionStrategyMiddleware<TDbContext, TResult>>
         GetMiddlewares<TDbContext, TResult>(this DbContext context) where TDbContext : DbContext
     {
-        return context.GetService<ExecutionStrategyContainer>().MiddlewaresManager
+        return context.GetService<DependencyContainer>().MiddlewaresManager
             .CastMiddlewares<TDbContext, TResult>().ToList();
     }
 
     public static IExecutionStrategyData GetData(this DbContext context)
     {
-        return context.GetService<ExecutionStrategyContainer>().Data;
+        return context.GetService<DependencyContainer>().Data;
     }
 
     public static IExecutionStrategyOptions<TDbContext, TResult> CreateOptionsFromPrimary<TDbContext, TResult>(

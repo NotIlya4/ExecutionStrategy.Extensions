@@ -5,10 +5,10 @@ namespace EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
 internal class ExecutionStrategyPrimaryOptionsBuilder<TDbContext> : IExecutionStrategyPrimaryOptionsBuilder<TDbContext>
     where TDbContext : DbContext
 {
-    private readonly ExecutionStrategyContainer _container;
+    private readonly DependencyContainer _container;
     public IExecutionStrategyData Data => _container.Data;
 
-    public ExecutionStrategyPrimaryOptionsBuilder(ExecutionStrategyContainer container)
+    public ExecutionStrategyPrimaryOptionsBuilder(DependencyContainer container)
     {
         _container = container;
     }

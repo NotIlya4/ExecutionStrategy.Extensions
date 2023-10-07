@@ -2,7 +2,7 @@
 
 namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
-public static class DbContextCoreExtensions
+public static class CoreExtensions
 {
     public static Task<TResult> ExecuteExtendedAsync<TDbContext, TResult>(this TDbContext context,
         IExecutionStrategyOptions<TDbContext, TResult> options) where TDbContext : DbContext

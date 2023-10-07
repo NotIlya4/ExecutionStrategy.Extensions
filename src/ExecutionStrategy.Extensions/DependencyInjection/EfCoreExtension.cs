@@ -3,11 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
 
-internal class ExecutionStrategyExtensionsExtension: IDbContextOptionsExtension
+internal class EfCoreExtension: IDbContextOptionsExtension
 {
-    private readonly ExecutionStrategyContainer _container;
+    private readonly DependencyContainer _container;
 
-    public ExecutionStrategyExtensionsExtension(ExecutionStrategyContainer container)
+    public EfCoreExtension(DependencyContainer container)
     {
         _container = container;
     }

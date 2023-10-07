@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
-public static class ExecutionStrategyOptionsBuilderExtensions
+public static class OptionsBuilderExtensions
 {
     public static TReturn WithTransaction<TDbContext, TResult, TReturn>(this IBuilderWithMiddleware<TDbContext, TResult, TReturn> returnTo, IsolationLevel isolationLevel)
         where TReturn : IBuilderWithMiddleware<TDbContext, TResult, TReturn> where TDbContext : DbContext
