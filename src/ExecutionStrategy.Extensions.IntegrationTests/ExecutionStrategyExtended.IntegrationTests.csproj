@@ -25,4 +25,8 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ExecutionStrategy.Extensions\ExecutionStrategy.Extensions.csproj" />
+    </ItemGroup>
+
 </Project>

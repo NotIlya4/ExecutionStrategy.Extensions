@@ -1,4 +1,5 @@
 using ExecutionStrategyExtended.UnitTests.DbContextConfigurator;
+using ExecutionStrategyExtended.UnitTests.PostgresBootstrapping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -6,17 +7,17 @@ namespace ExecutionStrategyExtended.UnitTests;
 
 public class TestFixture
 {
-    public IServiceProvider Services { get; }
+    public IServiceScope Scope { get; set; }
+    public IServiceProvider Services => Scope.ServiceProvider;
+    public IDbBootstrapper Bootstrapper => Services.GetRequiredService<IDbBootstrapper>();
+    
     
     public TestFixture()
     {
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddDbContextFactory<AppDbContext>(builder =>
-        {
-            builder.UseSqlite("Data Source=:memory:");
-        });
-        serviceCollection.AddExecutionStrategyExtended<AppDbContext>();
+        serviceCollection.AddScoped<IDbBootstrapper>();
+        serviceCollection.AddAppDbContext(new SqliteDbContextOptions());
 
-        Services = serviceCollection.BuildServiceProvider();
+        Scope = serviceCollection.BuildServiceProvider().CreateScope();
     }
 }
