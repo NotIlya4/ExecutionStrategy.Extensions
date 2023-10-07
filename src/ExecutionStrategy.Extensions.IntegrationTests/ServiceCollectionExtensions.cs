@@ -1,13 +1,12 @@
 ﻿using EntityFrameworkCore.ExecutionStrategy.Extensions;
 using EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
-using ExecutionStrategyExtended.UnitTests.DbContextConfigurator;
-using ExecutionStrategyExtended.UnitTests.PostgresBootstrapping;
-using ExecutionStrategyExtended.UnitTests.PostgresBootstrapping.ExistingDb;
+using ExecutionStrategy.Extensions.IntegrationTests.DbContextConfigurator;
+using ExecutionStrategy.Extensions.IntegrationTests.PostgresBootstrapping;
+using ExecutionStrategy.Extensions.IntegrationTests.PostgresBootstrapping.ExistingDb;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ExecutionStrategyExtended.UnitTests;
+namespace ExecutionStrategy.Extensions.IntegrationTests;
 
 public static class ServiceCollectionExtensions
 {

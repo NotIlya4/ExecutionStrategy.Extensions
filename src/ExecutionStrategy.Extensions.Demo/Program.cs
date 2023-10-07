@@ -1,8 +1,10 @@
 using EntityFrameworkCore.ExecutionStrategy.Extensions;
+using ExecutionStrategy.Extensions.Demo;
+using ExecutionStrategy.Extensions.Demo.EntityFramework;
+using ExecutionStrategy.Extensions.Demo.Models;
+using ExecutionStrategy.Extensions.Demo.Services;
 using ExecutionStrategyExtended.Demo;
 using ExecutionStrategyExtended.Demo.EntityFramework;
-using ExecutionStrategyExtended.Demo.Models;
-using ExecutionStrategyExtended.Demo.Services;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);

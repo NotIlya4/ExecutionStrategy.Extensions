@@ -1,9 +1,9 @@
 ﻿using EntityFrameworkCore.ExecutionStrategy.Extensions;
 using EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
-using ExecutionStrategyExtended.Demo.EntityFramework;
+using ExecutionStrategy.Extensions.Demo.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExecutionStrategyExtended.Demo;
+namespace ExecutionStrategy.Extensions.Demo;
 
 public static class ServiceCollectionExtensions
 {

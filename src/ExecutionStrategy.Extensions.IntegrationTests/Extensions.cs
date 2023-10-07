@@ -1,6 +1,6 @@
-﻿using ExecutionStrategyExtended.UnitTests.DbContextConfigurator;
+﻿using ExecutionStrategy.Extensions.IntegrationTests.DbContextConfigurator;
 
-namespace ExecutionStrategyExtended.UnitTests;
+namespace ExecutionStrategy.Extensions.IntegrationTests;
 
 public static class Extensions
 {

@@ -1,4 +1,4 @@
-﻿namespace ExecutionStrategyExtended.Demo.Models;
+﻿namespace ExecutionStrategy.Extensions.Demo.Models;
 
 public record User
 {

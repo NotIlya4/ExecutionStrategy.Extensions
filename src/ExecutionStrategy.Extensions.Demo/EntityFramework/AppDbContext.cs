@@ -1,7 +1,7 @@
-﻿using ExecutionStrategyExtended.Demo.Models;
+﻿using ExecutionStrategy.Extensions.Demo.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExecutionStrategyExtended.Demo.EntityFramework;
+namespace ExecutionStrategy.Extensions.Demo.EntityFramework;
 
 public class AppDbContext : DbContext
 {

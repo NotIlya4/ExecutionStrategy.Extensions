@@ -1,4 +1,4 @@
-namespace ExecutionStrategyExtended.UnitTests;
+namespace ExecutionStrategy.Extensions.IntegrationTests.Tests;
 
 public class UnitTest1
 {

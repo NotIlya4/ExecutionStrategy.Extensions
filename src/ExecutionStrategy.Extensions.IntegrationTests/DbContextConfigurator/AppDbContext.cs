@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace ExecutionStrategyExtended.UnitTests.DbContextConfigurator;
+namespace ExecutionStrategy.Extensions.IntegrationTests.DbContextConfigurator;
 
 public class AppDbContext : DbContext
 {

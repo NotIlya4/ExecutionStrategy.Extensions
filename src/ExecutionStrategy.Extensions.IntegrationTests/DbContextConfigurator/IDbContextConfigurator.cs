@@ -1,4 +1,4 @@
-﻿namespace ExecutionStrategyExtended.UnitTests.DbContextConfigurator;
+﻿namespace ExecutionStrategy.Extensions.IntegrationTests.DbContextConfigurator;
 
 public interface IDbContextConfigurator
 {

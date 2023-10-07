@@ -1,6 +1,6 @@
-﻿using ExecutionStrategyExtended.UnitTests.DbContextConfigurator;
+﻿using ExecutionStrategy.Extensions.IntegrationTests.DbContextConfigurator;
 
-namespace ExecutionStrategyExtended.UnitTests.PostgresBootstrapping.ExistingDb;
+namespace ExecutionStrategy.Extensions.IntegrationTests.PostgresBootstrapping.ExistingDb;
 
 public class ExistingDbBootstrapper : IDbBootstrapper
 {

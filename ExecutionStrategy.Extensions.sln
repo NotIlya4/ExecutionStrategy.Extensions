@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExecutionStrategy.Extensions", "src\ExecutionStrategy.Extensions\ExecutionStrategy.Extensions.csproj", "{21419248-5EEE-4A42-AD58-008A8C25C9E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExecutionStrategyExtended.Demo", "src\ExecutionStrategy.Extensions.Demo\ExecutionStrategyExtended.Demo.csproj", "{ADB49D76-FF3E-4821-A1CA-A55EF8DE04B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExecutionStrategy.Extensions.Demo", "src\ExecutionStrategy.Extensions.Demo\ExecutionStrategy.Extensions.Demo.csproj", "{ADB49D76-FF3E-4821-A1CA-A55EF8DE04B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExecutionStrategyExtended.IntegrationTests", "src\ExecutionStrategy.Extensions.IntegrationTests\ExecutionStrategyExtended.IntegrationTests.csproj", "{C13C6BB2-8C6A-4C09-9EA4-C3F5917B3FBF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExecutionStrategy.Extensions.IntegrationTests", "src\ExecutionStrategy.Extensions.IntegrationTests\ExecutionStrategy.Extensions.IntegrationTests.csproj", "{C13C6BB2-8C6A-4C09-9EA4-C3F5917B3FBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

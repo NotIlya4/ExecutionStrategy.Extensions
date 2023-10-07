@@ -1,4 +1,4 @@
-﻿namespace ExecutionStrategyExtended.UnitTests.PostgresBootstrapping.FluentDocker;
+﻿namespace ExecutionStrategy.Extensions.IntegrationTests.PostgresBootstrapping.FluentDocker;
 
 public record FluentDockerOptions
 {

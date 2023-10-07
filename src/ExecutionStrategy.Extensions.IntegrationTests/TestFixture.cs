@@ -1,9 +1,7 @@
-using ExecutionStrategyExtended.UnitTests.DbContextConfigurator;
-using ExecutionStrategyExtended.UnitTests.PostgresBootstrapping;
-using Microsoft.EntityFrameworkCore;
+using ExecutionStrategy.Extensions.IntegrationTests.PostgresBootstrapping;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ExecutionStrategyExtended.UnitTests;
+namespace ExecutionStrategy.Extensions.IntegrationTests;
 
 public class TestFixture
 {

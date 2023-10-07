@@ -1,8 +1,8 @@
-﻿using ExecutionStrategyExtended.Demo.EntityFramework;
-using ExecutionStrategyExtended.Demo.Models;
+﻿using ExecutionStrategy.Extensions.Demo.EntityFramework;
+using ExecutionStrategy.Extensions.Demo.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExecutionStrategyExtended.Demo.Services;
+namespace ExecutionStrategy.Extensions.Demo.Services;
 
 public class UserService
 {

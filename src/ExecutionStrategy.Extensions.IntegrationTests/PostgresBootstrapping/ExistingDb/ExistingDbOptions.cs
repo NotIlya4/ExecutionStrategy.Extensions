@@ -1,4 +1,4 @@
-﻿namespace ExecutionStrategyExtended.UnitTests.PostgresBootstrapping.ExistingDb;
+﻿namespace ExecutionStrategy.Extensions.IntegrationTests.PostgresBootstrapping.ExistingDb;
 
 public record ExistingDbOptions
 {

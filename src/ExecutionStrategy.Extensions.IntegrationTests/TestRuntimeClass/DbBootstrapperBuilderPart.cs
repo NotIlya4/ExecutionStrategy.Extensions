@@ -1,10 +1,10 @@
-﻿using ExecutionStrategyExtended.UnitTests.DbContextConfigurator;
-using ExecutionStrategyExtended.UnitTests.PostgresBootstrapping;
-using ExecutionStrategyExtended.UnitTests.PostgresBootstrapping.ExistingDb;
-using ExecutionStrategyExtended.UnitTests.PostgresBootstrapping.FluentDocker;
+﻿using ExecutionStrategy.Extensions.IntegrationTests.DbContextConfigurator;
+using ExecutionStrategy.Extensions.IntegrationTests.PostgresBootstrapping;
+using ExecutionStrategy.Extensions.IntegrationTests.PostgresBootstrapping.ExistingDb;
+using ExecutionStrategy.Extensions.IntegrationTests.PostgresBootstrapping.FluentDocker;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ExecutionStrategyExtended.UnitTests.TestRuntimeClass;
+namespace ExecutionStrategy.Extensions.IntegrationTests.TestRuntimeClass;
 
 public class DbBootstrapperBuilderPart
 {
