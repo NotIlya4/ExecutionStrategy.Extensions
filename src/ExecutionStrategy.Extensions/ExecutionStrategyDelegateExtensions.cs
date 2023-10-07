@@ -4,38 +4,39 @@ namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
 internal static class ExecutionStrategyDelegateExtensions 
 {
-    public static ExecutionStrategyOperation<TDbContext, TResult> CastOperation<TDbContext, TResult>(
-        this ExecutionStrategyOperation<DbContext, object> generalOperation) where TDbContext : DbContext
-    {
-        return (args) => (TResult)generalOperation(args);
-    }
-
-    public static ExecutionStrategyOperation<DbContext, object> CastOperation<TDbContext, TResult>(
+    public static ExecutionStrategyOperation<DbContext, object> ToGeneric<TDbContext, TResult>(
         this ExecutionStrategyOperation<TDbContext, TResult> operation) where TDbContext : DbContext
     {
-        return args => operation(new ExecutionStrategyOperationArgs<TDbContext>(
-            args.Data,
-            (TDbContext)args.Context,
-            args.Attempt,
-            args.CancellationToken))!;
-    }
-    
-    public static ExecutionStrategyMiddleware<TDbContext, TResult> CastMiddleware<TDbContext, TResult>(
-        this ExecutionStrategyMiddleware<DbContext, object> generalMiddleware)
-        where TDbContext : DbContext
-    {
-        return (next, args) => (TResult)CastOperation(next)(
-            new ExecutionStrategyOperationArgs<TDbContext>(
-                args.Data,
-                args.Context,
-                args.Attempt,
-                args.CancellationToken));
+        return async args => (await operation(args.FromGeneric<TDbContext>()))!;
     }
 
-    public static ExecutionStrategyMiddleware<DbContext, object> CastMiddleware<TDbContext, TResult>(
-        this ExecutionStrategyMiddleware<TDbContext, TResult> middleware)
-        where TDbContext : DbContext
+    public static ExecutionStrategyOperation<TDbContext, TResult> FromGeneric<TDbContext, TResult>(
+        this ExecutionStrategyOperation<DbContext, object> operation) where TDbContext : DbContext
     {
-        return (next, args) => CastOperation(next)(args);
+        return async args => (TResult)await operation(args);
+    }
+
+    public static ExecutionStrategyMiddleware<DbContext, object> ToGeneric<TDbContext, TResult>(
+        this ExecutionStrategyMiddleware<TDbContext, TResult> middleware) where TDbContext : DbContext
+    {
+        return async (next, args) => (await middleware(next.FromGeneric<TDbContext, TResult>(), args.FromGeneric<TDbContext>()))!;
+    }
+    
+    public static ExecutionStrategyMiddleware<TDbContext, TResult> FromGeneric<TDbContext, TResult>(
+        this ExecutionStrategyMiddleware<DbContext, object> middleware) where TDbContext : DbContext
+    {
+        return async (next, args) => (TResult)(await middleware(next.ToGeneric(), args));
+    }
+
+    public static IExecutionStrategyOperationArgs<DbContext> ToGeneric<TDbContext>(
+        this IExecutionStrategyOperationArgs<TDbContext> args) where TDbContext : DbContext
+    {
+        return args;
+    }
+    
+    public static IExecutionStrategyOperationArgs<TDbContext> FromGeneric<TDbContext>(
+        this IExecutionStrategyOperationArgs<DbContext> args) where TDbContext : DbContext
+    {
+        return new ExecutionStrategyOperationArgs<TDbContext>(args.Data, (TDbContext)args.Context, args.Attempt, args.CancellationToken);
     }
 }

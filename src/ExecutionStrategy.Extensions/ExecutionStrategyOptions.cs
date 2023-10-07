@@ -7,17 +7,17 @@ public record ExecutionStrategyOptions<TDbContext, TResult> : IExecutionStrategy
     where TDbContext : DbContext
 {
     public IExecutionStrategyData Data { get; set; }
-    public List<ExecutionStrategyMiddleware<TDbContext, Task<TResult>>> Middlewares { get; set; }
-    public ExecutionStrategyOperation<TDbContext, Task<TResult>> Operation { get; set; }
+    public List<ExecutionStrategyMiddleware<TDbContext, TResult>> Middlewares { get; set; }
+    public ExecutionStrategyOperation<TDbContext, TResult> Operation { get; set; }
     public CancellationToken CancellationToken { get; set; }
-    public ExecutionStrategyOperation<TDbContext, Task<ExecutionResult<TResult>>>? VerifySucceeded { get; set; }
+    public ExecutionStrategyOperation<TDbContext, ExecutionResult<TResult>>? VerifySucceeded { get; set; }
 
     public ExecutionStrategyOptions(
         IExecutionStrategyData data,
-        List<ExecutionStrategyMiddleware<TDbContext, Task<TResult>>> middlewares,
-        ExecutionStrategyOperation<TDbContext, Task<TResult>> operation, 
+        List<ExecutionStrategyMiddleware<TDbContext, TResult>> middlewares,
+        ExecutionStrategyOperation<TDbContext, TResult> operation,
         CancellationToken cancellationToken,
-        ExecutionStrategyOperation<TDbContext, Task<ExecutionResult<TResult>>>? verifySucceeded)
+        ExecutionStrategyOperation<TDbContext, ExecutionResult<TResult>>? verifySucceeded)
     {
         Data = data;
         Middlewares = middlewares;
@@ -30,8 +30,8 @@ public record ExecutionStrategyOptions<TDbContext, TResult> : IExecutionStrategy
 public interface IExecutionStrategyOptions<TDbContext, TResult> where TDbContext : DbContext
 {
     public IExecutionStrategyData Data { get; set; }
-    public List<ExecutionStrategyMiddleware<TDbContext, Task<TResult>>> Middlewares { get; set; }
-    public ExecutionStrategyOperation<TDbContext, Task<TResult>> Operation { get; set; }
+    public List<ExecutionStrategyMiddleware<TDbContext, TResult>> Middlewares { get; set; }
+    public ExecutionStrategyOperation<TDbContext, TResult> Operation { get; set; }
     public CancellationToken CancellationToken { get; set; }
-    public ExecutionStrategyOperation<TDbContext, Task<ExecutionResult<TResult>>>? VerifySucceeded { get; set; }
+    public ExecutionStrategyOperation<TDbContext, ExecutionResult<TResult>>? VerifySucceeded { get; set; }
 }

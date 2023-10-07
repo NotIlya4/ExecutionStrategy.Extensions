@@ -2,13 +2,13 @@
 
 namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
-public class ExecutionStrategyOperationArgs<TDbContext> : IExecutionStrategyOperationArgs<TDbContext>
+public record ExecutionStrategyOperationArgs<TDbContext> : IExecutionStrategyOperationArgs<TDbContext>
     where TDbContext : DbContext
 {
-    public IExecutionStrategyData Data { get; }
-    public TDbContext Context { get; }
-    public int Attempt { get; }
-    public CancellationToken CancellationToken { get; }
+    public IExecutionStrategyData Data { get; set; }
+    public TDbContext Context { get; set; }
+    public int Attempt { get; set; }
+    public CancellationToken CancellationToken { get; set; }
 
     public ExecutionStrategyOperationArgs(IExecutionStrategyData data, TDbContext context, int attempt,
         CancellationToken cancellationToken)

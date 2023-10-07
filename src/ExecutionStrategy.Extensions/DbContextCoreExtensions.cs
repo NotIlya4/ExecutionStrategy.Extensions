@@ -56,3 +56,5 @@ public static class DbContextCoreExtensions
         return (args) => middleware(operation, args);
     }
 }
+
+public struct ExecutionStrategyVoid { }

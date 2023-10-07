@@ -4,19 +4,14 @@ namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
 internal class ExecutionStrategyMiddlewaresManager
 {
-    public List<ExecutionStrategyMiddleware<DbContext, object>> LowLevelMiddlewares { get; } = new();
+    public List<ExecutionStrategyMiddleware<DbContext, object>> Middlewares { get; } = new();
 
     public IEnumerable<ExecutionStrategyMiddleware<TDbContext, TResult>> CastMiddlewares<TDbContext, TResult>()
         where TDbContext : DbContext
     {
-        foreach (var lowLevelMiddleware in LowLevelMiddlewares)
+        foreach (var middleware in Middlewares)
         {
-            yield return lowLevelMiddleware.CastMiddleware<TDbContext, TResult>();
+            yield return middleware.FromGeneric<TDbContext, TResult>();
         }
-    }
-
-    public void AddLowLevel(ExecutionStrategyMiddleware<DbContext, object> lowLevelMiddleware)
-    {
-        LowLevelMiddlewares.Add(lowLevelMiddleware);
     }
 }

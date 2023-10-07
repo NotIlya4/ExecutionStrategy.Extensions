@@ -19,13 +19,13 @@ app.MapGet("/", () => "Hello World!");
 app.MapPost("/users",
     async (User user, [FromServices] UserService service, [FromServices] AppDbContext context) =>
     {
-        await context.ExecuteExtendedAsync(async () => { await service.AddUser(user); return true; });
+        await context.ExecuteExtendedAsync(async () => { await service.AddUser(user); });
     });
 
 app.MapDelete("/users",
     async (int userId, [FromServices] UserService service, [FromServices] AppDbContext context) =>
     {
-        await context.ExecuteExtendedAsync(async () => { await service.DeleteUser(userId); return true; });
+        await context.ExecuteExtendedAsync(async () => { await service.DeleteUser(userId); });
     });
 
 app.Run();

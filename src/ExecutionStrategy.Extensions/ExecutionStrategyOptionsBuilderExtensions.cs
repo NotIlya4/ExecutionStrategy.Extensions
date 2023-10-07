@@ -12,7 +12,9 @@ public static class ExecutionStrategyOptionsBuilderExtensions
         {
             await using var transaction = await args.Context.Database.BeginTransactionAsync(isolationLevel);
             args.Data.Set(transaction);
-            return await next(args);
+            var result = await next(args);
+            await transaction.CommitAsync();
+            return result;
         });
     }
 

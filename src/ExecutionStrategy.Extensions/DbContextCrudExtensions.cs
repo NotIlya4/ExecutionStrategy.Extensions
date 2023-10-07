@@ -19,11 +19,11 @@ internal static class DbContextCrudExtensions
     }
 
     public static IExecutionStrategyOptions<TDbContext, TResult> CreateOptionsFromPrimary<TDbContext, TResult>(
-        this DbContext context, ExecutionStrategyOperation<TDbContext, Task<TResult>> operation) where TDbContext : DbContext
+        this DbContext context, ExecutionStrategyOperation<TDbContext, TResult> operation) where TDbContext : DbContext
     {
         return new ExecutionStrategyOptions<TDbContext, TResult>(
             context.GetData(),
-            context.GetMiddlewares<TDbContext, Task<TResult>>(),
+            context.GetMiddlewares<TDbContext, TResult>(),
             operation,
             default,
             null);

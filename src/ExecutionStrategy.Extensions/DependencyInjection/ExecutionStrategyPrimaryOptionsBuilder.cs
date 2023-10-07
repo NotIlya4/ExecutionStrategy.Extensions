@@ -14,9 +14,9 @@ internal class ExecutionStrategyPrimaryOptionsBuilder<TDbContext> : IExecutionSt
     }
 
     public IExecutionStrategyPrimaryOptionsBuilder<TDbContext> WithMiddleware(
-        ExecutionStrategyMiddleware<TDbContext, Task<object>> middleware)
+        ExecutionStrategyMiddleware<TDbContext, object> middleware)
     {
-        _container.MiddlewaresManager.LowLevelMiddlewares.Add(middleware.CastMiddleware());
+        _container.MiddlewaresManager.Middlewares.Add(middleware.ToGeneric());
         return this;
     }
 }

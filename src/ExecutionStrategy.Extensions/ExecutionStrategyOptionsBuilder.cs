@@ -16,14 +16,14 @@ internal class ExecutionStrategyOptionsBuilder<TDbContext, TResult> : IExecution
     }
 
     public IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithOperation(
-        ExecutionStrategyOperation<TDbContext, Task<TResult>> action)
+        ExecutionStrategyOperation<TDbContext, TResult> action)
     {
         Options.Operation = action;
         return this;
     }
 
     public IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithVerifySucceeded(
-        ExecutionStrategyOperation<TDbContext, Task<ExecutionResult<TResult>>> action)
+        ExecutionStrategyOperation<TDbContext, ExecutionResult<TResult>> action)
     {
         Options.VerifySucceeded = action;
         return this;
@@ -56,7 +56,7 @@ internal class ExecutionStrategyOptionsBuilder<TDbContext, TResult> : IExecution
     }
 
     public IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithMiddleware(
-        ExecutionStrategyMiddleware<TDbContext, Task<TResult>> middleware)
+        ExecutionStrategyMiddleware<TDbContext, TResult> middleware)
     {
         Options.Middlewares.Add(middleware);
         return this;
@@ -77,16 +77,16 @@ public interface IExecutionStrategyOptionsBuilder<TDbContext, TResult>
     public IExecutionStrategyOptions<TDbContext, TResult> Options { get; set; }
     
     IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithOperation(
-        ExecutionStrategyOperation<TDbContext, Task<TResult>> action);
+        ExecutionStrategyOperation<TDbContext, TResult> action);
     IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithVerifySucceeded(
-        ExecutionStrategyOperation<TDbContext, Task<ExecutionResult<TResult>>> action);
+        ExecutionStrategyOperation<TDbContext, ExecutionResult<TResult>> action);
     IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithCancellationToken(CancellationToken token);
     IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithData(Action<IExecutionStrategyData> action);
 }
 
 public interface IBuilderWithMiddleware<TDbContext, TResult, out TReturn> where TDbContext : DbContext
 {
-    TReturn WithMiddleware(ExecutionStrategyMiddleware<TDbContext, Task<TResult>> middleware);
+    TReturn WithMiddleware(ExecutionStrategyMiddleware<TDbContext, TResult> middleware);
 }
 
 public interface IBuilderWithData
