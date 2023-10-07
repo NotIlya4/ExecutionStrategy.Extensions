@@ -7,7 +7,11 @@ public static class DbInfrastructureThemes
         return new DbInfrastructureBuilder()
             .UsePostgresLocalContainer(new PostgresLocalContainerOptions()
             {
-                OnBootstrap = (container, context) => container.Recreate(),
+                OnBootstrap = (container, context) =>
+                {
+                    container.EnsureStarted();
+                    context.EnsureDeletedCreated();
+                },
                 OnDestroy = (container, context) => container.Destroy(),
                 OnClean = (container, context) => context.EnsureDeletedCreated(),
                 Port = 8888
@@ -19,7 +23,11 @@ public static class DbInfrastructureThemes
         return new DbInfrastructureBuilder()
             .UsePostgresExistingDb(new PostgresExistingDbOptions()
             {
-                OnBootstrap = context => context.ClearTables(),
+                OnBootstrap = context =>
+                {
+                    context.Database.EnsureCreatedAsync();
+                    context.ClearTables();
+                },
                 OnDestroy = context => context.ClearTables(),
                 OnClean = context => context.ClearTables(),
                 Port = 5432

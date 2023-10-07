@@ -14,7 +14,7 @@ public class TestFixture : ICollectionFixture<TestFixture>, IDisposable
     {
         var services = new ServiceCollection();
         
-        var db = DbInfrastructureThemes.CreateForSqlite();
+        var db = DbInfrastructureThemes.CreateForLocalContainer();
         services.ApplyDbInfrastructure(db);
         
         Scope = services.BuildServiceProvider().CreateScope();

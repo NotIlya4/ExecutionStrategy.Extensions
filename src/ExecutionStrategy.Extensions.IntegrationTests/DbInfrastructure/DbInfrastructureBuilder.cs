@@ -23,8 +23,10 @@ public class DbInfrastructureBuilder : IDbInfrastructureBuilder
     
     public IDbInfrastructureBuilder UsePostgresExistingDb(PostgresExistingDbOptions options)
     {
-        BootstrapperFactory = context => new DelegateBootstrapper(() => options.OnBootstrap(context),
-            () => options.OnClean(context), () => options.OnDestroy(context));
+        BootstrapperFactory = context => new DelegateBootstrapper(
+            () => options.OnBootstrap(context),
+            () => options.OnClean(context), 
+            () => options.OnDestroy(context));
 
         DbContextOptionsConfigurator = builder =>
         {
@@ -51,8 +53,10 @@ public class DbInfrastructureBuilder : IDbInfrastructureBuilder
             Password = containerOptions.Password,
             Port = containerOptions.Port
         });
-        BootstrapperFactory = context => new DelegateBootstrapper(() => containerOptions.OnBootstrap(container, context),
-            () => containerOptions.OnClean(container, context), () => containerOptions.OnDestroy(container, context));
+        BootstrapperFactory = context => new DelegateBootstrapper(
+            () => containerOptions.OnBootstrap(container, context),
+            () => containerOptions.OnClean(container, context), 
+            () => containerOptions.OnDestroy(container, context));
 
         DbContextOptionsConfigurator = builder =>
         {
@@ -72,8 +76,10 @@ public class DbInfrastructureBuilder : IDbInfrastructureBuilder
 
     public IDbInfrastructureBuilder UseSqlite()
     {
-        BootstrapperFactory = context => new DelegateBootstrapper(context.EnsureDeletedCreated,
-            context.EnsureDeletedCreated, context.EnsureDeletedCreated);
+        BootstrapperFactory = context => new DelegateBootstrapper(
+            context.EnsureDeletedCreated,
+            context.EnsureDeletedCreated, 
+            context.EnsureDeletedCreated);
 
         DbContextOptionsConfigurator = builder =>
         {

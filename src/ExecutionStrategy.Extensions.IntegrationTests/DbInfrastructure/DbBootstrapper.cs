@@ -1,19 +1,19 @@
 ﻿namespace ExecutionStrategy.Extensions.IntegrationTests.DbInfrastructure;
 
-public interface IDbBootstrapper : IDisposable, IAsyncDisposable
+public interface IDbBootstrapper : IDisposable
 {
-    Task Bootstrap();
-    Task Destroy();
-    Task Clean();
+    void Bootstrap();
+    void Destroy();
+    void Clear();
 }
 
 public class DelegateBootstrapper : IDbBootstrapper
 {
-    private readonly Func<Task> _bootstrap;
-    private readonly Func<Task> _clean;
-    private readonly Func<Task> _destroy;
+    private readonly Action _bootstrap;
+    private readonly Action _clean;
+    private readonly Action _destroy;
 
-    public DelegateBootstrapper(Func<Task> bootstrap, Func<Task> clean, Func<Task> destroy)
+    public DelegateBootstrapper(Action bootstrap, Action clean, Action destroy)
     {
         _bootstrap = bootstrap;
         _clean = clean;
@@ -22,26 +22,21 @@ public class DelegateBootstrapper : IDbBootstrapper
     
     public void Dispose()
     {
-        Destroy().GetAwaiter().GetResult();
+        Destroy();
     }
 
-    public async ValueTask DisposeAsync()
+    public void Bootstrap()
     {
-        await Destroy();
+        _bootstrap();
     }
 
-    public async Task Bootstrap()
+    public void Destroy()
     {
-        await _bootstrap();
+        _destroy();
     }
 
-    public async Task Destroy()
+    public void Clear()
     {
-        await _destroy();
-    }
-
-    public async Task Clean()
-    {
-        await _clean();
+        _clean();
     }
 }

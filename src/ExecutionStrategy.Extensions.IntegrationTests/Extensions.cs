@@ -7,10 +7,10 @@ namespace ExecutionStrategy.Extensions.IntegrationTests;
 
 public static class Extensions
 {
-    public static async Task ClearTables(this AppDbContext context)
+    public static void ClearTables(this AppDbContext context)
     {
-        context.RemoveRange(await context.Users.ToListAsync());
-        await context.SaveChangesAsync();
+        context.RemoveRange(context.Users.ToList());
+        context.SaveChanges();
     }
 
     public static void Clear(this AppDbContext context)
@@ -18,10 +18,10 @@ public static class Extensions
         context.ChangeTracker.Clear();
     }
 
-    public static async Task EnsureDeletedCreated(this AppDbContext context)
+    public static void EnsureDeletedCreated(this AppDbContext context)
     {
-        await context.Database.EnsureDeletedAsync();
-        await context.Database.EnsureCreatedAsync();
+        context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
     }
 
     public static AppDbContext AppDbContext(this IServiceProvider provider)

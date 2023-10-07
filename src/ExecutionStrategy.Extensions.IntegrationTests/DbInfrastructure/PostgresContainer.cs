@@ -13,7 +13,7 @@ public class PostgresContainer
         _options = options;
     }
     
-    public async Task EnsureStarted()
+    public void EnsureStarted()
     {
         _container = new Builder()
             .UseContainer()
@@ -26,13 +26,13 @@ public class PostgresContainer
             .Build().Start();
     }
 
-    public async Task Recreate()
+    public void Recreate()
     {
-        await Destroy();
-        await EnsureStarted();
+        Destroy();
+        EnsureStarted();
     }
 
-    public async Task Destroy()
+    public void Destroy()
     {
         if (_container is null)
         {
