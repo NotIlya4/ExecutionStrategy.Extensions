@@ -13,10 +13,10 @@
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <AssemblyName>EntityFrameworkCore.ExecutionStrategy.Extensions</AssemblyName>
         <RootNamespace>EntityFrameworkCore.ExecutionStrategy.Extensions</RootNamespace>
-        <PackageProjectUrl>https://github.com/NotIlya4/ExecutionStrategyExtended</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/NotIlya4/ExecutionStrategyExtended</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/NotIlya4/ExecutionStrategy.Extensions</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/NotIlya4/ExecutionStrategy.Extensions</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageTags>ef-core iexecutionstrategy</PackageTags>
+        <PackageTags>ef-core iexecutionstrategy extensions</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
