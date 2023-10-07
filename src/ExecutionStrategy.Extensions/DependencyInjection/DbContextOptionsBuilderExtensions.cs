@@ -14,7 +14,7 @@ public static class DbContextOptionsBuilderExtensions
         action?.Invoke(new ExecutionStrategyPrimaryOptionsBuilder<TDbContext>(container));
 
         ((IDbContextOptionsBuilderInfrastructure)builder).AddOrUpdateExtension(
-            new EfCoreExtension(container));
+            new ExecutionStrategyEfExtension(container));
 
         return builder;
     }

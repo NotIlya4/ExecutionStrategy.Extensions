@@ -1,21 +1,30 @@
-using ExecutionStrategy.Extensions.IntegrationTests.PostgresBootstrapping;
+using ExecutionStrategy.Extensions.IntegrationTests.DbInfrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ExecutionStrategy.Extensions.IntegrationTests;
 
-public class TestFixture
+[CollectionDefinition("default")]
+public class TestFixture : ICollectionFixture<TestFixture>, IDisposable
 {
     public IServiceScope Scope { get; set; }
     public IServiceProvider Services => Scope.ServiceProvider;
     public IDbBootstrapper Bootstrapper => Services.GetRequiredService<IDbBootstrapper>();
-    
-    
+
     public TestFixture()
     {
-        var serviceCollection = new ServiceCollection();
-        serviceCollection.AddScoped<IDbBootstrapper>();
-        serviceCollection.AddAppDbContext(new SqliteDbContextOptions());
+        var services = new ServiceCollection();
+        
+        var db = DbInfrastructureThemes.CreateForSqlite();
+        services.ApplyDbInfrastructure(db);
+        
+        Scope = services.BuildServiceProvider().CreateScope();
 
-        Scope = serviceCollection.BuildServiceProvider().CreateScope();
+        Bootstrapper.Bootstrap();
+    }
+
+    public void Dispose()
+    {
+        Bootstrapper.Destroy();
+        Scope.Dispose();
     }
 }

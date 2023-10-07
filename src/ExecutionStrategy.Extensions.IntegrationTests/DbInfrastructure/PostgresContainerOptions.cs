@@ -1,4 +1,4 @@
-﻿namespace ExecutionStrategy.Extensions.IntegrationTests.PostgresBootstrapping.FluentDocker;
+﻿namespace ExecutionStrategy.Extensions.IntegrationTests.DbInfrastructure;
 
 public record PostgresContainerOptions
 {
