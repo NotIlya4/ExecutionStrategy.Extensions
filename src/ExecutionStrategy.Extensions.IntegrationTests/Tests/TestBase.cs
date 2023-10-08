@@ -1,10 +1,7 @@
-﻿using ExecutionStrategy.Extensions.IntegrationTests.DbInfrastructure;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace ExecutionStrategy.Extensions.IntegrationTests.Tests;
+﻿namespace ExecutionStrategy.Extensions.IntegrationTests.Tests;
 
 [UsesVerify]
-public class TestBase
+public class TestBase : IClassFixture<TestFixture>
 {
     private readonly TestFixture _fixture;
 

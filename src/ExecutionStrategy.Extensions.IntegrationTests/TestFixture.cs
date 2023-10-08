@@ -4,26 +4,25 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ExecutionStrategy.Extensions.IntegrationTests;
 
-[CollectionDefinition("default")]
-public class TestFixture : ICollectionFixture<TestFixture>, IDisposable
+public class TestFixture : IDisposable, IServiceProvider
 {
     public IServiceProvider RootServiceProvider { get; set; }
     public IServiceScope Scope { get; set; }
     public IServiceProvider Services => Scope.ServiceProvider;
 
-    public TestFixture()
+    public TestFixture(IDbInfrastructure db)
     {
         var services = new ServiceCollection();
         
-        ConfigureServices(services);
+        ConfigureServices(services, db);
 
         RootServiceProvider = services.BuildServiceProvider();
         Scope = RootServiceProvider.CreateScope();
     }
 
-    private void ConfigureServices(IServiceCollection services)
+    private void ConfigureServices(IServiceCollection services, IDbInfrastructure db)
     {
-        services.ApplyDbInfrastructure(new DbInfrastructureBuilder<AppDbContext>().UsePostgresLocalContainer());
+        services.ApplyDbInfrastructure(db);
     }
 
     public void RunBetweenTests()
@@ -35,6 +34,16 @@ public class TestFixture : ICollectionFixture<TestFixture>, IDisposable
     public void Dispose()
     {
         Scope.Dispose();
-        RootServiceProvider.GetRequiredService<IDbInfrastructure>().Destroy();
     }
+
+    public object? GetService(Type serviceType)
+    {
+        return Services.GetService(serviceType);
+    }
+}
+
+public interface ITestLifetime
+{
+    public Task OnTestStart();
+    public Task OnTestFinish();
 }

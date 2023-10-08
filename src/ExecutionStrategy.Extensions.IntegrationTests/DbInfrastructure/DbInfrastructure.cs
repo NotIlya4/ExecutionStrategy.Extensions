@@ -1,7 +1,4 @@
-﻿using EntityFrameworkCore.ExecutionStrategy.Extensions;
-using EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
-using ExecutionStrategy.Extensions.IntegrationTests.EntityFramework;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 
@@ -162,6 +159,8 @@ public interface IDbInfrastructureBuilder<TDbContext> where TDbContext : DbConte
 
 public class DbInfrastructureBuilder<TDbContext> : IDbInfrastructureBuilder<TDbContext> where TDbContext : DbContext
 {
+    public static IDbInfrastructure Instance { get; } = new DbInfrastructureBuilder<TDbContext>().UsePostgresLocalContainer();
+    
     public IDbInfrastructure UsePostgresExistingDb(PostgresConn? postgresConn = null)
     {
         return new PostgresIsolatedInfrastructure<TDbContext>(postgresConn ?? new PostgresConn());
