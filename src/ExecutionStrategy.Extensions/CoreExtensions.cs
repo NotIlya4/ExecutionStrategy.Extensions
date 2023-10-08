@@ -35,7 +35,7 @@ public static class CoreExtensions
             options.CancellationToken);
     }
 
-    private static ExecutionStrategyOperation<TDbContext, TResult> WrapMiddlewares<TDbContext, TResult>(
+    internal static ExecutionStrategyOperation<TDbContext, TResult> WrapMiddlewares<TDbContext, TResult>(
         IEnumerable<ExecutionStrategyMiddleware<TDbContext, TResult>> middlewares,
         ExecutionStrategyOperation<TDbContext, TResult> operation) where TDbContext : DbContext
     {
@@ -49,7 +49,7 @@ public static class CoreExtensions
         return resultOperation;
     }
 
-    private static ExecutionStrategyOperation<TDbContext, TResult> MiddlewareToOperation<TDbContext, TResult>(
+    internal static ExecutionStrategyOperation<TDbContext, TResult> MiddlewareToOperation<TDbContext, TResult>(
         ExecutionStrategyMiddleware<TDbContext, TResult> middleware,
         ExecutionStrategyOperation<TDbContext, TResult> operation) where TDbContext : DbContext
     {

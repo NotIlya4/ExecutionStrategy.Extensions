@@ -1,4 +1,6 @@
-﻿using ExecutionStrategy.Extensions.IntegrationTests.DbInfrastructure;
+﻿using EntityFrameworkCore.ExecutionStrategy.Extensions;
+using EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
+using ExecutionStrategy.Extensions.IntegrationTests.DbInfrastructure;
 using ExecutionStrategy.Extensions.IntegrationTests.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +20,7 @@ public static class Extensions
         context.ChangeTracker.Clear();
     }
 
-    public static void EnsureDeletedCreated(this AppDbContext context)
+    public static void EnsureDeletedCreated(this DbContext context)
     {
         context.Database.EnsureDeleted();
         context.Database.EnsureCreated();
@@ -29,10 +31,17 @@ public static class Extensions
         return provider.GetRequiredService<AppDbContext>();
     }
 
-    public static IServiceCollection ApplyDbInfrastructure(this IServiceCollection services, IDbInfrastructureBuilder db)
+    public static IServiceCollection ApplyDbInfrastructure(this IServiceCollection services, IDbInfrastructure db)
     {
-        db.ConfigureDbContext(services);
-        services.AddSingleton(provider => db.CreateBootstrapper(provider.AppDbContext()));
+        services.AddDbContext<AppDbContext>((provider, builder) =>
+        {
+            var db = provider.GetRequiredService<IIsolatedDbInfrastructure>();
+
+            db.ConfigureDbContext(builder);
+            builder.UseExecutionStrategyExtensions(builder => builder.WithClearChangeTrackerOnRetry());
+        });
+        services.AddSingleton(db);
+        services.AddScoped<IIsolatedDbInfrastructure>(provider => provider.GetRequiredService<IDbInfrastructure>().ProvideIsolatedInfrastructure());
         return services;
     }
 }

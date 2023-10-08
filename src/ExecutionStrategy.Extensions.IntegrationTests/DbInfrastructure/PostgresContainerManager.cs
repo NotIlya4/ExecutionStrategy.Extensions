@@ -3,12 +3,12 @@ using Ductus.FluentDocker.Services;
 
 namespace ExecutionStrategy.Extensions.IntegrationTests.DbInfrastructure;
 
-public class PostgresContainer
+public class PostgresContainerManager
 {
     private readonly PostgresContainerOptions _options;
     private IContainerService? _container;
 
-    public PostgresContainer(PostgresContainerOptions options)
+    public PostgresContainerManager(PostgresContainerOptions options)
     {
         _options = options;
     }

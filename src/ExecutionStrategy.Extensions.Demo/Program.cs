@@ -3,8 +3,6 @@ using ExecutionStrategy.Extensions.Demo;
 using ExecutionStrategy.Extensions.Demo.EntityFramework;
 using ExecutionStrategy.Extensions.Demo.Models;
 using ExecutionStrategy.Extensions.Demo.Services;
-using ExecutionStrategyExtended.Demo;
-using ExecutionStrategyExtended.Demo.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
