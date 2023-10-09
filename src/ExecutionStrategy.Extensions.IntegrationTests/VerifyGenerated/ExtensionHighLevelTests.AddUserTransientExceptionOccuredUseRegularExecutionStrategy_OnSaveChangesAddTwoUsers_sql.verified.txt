@@ -1,0 +1,21 @@
+{
+  sql: [
+    {
+      Type: ReaderExecutedAsync,
+      HasTransaction: true,
+      Parameters: {
+        @p0 (Boolean): false,
+        @p1 (String): Biba,
+        @p2 (Boolean): false,
+        @p3 (String): Biba
+      },
+      Text:
+INSERT INTO "Users" ("IsDeleted", "Name")
+VALUES (@p0, @p1)
+RETURNING "Id";
+INSERT INTO "Users" ("IsDeleted", "Name")
+VALUES (@p2, @p3)
+RETURNING "Id";
+    }
+  ]
+}

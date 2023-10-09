@@ -5,7 +5,7 @@ using ExecutionStrategy.Extensions.IntegrationTests.EntityFramework;
 using ExecutionStrategy.Extensions.IntegrationTests.Xunit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using VerifyTests.EntityFramework;
 
 namespace ExecutionStrategy.Extensions.IntegrationTests;
 
@@ -29,7 +29,6 @@ public class TestFixture : IDisposable, IServiceProvider, ITestLifetime
     {
         services.AddSingleton(db);
         services.AddScoped<IIsolatedDbInfrastructure>(provider => provider.GetRequiredService<IDbInfrastructure>().ProvideIsolatedInfrastructure());
-        services.AddScoped<TransientExceptionThrower>();
     }
 
     public void Dispose()
@@ -63,6 +62,7 @@ public class TestFixture : IDisposable, IServiceProvider, ITestLifetime
     {
         var builder = new DbContextOptionsBuilder<AppDbContext>();
         ConfigureDbContext(builder);
+        builder.EnableRecording();
         action?.Invoke(builder);
         return new AppDbContext(builder.Options);
     }

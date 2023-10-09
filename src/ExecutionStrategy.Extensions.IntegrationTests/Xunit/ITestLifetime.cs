@@ -1,4 +1,4 @@
-﻿namespace ExecutionStrategy.Extensions.IntegrationTests;
+﻿namespace ExecutionStrategy.Extensions.IntegrationTests.Xunit;
 
 public interface ITestLifetime
 {

@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using ExecutionStrategy.Extensions.IntegrationTests.DbInfrastructure;
 using ExecutionStrategy.Extensions.IntegrationTests.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
@@ -27,6 +27,8 @@ class TestAssemblyRunner : XunitTestAssemblyRunner
         ConfigureServiceFixtures(services);
 
         ServiceProvider = services.BuildServiceProvider();
+        
+        VerifyEfCore();
     }
 
     protected override Task BeforeTestAssemblyFinishedAsync()
@@ -75,5 +77,15 @@ class TestAssemblyRunner : XunitTestAssemblyRunner
             ServiceLifetime lifetime = fixtureLifetime.Item2.Lifetime;
             serviceCollection.Add(new ServiceDescriptor(serviceType, implementationType, lifetime));
         }
+    }
+
+    private void VerifyEfCore()
+    {
+        var builder = new DbContextOptionsBuilder<AppDbContext>();
+        var db = ServiceProvider.GetRequiredService<IDbInfrastructure>().ProvideIsolatedInfrastructure();
+        db.ConfigureDbContext(builder);
+        db.Dispose();
+
+        VerifyEntityFramework.Initialize(new AppDbContext(builder.Options).Model);
     }
 }

@@ -1,0 +1,17 @@
+{
+  target: {
+    Added: {
+      User: {
+        Id: -2147482647,
+        IsDeleted: false,
+        Name: Biba
+      },
+      User: {
+        Id: -2147482646,
+        IsDeleted: false,
+        Name: Biba
+      }
+    }
+  },
+  sql: []
+}
