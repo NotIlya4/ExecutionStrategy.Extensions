@@ -8,6 +8,12 @@ public class CoreExtensionsTests
     
     public CoreExtensionsTests(TestFixture fixture)
     {
-        _context = fixture.AppDbContext();
+        _context = fixture.CreateContext();
+    }
+
+    [Fact]
+    public void EmptyMiddlewares_OperationInvoked()
+    {
+        
     }
 }

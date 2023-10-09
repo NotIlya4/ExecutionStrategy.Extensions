@@ -8,49 +8,51 @@ namespace ExecutionStrategy.Extensions.IntegrationTests.Tests;
 public class UnitTest1
 {
     private readonly TestFixture _fixture;
-    private readonly AppDbContext _context;
     private readonly TransientExceptionThrower _thrower;
 
     public UnitTest1(TestFixture fixture)
     {
         _fixture = fixture;
-        _context = fixture.AppDbContext();
         _thrower = fixture.GetRequiredService<TransientExceptionThrower>();
     }
     
     [Fact]
     public async Task AddUserAndTransientExceptionOccured_OnSaveChangesSaveOnlyOneUser()
     {
-        await _context.ExecuteExtendedAsync(async () =>
+        var context = _fixture.CreateWithClearChangeTracker();
+        
+        await context.ExecuteExtendedAsync(async () =>
         {
-            _context.Users.Add(new User(0, "Biba", false));
+            context.Users.Add(new User(0, "Biba", false));
 
             _thrower.ThrowOnlyOnce();
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         });
 
-        _context.Clear();
+        context.ChangeTrackerClear();
 
-        await Verify(await _context.Users.SingleAsync());
+        await Verify(await context.Users.SingleAsync());
     }
 
     [Fact]
-    public async Task AddUserTransientExceptionOccuredButWithoutMiddleware_OnSaveChangesAddTwoUsers()
+    public async Task AddUserTransientExceptionOccuredUseRegularExecutionStrategy_OnSaveChangesAddTwoUsers()
     {
-        var emptyContext = _fixture.CreateEmptyContext();
-        
-        await emptyContext.ExecuteExtendedAsync(async () =>
+        var context = _fixture.CreateContext();
+
+        var strategy = context.Database.CreateExecutionStrategy();
+
+        await strategy.ExecuteAsync(async () =>
         {
-            _context.Users.Add(new User(0, "Biba", false));
+            context.Users.Add(new User(0, "Biba", false));
 
             _thrower.ThrowOnlyOnce();
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         });
 
-        _context.Clear();
+        context.ChangeTrackerClear();
         
-        await Verify(await _context.Users.ToListAsync());
+        await Verify(await context.Users.ToListAsync());
     }
 }

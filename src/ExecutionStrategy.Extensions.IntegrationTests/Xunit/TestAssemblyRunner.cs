@@ -2,6 +2,7 @@
 using ExecutionStrategy.Extensions.IntegrationTests.DbInfrastructure;
 using ExecutionStrategy.Extensions.IntegrationTests.EntityFramework;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
@@ -9,9 +10,8 @@ namespace ExecutionStrategy.Extensions.IntegrationTests.Xunit;
 
 class TestAssemblyRunner : XunitTestAssemblyRunner
 {
-    readonly Dictionary<Type, object> _assemblyFixtures = new();
-    private readonly IServiceProvider _provider;
-
+    public ServiceProvider ServiceProvider { get; set; }
+    
     public TestAssemblyRunner(ITestAssembly testAssembly,
         IEnumerable<IXunitTestCase> testCases,
         IMessageSink diagnosticMessageSink,
@@ -20,20 +20,18 @@ class TestAssemblyRunner : XunitTestAssemblyRunner
         : base(testAssembly, testCases, diagnosticMessageSink, executionMessageSink, executionOptions)
     {
         GuardParallelism();
-        
         UseProjectRelativeDirectory("VerifyGenerated");
-        
-        var serviceCollection = new ServiceCollection();
 
-        _provider = serviceCollection.BuildServiceProvider();
+        var services = new ServiceCollection();
+        services.AddSingleton(_ => DbInfrastructureBuilder<AppDbContext>.Instance);
+        ConfigureServiceFixtures(services);
 
-        _assemblyFixtures[typeof(IDbInfrastructure)] = DbInfrastructureBuilder<AppDbContext>.Instance;
+        ServiceProvider = services.BuildServiceProvider();
     }
 
     protected override Task BeforeTestAssemblyFinishedAsync()
     {
-        foreach (var disposable in _assemblyFixtures.Values.OfType<IDisposable>())
-            Aggregator.Run(disposable.Dispose);
+        ServiceProvider.Dispose();
 
         return base.BeforeTestAssemblyFinishedAsync();
     }
@@ -43,9 +41,8 @@ class TestAssemblyRunner : XunitTestAssemblyRunner
         IEnumerable<IXunitTestCase> testCases,
         CancellationTokenSource cancellationTokenSource)
     {
-        return await new TestCollectionRunner(_assemblyFixtures, testCollection, testCases, DiagnosticMessageSink,
-            messageBus,
-            TestCaseOrderer, new ExceptionAggregator(Aggregator), cancellationTokenSource).RunAsync();
+        return await new TestCollectionRunner(ServiceProvider, testCollection, testCases, DiagnosticMessageSink,
+            messageBus, TestCaseOrderer, new ExceptionAggregator(Aggregator), cancellationTokenSource).RunAsync();
     }
 
     private void GuardParallelism()
@@ -54,5 +51,29 @@ class TestAssemblyRunner : XunitTestAssemblyRunner
                 x.GetCustomAttributes().Any(x => x is CollectionAttribute || x is CollectionDefinitionAttribute)))
             throw new Exception(
                 "Don't use CollectionAttribute and CollectionDefinitionAttribute because it decreases level of parallelism for tests");
+    }
+
+    private static void ConfigureServiceFixtures(IServiceCollection serviceCollection)
+    {
+        var types = typeof(TestFramework).Assembly.GetTypes();
+
+        var fixtureLifetimes = new List<(Type, FixtureLifetimeAttribute)>();
+        foreach (var type in types)
+        {
+            var attributes = type.GetCustomAttributes().OfType<FixtureLifetimeAttribute>().ToList();
+
+            foreach (var attribute in attributes)
+            {
+                fixtureLifetimes.Add((type, attribute));
+            }
+        }
+
+        foreach (var fixtureLifetime in fixtureLifetimes)
+        {
+            Type implementationType = fixtureLifetime.Item1;
+            Type serviceType = fixtureLifetime.Item2.ServiceType ?? implementationType;
+            ServiceLifetime lifetime = fixtureLifetime.Item2.Lifetime;
+            serviceCollection.Add(new ServiceDescriptor(serviceType, implementationType, lifetime));
+        }
     }
 }
