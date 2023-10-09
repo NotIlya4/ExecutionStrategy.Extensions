@@ -25,6 +25,13 @@ class TestCollectionRunner : XunitTestCollectionRunner
 
     protected override Task<RunSummary> RunTestClassAsync(ITestClass testClass, IReflectionTypeInfo @class, IEnumerable<IXunitTestCase> testCases)
     {
+        var combinedFixtureMapping = CombineAssemblyFixtures();
+
+        return new TestClassRunner(testClass, @class, testCases, DiagnosticMessageSink, MessageBus, TestCaseOrderer, new ExceptionAggregator(Aggregator), CancellationTokenSource, combinedFixtureMapping).RunAsync();
+    }
+
+    private Dictionary<Type, object> CombineAssemblyFixtures()
+    {
         var combinedFixtureMapping = new Dictionary<Type, object>();
 
         foreach (KeyValuePair<Type,object> assemblyFixture in _assemblyFixtures)
@@ -37,6 +44,6 @@ class TestCollectionRunner : XunitTestCollectionRunner
             combinedFixtureMapping[fixtureMapping.Key] = fixtureMapping.Value;
         }
 
-        return new TestClassRunner(testClass, @class, testCases, DiagnosticMessageSink, MessageBus, TestCaseOrderer, new ExceptionAggregator(Aggregator), CancellationTokenSource, combinedFixtureMapping).RunAsync();
+        return combinedFixtureMapping;
     }
 }

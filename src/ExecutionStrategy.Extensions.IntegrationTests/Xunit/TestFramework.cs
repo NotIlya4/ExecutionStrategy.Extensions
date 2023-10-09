@@ -2,6 +2,7 @@
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
+[assembly:Xunit.TestFramework("ExecutionStrategy.Extensions.IntegrationTests.Xunit.TestFramework", "ExecutionStrategy.Extensions.IntegrationTests")]
 namespace ExecutionStrategy.Extensions.IntegrationTests.Xunit;
 
 class TestFramework : XunitTestFramework

@@ -1,318 +1,56 @@
 using EntityFrameworkCore.ExecutionStrategy.Extensions;
 using ExecutionStrategy.Extensions.IntegrationTests.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ExecutionStrategy.Extensions.IntegrationTests.Tests;
 
-public class UnitTest1 : TestBase
+public class UnitTest1
 {
+    private readonly TestFixture _fixture;
     private readonly AppDbContext _context;
+    private readonly TransientExceptionThrower _thrower;
 
-    public UnitTest1(TestFixture fixture) : base(fixture)
+    public UnitTest1(TestFixture fixture)
     {
+        _fixture = fixture;
         _context = fixture.AppDbContext();
+        _thrower = fixture.GetRequiredService<TransientExceptionThrower>();
     }
     
     [Fact]
-    public async Task Test4()
+    public async Task AddUserAndTransientExceptionOccured_OnSaveChangesSaveOnlyOneUser()
     {
-        bool isThrown = false;
-
         await _context.ExecuteExtendedAsync(async () =>
         {
             _context.Users.Add(new User(0, "Biba", false));
 
-            if (!isThrown)
-            {
-                isThrown = true;
-                ThrowTimout();
-            }
+            _thrower.ThrowOnlyOnce();
 
             await _context.SaveChangesAsync();
         });
 
         _context.Clear();
 
-        await Verify(await _context.Users.SingleAsync(), new VerifySettings());
+        await Verify(await _context.Users.SingleAsync());
     }
-    
+
     [Fact]
-    public async Task Test1()
+    public async Task AddUserTransientExceptionOccuredButWithoutMiddleware_OnSaveChangesAddTwoUsers()
     {
-        bool isThrown = false;
-
-        await _context.ExecuteExtendedAsync(async () =>
+        var emptyContext = _fixture.CreateEmptyContext();
+        
+        await emptyContext.ExecuteExtendedAsync(async () =>
         {
             _context.Users.Add(new User(0, "Biba", false));
 
-            if (!isThrown)
-            {
-                isThrown = true;
-                ThrowTimout();
-            }
+            _thrower.ThrowOnlyOnce();
 
             await _context.SaveChangesAsync();
         });
 
         _context.Clear();
-
-        await Verify(await _context.Users.SingleAsync());
-    }
-    
-    [Fact]
-    public async Task Test2()
-    {
-        bool isThrown = false;
-
-        await _context.ExecuteExtendedAsync(async () =>
-        {
-            _context.Users.Add(new User(0, "Biba", false));
-
-            if (!isThrown)
-            {
-                isThrown = true;
-                ThrowTimout();
-            }
-
-            await _context.SaveChangesAsync();
-        });
-
-        _context.Clear();
-
-        await Verify(await _context.Users.SingleAsync());
-    }
-}
-
-public class UnitTest2 : TestBase
-{
-    private readonly AppDbContext _context;
-
-    public UnitTest2(TestFixture fixture) : base(fixture)
-    {
-        _context = fixture.AppDbContext();
-    }
-    
-    public async Task Test4()
-    {
-        bool isThrown = false;
-
-        await _context.ExecuteExtendedAsync(async () =>
-        {
-            _context.Users.Add(new User(0, "Biba", false));
-
-            if (!isThrown)
-            {
-                isThrown = true;
-                ThrowTimout();
-            }
-
-            await _context.SaveChangesAsync();
-        });
-
-        _context.Clear();
-
-        await Verify(await _context.Users.SingleAsync());
-    }
-    
-    [Fact]
-    public async Task Test1()
-    {
-        bool isThrown = false;
-
-        await _context.ExecuteExtendedAsync(async () =>
-        {
-            _context.Users.Add(new User(0, "Biba", false));
-
-            if (!isThrown)
-            {
-                isThrown = true;
-                ThrowTimout();
-            }
-
-            await _context.SaveChangesAsync();
-        });
-
-        _context.Clear();
-
-        await Verify(await _context.Users.SingleAsync());
-    }
-    
-    [Fact]
-    public async Task Test2()
-    {
-        bool isThrown = false;
-
-        await _context.ExecuteExtendedAsync(async () =>
-        {
-            _context.Users.Add(new User(0, "Biba", false));
-
-            if (!isThrown)
-            {
-                isThrown = true;
-                ThrowTimout();
-            }
-
-            await _context.SaveChangesAsync();
-        });
-
-        _context.Clear();
-
-        await Verify(await _context.Users.SingleAsync());
-    }
-}
-
-public class UnitTest3 : TestBase
-{
-    private readonly AppDbContext _context;
-
-    public UnitTest3(TestFixture fixture) : base(fixture)
-    {
-        _context = fixture.AppDbContext();
-    }
-    
-    public async Task Test4()
-    {
-        bool isThrown = false;
-
-        await _context.ExecuteExtendedAsync(async () =>
-        {
-            _context.Users.Add(new User(0, "Biba", false));
-
-            if (!isThrown)
-            {
-                isThrown = true;
-                ThrowTimout();
-            }
-
-            await _context.SaveChangesAsync();
-        });
-
-        _context.Clear();
-
-        await Verify(await _context.Users.SingleAsync());
-    }
-    
-    [Fact]
-    public async Task Test1()
-    {
-        bool isThrown = false;
-
-        await _context.ExecuteExtendedAsync(async () =>
-        {
-            _context.Users.Add(new User(0, "Biba", false));
-
-            if (!isThrown)
-            {
-                isThrown = true;
-                ThrowTimout();
-            }
-
-            await _context.SaveChangesAsync();
-        });
-
-        _context.Clear();
-
-        await Verify(await _context.Users.SingleAsync());
-    }
-    
-    [Fact]
-    public async Task Test2()
-    {
-        bool isThrown = false;
-
-        await _context.ExecuteExtendedAsync(async () =>
-        {
-            _context.Users.Add(new User(0, "Biba", false));
-
-            if (!isThrown)
-            {
-                isThrown = true;
-                ThrowTimout();
-            }
-
-            await _context.SaveChangesAsync();
-        });
-
-        _context.Clear();
-
-        await Verify(await _context.Users.SingleAsync());
-    }
-}
-
-public class UnitTest4 : TestBase
-{
-    private readonly AppDbContext _context;
-
-    public UnitTest4(TestFixture fixture) : base(fixture)
-    {
-        _context = fixture.AppDbContext();
-    }
-    
-    public async Task Test4()
-    {
-        bool isThrown = false;
-
-        await _context.ExecuteExtendedAsync(async () =>
-        {
-            _context.Users.Add(new User(0, "Biba", false));
-
-            if (!isThrown)
-            {
-                isThrown = true;
-                ThrowTimout();
-            }
-
-            await _context.SaveChangesAsync();
-        });
-
-        _context.Clear();
-
-        await Verify(await _context.Users.SingleAsync());
-    }
-    
-    [Fact]
-    public async Task Test1()
-    {
-        bool isThrown = false;
-
-        await _context.ExecuteExtendedAsync(async () =>
-        {
-            _context.Users.Add(new User(0, "Biba", false));
-
-            if (!isThrown)
-            {
-                isThrown = true;
-                ThrowTimout();
-            }
-
-            await _context.SaveChangesAsync();
-        });
-
-        _context.Clear();
-
-        await Verify(await _context.Users.SingleAsync());
-    }
-    
-    [Fact]
-    public async Task Test2()
-    {
-        bool isThrown = false;
-
-        await _context.ExecuteExtendedAsync(async () =>
-        {
-            _context.Users.Add(new User(0, "Biba", false));
-
-            if (!isThrown)
-            {
-                isThrown = true;
-                ThrowTimout();
-            }
-
-            await _context.SaveChangesAsync();
-        });
-
-        _context.Clear();
-
-        await Verify(await _context.Users.SingleAsync());
+        
+        await Verify(await _context.Users.ToListAsync());
     }
 }

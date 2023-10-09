@@ -1,4 +1,5 @@
-﻿using ExecutionStrategy.Extensions.IntegrationTests.DbInfrastructure;
+﻿using System.Reflection;
+using ExecutionStrategy.Extensions.IntegrationTests.DbInfrastructure;
 using ExecutionStrategy.Extensions.IntegrationTests.EntityFramework;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
@@ -18,6 +19,10 @@ class TestAssemblyRunner : XunitTestAssemblyRunner
         ITestFrameworkExecutionOptions executionOptions)
         : base(testAssembly, testCases, diagnosticMessageSink, executionMessageSink, executionOptions)
     {
+        GuardParallelism();
+        
+        UseProjectRelativeDirectory("VerifyGenerated");
+        
         var serviceCollection = new ServiceCollection();
 
         _provider = serviceCollection.BuildServiceProvider();
@@ -32,37 +37,22 @@ class TestAssemblyRunner : XunitTestAssemblyRunner
 
         return base.BeforeTestAssemblyFinishedAsync();
     }
-    
+
     protected override async Task<RunSummary> RunTestCollectionAsync(IMessageBus messageBus,
-                                                               ITestCollection testCollection,
-                                                               IEnumerable<IXunitTestCase> testCases,
-                                                               CancellationTokenSource cancellationTokenSource)
+        ITestCollection testCollection,
+        IEnumerable<IXunitTestCase> testCases,
+        CancellationTokenSource cancellationTokenSource)
     {
-        testCases = testCases.ToList();
-        var testCasesPostgres = testCases.Select(t =>
-        {
-            var propertyInfo = t.GetType().GetProperties().Single(p => p.Name == nameof(IXunitTestCase.DisplayName));
-            propertyInfo.SetValue(t, $"{t.DisplayName} - postgres");
-
-            return t;
-        }).ToList();
-        
-        var summary1 = await new TestCollectionRunner(_assemblyFixtures, testCollection, testCasesPostgres.ToList(), DiagnosticMessageSink, messageBus,
+        return await new TestCollectionRunner(_assemblyFixtures, testCollection, testCases, DiagnosticMessageSink,
+            messageBus,
             TestCaseOrderer, new ExceptionAggregator(Aggregator), cancellationTokenSource).RunAsync();
+    }
 
-        var testCasesSqlServer = testCases.Select(t =>
-        {
-            var propertyInfo = t.GetType().GetProperties().Single(p => p.Name == nameof(IXunitTestCase.DisplayName));
-            propertyInfo.SetValue(t, $"{t.DisplayName} - sql server");
-
-            return t;
-        }).ToList();
-
-        var summary2 = await new TestCollectionRunner(_assemblyFixtures, testCollection, testCasesSqlServer, DiagnosticMessageSink, messageBus,
-            TestCaseOrderer, new ExceptionAggregator(Aggregator), cancellationTokenSource).RunAsync();
-
-        summary1.Aggregate(summary2);
-        
-        return summary1;
+    private void GuardParallelism()
+    {
+        if (typeof(TestFramework).Assembly.GetTypes().Any(x =>
+                x.GetCustomAttributes().Any(x => x is CollectionAttribute || x is CollectionDefinitionAttribute)))
+            throw new Exception(
+                "Don't use CollectionAttribute and CollectionDefinitionAttribute because it decreases level of parallelism for tests");
     }
 }
