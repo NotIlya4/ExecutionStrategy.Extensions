@@ -5,7 +5,6 @@ using ExecutionStrategy.Extensions.IntegrationTests.EntityFramework;
 using ExecutionStrategy.Extensions.IntegrationTests.Xunit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using VerifyTests.EntityFramework;
 
 namespace ExecutionStrategy.Extensions.IntegrationTests;
 

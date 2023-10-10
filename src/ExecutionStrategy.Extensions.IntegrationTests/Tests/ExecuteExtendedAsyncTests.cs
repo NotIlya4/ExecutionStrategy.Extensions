@@ -2,7 +2,6 @@
 using EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
 using ExecutionStrategy.Extensions.IntegrationTests.EntityFramework;
 using ExecutionStrategy.Extensions.IntegrationTests.Helpers;
-using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 
@@ -38,8 +37,7 @@ public class ExecuteExtendedAsyncTests
     }
 
     [Fact]
-    public async Task
-        ExecuteExtendedAsync_AddUserTransientExceptionOccuredUseRegularExecutionStrategy_OnSaveChangesAddTwoUsers()
+    public async Task ExecuteExtendedAsync_AddUserTransientExceptionOccuredUseRegularExecutionStrategy_OnSaveChangesAddTwoUsers()
     {
         var thrower = Hooker.ThrowTransientOnce();
         var context = _fixture.CreateDbContext();
