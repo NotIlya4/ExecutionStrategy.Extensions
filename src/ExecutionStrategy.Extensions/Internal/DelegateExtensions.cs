@@ -4,14 +4,14 @@ namespace EntityFrameworkCore.ExecutionStrategy.Extensions.Internal;
 
 internal static class DelegateExtensions 
 {
-    public static ExecutionStrategyOperation<DbContext, object> ToGeneric<TDbContext, TResult>(
-        this ExecutionStrategyOperation<TDbContext, TResult> operation) where TDbContext : DbContext
+    public static ExecutionStrategyNext<DbContext, object> ToGeneric<TDbContext, TResult>(
+        this ExecutionStrategyNext<TDbContext, TResult> operation) where TDbContext : DbContext
     {
         return async args => (await operation(args.FromGeneric<TDbContext>()))!;
     }
 
-    public static ExecutionStrategyOperation<TDbContext, TResult> FromGeneric<TDbContext, TResult>(
-        this ExecutionStrategyOperation<DbContext, object> operation) where TDbContext : DbContext
+    public static ExecutionStrategyNext<TDbContext, TResult> FromGeneric<TDbContext, TResult>(
+        this ExecutionStrategyNext<DbContext, object> operation) where TDbContext : DbContext
     {
         return async args => (TResult)await operation(args);
     }

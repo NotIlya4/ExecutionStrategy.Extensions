@@ -19,12 +19,11 @@ class TestAssemblyRunner : XunitTestAssemblyRunner
         ITestFrameworkExecutionOptions executionOptions)
         : base(testAssembly, testCases, diagnosticMessageSink, executionMessageSink, executionOptions)
     {
-        GuardParallelism();
         UseProjectRelativeDirectory("VerifyGenerated");
 
         var services = new ServiceCollection();
-        services.AddSingleton(_ => DbInfrastructureBuilder<AppDbContext>.Instance);
-        ConfigureServiceFixtures(services);
+        ConfigureFixtureServices(services);
+        ConfigureFixtureServiceProviders(services);
 
         ServiceProvider = services.BuildServiceProvider();
         
@@ -47,22 +46,29 @@ class TestAssemblyRunner : XunitTestAssemblyRunner
             messageBus, TestCaseOrderer, new ExceptionAggregator(Aggregator), cancellationTokenSource).RunAsync();
     }
 
-    private void GuardParallelism()
+    private static void ConfigureFixtureServiceProviders(IServiceCollection serviceCollection)
     {
-        if (typeof(TestFramework).Assembly.GetTypes().Any(x =>
-                x.GetCustomAttributes().Any(x => x is CollectionAttribute || x is CollectionDefinitionAttribute)))
-            throw new Exception(
-                "Don't use CollectionAttribute and CollectionDefinitionAttribute because it decreases level of parallelism for tests");
+        var providers = typeof(TestFramework)
+            .Assembly
+            .GetTypes()
+            .Where(t => !t.IsInterface && t.IsAssignableTo(typeof(IFixtureServicesProvider)))
+            .Select((t) => (IFixtureServicesProvider)Activator.CreateInstance(t)!)
+            .ToArray();
+
+        foreach (var provider in providers)
+        {
+            provider.ConfigureServices(serviceCollection);
+        }
     }
 
-    private static void ConfigureServiceFixtures(IServiceCollection serviceCollection)
+    private static void ConfigureFixtureServices(IServiceCollection serviceCollection)
     {
         var types = typeof(TestFramework).Assembly.GetTypes();
 
-        var fixtureLifetimes = new List<(Type, FixtureLifetimeAttribute)>();
+        var fixtureLifetimes = new List<(Type, FixtureServiceAttribute)>();
         foreach (var type in types)
         {
-            var attributes = type.GetCustomAttributes().OfType<FixtureLifetimeAttribute>().ToList();
+            var attributes = type.GetCustomAttributes().OfType<FixtureServiceAttribute>().ToList();
 
             foreach (var attribute in attributes)
             {
@@ -73,9 +79,18 @@ class TestAssemblyRunner : XunitTestAssemblyRunner
         foreach (var fixtureLifetime in fixtureLifetimes)
         {
             Type implementationType = fixtureLifetime.Item1;
+            Func<IServiceProvider, object>? factory = fixtureLifetime.Item2.Factory;
             Type serviceType = fixtureLifetime.Item2.ServiceType ?? implementationType;
             ServiceLifetime lifetime = fixtureLifetime.Item2.Lifetime;
-            serviceCollection.Add(new ServiceDescriptor(serviceType, implementationType, lifetime));
+
+            if (factory is null)
+            {
+                serviceCollection.Add(new ServiceDescriptor(serviceType, implementationType, lifetime));
+            }
+            else
+            {
+                serviceCollection.Add(new ServiceDescriptor(serviceType, factory, lifetime));
+            }
         }
     }
 

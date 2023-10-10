@@ -6,9 +6,9 @@ namespace EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
 
 internal class ExecutionStrategyEfExtension: IDbContextOptionsExtension
 {
-    private readonly DependencyContainer _container;
+    private readonly DependenciesContainer _container;
 
-    public ExecutionStrategyEfExtension(DependencyContainer container)
+    public ExecutionStrategyEfExtension(DependenciesContainer container)
     {
         _container = container;
         Info = new ExecutionStrategyEfExtensionInfo(this);

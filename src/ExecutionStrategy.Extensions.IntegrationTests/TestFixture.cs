@@ -9,8 +9,8 @@ using VerifyTests.EntityFramework;
 
 namespace ExecutionStrategy.Extensions.IntegrationTests;
 
-[FixtureLifetime]
-public class TestFixture : IDisposable, IServiceProvider, ITestLifetime
+[FixtureService(Lifetime = ServiceLifetime.Transient)]
+public class TestFixture : IDisposable, IServiceProvider
 {
     public ServiceProvider RootServiceProvider { get; set; }
     public IServiceScope Scope { get; set; }
@@ -28,7 +28,7 @@ public class TestFixture : IDisposable, IServiceProvider, ITestLifetime
     private void ConfigureServices(IServiceCollection services, IDbInfrastructure db)
     {
         services.AddSingleton(db);
-        services.AddScoped<IIsolatedDbInfrastructure>(provider => provider.GetRequiredService<IDbInfrastructure>().ProvideIsolatedInfrastructure());
+        services.AddSingleton(provider => provider.GetRequiredService<IDbInfrastructure>().ProvideIsolatedInfrastructure());
     }
 
     public void Dispose()
@@ -41,35 +41,32 @@ public class TestFixture : IDisposable, IServiceProvider, ITestLifetime
         return Services.GetService(serviceType);
     }
 
-    public Task OnTestStart()
-    {
-        Scope.Dispose();
-        Scope = RootServiceProvider.CreateScope();
-        return Task.CompletedTask;
-    }
-
-    public Task OnTestFinish()
-    {
-        return Task.CompletedTask;
-    }
-
     public void ConfigureDbContext(DbContextOptionsBuilder builder)
     {
         Services.GetRequiredService<IIsolatedDbInfrastructure>().ConfigureDbContext(builder);
     }
 
-    public AppDbContext CreateContext(Action<DbContextOptionsBuilder>? action = null)
+    public AppDbContext CreateDbContext(Action<DbContextOptionsBuilder>? action = null)
     {
         var builder = new DbContextOptionsBuilder<AppDbContext>();
         ConfigureDbContext(builder);
-        builder.EnableRecording();
         action?.Invoke(builder);
         return new AppDbContext(builder.Options);
     }
 
-    public AppDbContext CreateWithClearChangeTracker()
+    public AppDbContext CreateDbContextWithEmptyUse(Action<IExecutionStrategyPrimaryOptionsBuilder<AppDbContext>>? action = null)
     {
-        return CreateContext(builder =>
+        action ??= (_) => { };
+
+        return CreateDbContext(builder =>
+        {
+            builder.UseExecutionStrategyExtensions(action);
+        });
+    }
+
+    public AppDbContext CreateDbContextWithClearChangeTracker()
+    {
+        return CreateDbContext(builder =>
         {
             builder.UseExecutionStrategyExtensions(builder => builder.WithClearChangeTrackerOnRetry());
         });

@@ -1,11 +1,11 @@
 namespace EntityFrameworkCore.ExecutionStrategy.Extensions.Container;
 
-internal class DependencyContainer
+internal class DependenciesContainer
 {
     public MiddlewaresManager MiddlewaresManager { get; }
     public IExecutionStrategyData Data { get; }
 
-    public DependencyContainer(MiddlewaresManager middlewaresManager, IExecutionStrategyData data)
+    public DependenciesContainer(MiddlewaresManager middlewaresManager, IExecutionStrategyData data)
     {
         MiddlewaresManager = middlewaresManager;
         Data = data;

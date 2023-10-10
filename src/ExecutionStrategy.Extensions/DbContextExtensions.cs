@@ -6,7 +6,7 @@ namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 public static class DbContextExtensions
 {
     public static Task<TResult> ExecuteExtendedAsync<TDbContext, TResult>(this TDbContext context,
-        ExecutionStrategyOperation<TDbContext, TResult> operation,
+        ExecutionStrategyNext<TDbContext, TResult> operation,
         Action<IExecutionStrategyOptionsBuilder<TDbContext, TResult>>? action = null) where TDbContext : DbContext
     {
         var options = context.CreateOptionsFromPrimary(operation);
@@ -18,9 +18,9 @@ public static class DbContextExtensions
     }
     
     public static Task<TResult> ExecuteExtendedAsync<TDbContext, TResult>(this TDbContext context,
-        ExecutionStrategyOperation<TResult> operation,
+        ExecutionStrategyNext<TResult> operation,
         Action<IExecutionStrategyOptionsBuilder<TDbContext, TResult>>? action = null) where TDbContext : DbContext
     {
-        return context.ExecuteExtendedAsync(args => operation(), action);
+        return context.ExecuteExtendedAsync(_ => operation(), action);
     }
 }

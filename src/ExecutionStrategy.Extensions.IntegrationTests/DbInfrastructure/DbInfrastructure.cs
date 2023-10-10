@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ExecutionStrategy.Extensions.IntegrationTests.EntityFramework;
+using ExecutionStrategy.Extensions.IntegrationTests.Xunit;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 
@@ -159,8 +161,6 @@ public interface IDbInfrastructureBuilder<TDbContext> where TDbContext : DbConte
 
 public class DbInfrastructureBuilder<TDbContext> : IDbInfrastructureBuilder<TDbContext> where TDbContext : DbContext
 {
-    public static IDbInfrastructure Instance { get; } = new DbInfrastructureBuilder<TDbContext>().UsePostgresLocalContainer();
-    
     public IDbInfrastructure UsePostgresExistingDb(PostgresConn? postgresConn = null)
     {
         return new PostgresIsolatedInfrastructure<TDbContext>(postgresConn ?? new PostgresConn());
@@ -174,5 +174,13 @@ public class DbInfrastructureBuilder<TDbContext> : IDbInfrastructureBuilder<TDbC
     public IDbInfrastructure UseInMemory()
     {
         return new InMemoryInfrastructure();
+    }
+}
+
+public class DbInfrastructureProvider : IFixtureServicesProvider
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddSingleton((_) => new DbInfrastructureBuilder<AppDbContext>().UsePostgresLocalContainer());
     }
 }

@@ -16,16 +16,16 @@ internal class ExecutionStrategyOptionsBuilder<TDbContext, TResult> : IExecution
     }
 
     public IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithOperation(
-        ExecutionStrategyOperation<TDbContext, TResult> action)
+        ExecutionStrategyNext<TDbContext, TResult> action)
     {
         Options.Operation = action;
         return this;
     }
 
     public IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithVerifySucceeded(
-        ExecutionStrategyOperation<TDbContext, ExecutionResult<TResult>> action)
+        ExecutionStrategyNext<TDbContext, ExecutionResult<TResult>> verifySucceeded)
     {
-        Options.VerifySucceeded = action;
+        Options.VerifySucceeded = verifySucceeded;
         return this;
     }
 
@@ -77,9 +77,9 @@ public interface IExecutionStrategyOptionsBuilder<TDbContext, TResult>
     public IExecutionStrategyOptions<TDbContext, TResult> Options { get; set; }
     
     IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithOperation(
-        ExecutionStrategyOperation<TDbContext, TResult> action);
+        ExecutionStrategyNext<TDbContext, TResult> action);
     IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithVerifySucceeded(
-        ExecutionStrategyOperation<TDbContext, ExecutionResult<TResult>> action);
+        ExecutionStrategyNext<TDbContext, ExecutionResult<TResult>> verifySucceeded);
     IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithCancellationToken(CancellationToken token);
     IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithData(Action<IExecutionStrategyData> action);
 }
