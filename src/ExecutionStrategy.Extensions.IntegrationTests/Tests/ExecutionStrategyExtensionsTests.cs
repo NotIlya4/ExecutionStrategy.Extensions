@@ -4,15 +4,15 @@ namespace ExecutionStrategy.Extensions.IntegrationTests.Tests;
 
 public class CoreExtensionsTests
 {
-    private readonly AppDbContext _context;
+    private readonly TestFixture _fixture;
     
     public CoreExtensionsTests(TestFixture fixture)
     {
-        _context = fixture.CreateContext();
+        _fixture = fixture;
     }
 
     [Fact]
-    public void EmptyMiddlewares_OperationInvoked()
+    public void ExecuteExtendedAsync_EmptyMiddlewares_OperationInvoked()
     {
         
     }
