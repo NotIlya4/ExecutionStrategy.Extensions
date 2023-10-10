@@ -69,27 +69,11 @@ internal class ExecutionStrategyOptionsBuilder<TDbContext, TResult> : IExecution
     }
 }
 
-public interface IExecutionStrategyOptionsBuilder<TDbContext, TResult> 
-    : IBuilderWithMiddleware<TDbContext, TResult, IExecutionStrategyOptionsBuilder<TDbContext, TResult>>, 
-        IBuilderWithData
-        where TDbContext : DbContext
+public interface IExecutionStrategyOptionsBuilder<TDbContext, TResult> : 
+    IBuilderWithMiddleware<TDbContext, TResult, IExecutionStrategyOptionsBuilder<TDbContext, TResult>>, 
+    IBuilderWithData, 
+    IBuilderWithVerifySucceeded<TDbContext, TResult, IExecutionStrategyOptionsBuilder<TDbContext, TResult>> 
+    where TDbContext : DbContext
 {
-    public IExecutionStrategyOptions<TDbContext, TResult> Options { get; set; }
-    
-    IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithOperation(
-        ExecutionStrategyNext<TDbContext, TResult> action);
-    IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithVerifySucceeded(
-        ExecutionStrategyNext<TDbContext, ExecutionResult<TResult>> verifySucceeded);
     IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithCancellationToken(CancellationToken token);
-    IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithData(Action<IExecutionStrategyData> action);
-}
-
-public interface IBuilderWithMiddleware<TDbContext, TResult, out TReturn> where TDbContext : DbContext
-{
-    TReturn WithMiddleware(ExecutionStrategyMiddleware<TDbContext, TResult> middleware);
-}
-
-public interface IBuilderWithData
-{
-    IExecutionStrategyData Data { get; }
 }

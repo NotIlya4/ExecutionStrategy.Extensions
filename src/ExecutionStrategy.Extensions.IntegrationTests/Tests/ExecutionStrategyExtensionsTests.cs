@@ -1,4 +1,5 @@
 ﻿using EntityFrameworkCore.ExecutionStrategy.Extensions;
+using EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
 using ExecutionStrategy.Extensions.IntegrationTests.EntityFramework;
 using ExecutionStrategy.Extensions.IntegrationTests.HookClass;
 using FluentValidation;
@@ -143,6 +144,54 @@ public class ExecutionStrategyExtensionsTests
         Received.InOrder(() =>
         {
             checker.Check();
+        });
+    }
+
+    [Fact]
+    public async Task ExecuteExtendedAsync_ProvideDefaultMiddleware_RunMiddlewareEachTime()
+    {
+        var checker = Substitute.For<IChecker>();
+        var context = _fixture.CreateDbContext(builder =>
+        {
+            builder.UseExecutionStrategyExtensions(builder =>
+            {
+                builder.WithMiddleware(async (next, args) =>
+                {
+                    checker.Check("1");
+                    var result = await next(args);
+                    checker.Check("3");
+                    return result;
+                });
+            });
+        });
+
+        await context.ExecuteExtendedAsync(async () =>
+        {
+            checker.Check("2");
+        });
+        
+        Received.InOrder(() =>
+        {
+            checker.Check("1");
+            checker.Check("2");
+            checker.Check("3");
+        });
+    }
+    
+    [Fact]
+    public async Task ExecuteExtendedAsync_ProvideDataInDbContextBuilder_AccessDataInDbContext()
+    {
+        var context = _fixture.CreateDbContext(builder =>
+        {
+            builder.UseExecutionStrategyExtensions(builder =>
+            {
+                builder.WithData(data => data["asd"] = "asd");
+            });
+        });
+
+        await context.ExecuteExtendedAsync(async (args) =>
+        {
+            Assert.Equal("asd", args.Data["asd"]);
         });
     }
 }

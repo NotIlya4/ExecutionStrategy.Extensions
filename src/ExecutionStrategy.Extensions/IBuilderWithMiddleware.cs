@@ -1,11 +1,26 @@
-using System.Data;
+﻿using System.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
-public static class OptionsBuilderExtensions
+public interface IBuilderWithMiddleware<TDbContext, TResult, out TReturn> where TDbContext : DbContext
 {
+    TReturn WithMiddleware(ExecutionStrategyMiddleware<TDbContext, TResult> middleware);
+}
+
+public static class BuilderWithMiddlewareExtensions
+{
+    public static IBuilderWithMiddleware<TDbContext, Void, TReturn> WithMiddleware<TDbContext, TReturn>(
+        this IBuilderWithMiddleware<TDbContext, Void, TReturn> builder,
+        ExecutionStrategyVoidMiddleware<TDbContext> middleware) where TReturn : IBuilderWithMiddleware<TDbContext, Void, TReturn> where TDbContext : DbContext
+    {
+        return builder.WithMiddleware(async (next, args) =>
+        {
+            await middleware(async (args) => await next(args), args);
+            return new Void();
+        });
+    }
+    
     public static TReturn WithTransaction<TDbContext, TResult, TReturn>(
         this IBuilderWithMiddleware<TDbContext, TResult, TReturn> returnTo, IsolationLevel isolationLevel)
         where TReturn : IBuilderWithMiddleware<TDbContext, TResult, TReturn> where TDbContext : DbContext
@@ -28,25 +43,6 @@ public static class OptionsBuilderExtensions
         {
             args.Context.ChangeTracker.Clear();
             return await next(args);
-        });
-    }
-
-    public static TReturn WithData<TReturn>(this TReturn returnTo, Action<IExecutionStrategyData> action)
-        where TReturn : IBuilderWithData
-    {
-        action(returnTo.Data);
-        return returnTo;
-    }
-
-    public static IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithVerifySucceeded<TDbContext, TResult>(
-        this IExecutionStrategyOptionsBuilder<TDbContext, TResult> builder,
-        ExecutionStrategyNext<TDbContext, TResult?> verifySucceeded)
-        where TDbContext : DbContext
-    {
-        return builder.WithVerifySucceeded(async args =>
-        {
-            var result = await verifySucceeded(args);
-            return new ExecutionResult<TResult>(result is not null, result!);
         });
     }
 }
