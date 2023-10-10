@@ -1,4 +1,4 @@
-﻿namespace ExecutionStrategy.Extensions.IntegrationTests.HookClass;
+﻿namespace ExecutionStrategy.Extensions.IntegrationTests.Helpers;
 
 public interface IChecker
 {

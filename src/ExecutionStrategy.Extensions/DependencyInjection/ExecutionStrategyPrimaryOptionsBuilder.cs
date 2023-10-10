@@ -24,7 +24,7 @@ internal class ExecutionStrategyPrimaryOptionsBuilder<TDbContext> : IExecutionSt
 }
 
 public interface IExecutionStrategyPrimaryOptionsBuilder<TDbContext> :
-    IBuilderWithMiddleware<TDbContext, object, IExecutionStrategyPrimaryOptionsBuilder<TDbContext>>, 
+    IBuilderWithMiddlewares<TDbContext, object, IExecutionStrategyPrimaryOptionsBuilder<TDbContext>>, 
     IBuilderWithData
     where TDbContext : DbContext
 {

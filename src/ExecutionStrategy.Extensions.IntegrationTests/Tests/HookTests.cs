@@ -1,4 +1,4 @@
-﻿using ExecutionStrategy.Extensions.IntegrationTests.HookClass;
+﻿using ExecutionStrategy.Extensions.IntegrationTests.Helpers;
 using NSubstitute;
 
 namespace ExecutionStrategy.Extensions.IntegrationTests.Tests;

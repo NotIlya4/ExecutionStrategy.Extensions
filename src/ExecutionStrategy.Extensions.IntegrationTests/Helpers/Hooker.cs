@@ -1,7 +1,6 @@
-﻿global using static ExecutionStrategy.Extensions.IntegrationTests.HookClass.ThrowTransientExceptionStatic;
-using NSubstitute;
+﻿global using static ExecutionStrategy.Extensions.IntegrationTests.Helpers.ThrowTransientExceptionStatic;
 
-namespace ExecutionStrategy.Extensions.IntegrationTests.HookClass;
+namespace ExecutionStrategy.Extensions.IntegrationTests.Helpers;
 
 public class Hooker
 {

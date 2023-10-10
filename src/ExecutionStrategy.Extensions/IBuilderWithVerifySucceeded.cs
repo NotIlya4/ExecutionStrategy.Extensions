@@ -30,7 +30,7 @@ public static class BuilderWithVerifySucceededExtensions
         return builder.WithVerifySucceeded(async args =>
         {
             var result = await verifySucceeded(args);
-            return new ExecutionResult<Void>(result, new Void());
+            return new ExecutionResult<Void>(result, Void.Instance);
         });
     }
 }

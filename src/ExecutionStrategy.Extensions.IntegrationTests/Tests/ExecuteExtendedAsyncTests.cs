@@ -1,18 +1,18 @@
 ﻿using EntityFrameworkCore.ExecutionStrategy.Extensions;
 using EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
 using ExecutionStrategy.Extensions.IntegrationTests.EntityFramework;
-using ExecutionStrategy.Extensions.IntegrationTests.HookClass;
+using ExecutionStrategy.Extensions.IntegrationTests.Helpers;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 
 namespace ExecutionStrategy.Extensions.IntegrationTests.Tests;
 
-public class ExecutionStrategyExtensionsTests
+public class ExecuteExtendedAsyncTests
 {
     private readonly TestFixture _fixture;
 
-    public ExecutionStrategyExtensionsTests(TestFixture fixture)
+    public ExecuteExtendedAsyncTests(TestFixture fixture)
     {
         _fixture = fixture;
     }
@@ -179,7 +179,7 @@ public class ExecutionStrategyExtensionsTests
     }
     
     [Fact]
-    public async Task ExecuteExtendedAsync_ProvideDataInDbContextBuilder_AccessDataInDbContext()
+    public async Task ExecuteExtendedAsync_ProvideDefaultData_WhenAccessDataCanGetDefaultData()
     {
         var context = _fixture.CreateDbContext(builder =>
         {

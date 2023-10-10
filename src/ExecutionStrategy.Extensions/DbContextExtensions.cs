@@ -23,4 +23,22 @@ public static class DbContextExtensions
     {
         return context.ExecuteExtendedAsync(_ => operation(), action);
     }
+    
+    public static Task ExecuteExtendedAsync<TDbContext>(this TDbContext context,
+        ExecutionStrategyVoidNext<TDbContext> operation,
+        Action<IExecutionStrategyOptionsBuilder<TDbContext, Void>>? action = null) where TDbContext : DbContext
+    {
+        return context.ExecuteExtendedAsync(async args =>
+        {
+            await operation(args);
+            return Void.Instance;
+        }, action);
+    }
+    
+    public static Task ExecuteExtendedAsync<TDbContext>(this TDbContext context,
+        ExecutionStrategyVoidNext operation,
+        Action<IExecutionStrategyOptionsBuilder<TDbContext, Void>>? action = null) where TDbContext : DbContext
+    {
+        return context.ExecuteExtendedAsync(_ => operation(), action);
+    }
 }

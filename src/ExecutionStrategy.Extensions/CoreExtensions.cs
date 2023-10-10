@@ -57,4 +57,7 @@ public static class CoreExtensions
     }
 }
 
-public struct Void { }
+public struct Void
+{
+    public static Void Instance { get; } = new Void();
+}
