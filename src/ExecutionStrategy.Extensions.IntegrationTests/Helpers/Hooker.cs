@@ -29,3 +29,11 @@ public class Hooker
         }
     }
 }
+
+public static class ThrowTransientExceptionStatic
+{
+    public static void ThrowTransientException()
+    {
+        throw new TimeoutException();
+    }
+}
