@@ -1,5 +1,5 @@
 # 🔄 ExecutionStrategy.Extensions
-ExecutionStrategy.Extensions is a little convenient wrapper for `IExecutionStrategy` that simplifies work with `IExecutionStrategy`.
+Little convenient wrapper for `IExecutionStrategy`.
 
 ## Getting started
 Add this to your `DbContextOptionsBuilder`:
