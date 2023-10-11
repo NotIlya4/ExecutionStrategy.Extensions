@@ -1,9 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
+/// <summary>
+/// Class that contains core extension. Any other extensions are built on top of it.
+/// </summary>
 public static class CoreExtensions
 {
+    /// <summary>
+    /// Executes your <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Operation"/> from <see cref="IExecutionStrategyOptions{TDbContext,TResult}"/> wrapped with <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Middlewares"/>.
+    /// 
+    /// This is core extension. Any other extensions are built on top of it.
+    /// </summary>
+    /// <param name="context">DbContext instance that will be used as a source for <see cref="IExecutionStrategy"/></param>
+    /// <param name="options">Options instance</param>
+    /// <typeparam name="TDbContext">Your type of DbContext</typeparam>
+    /// <typeparam name="TResult">Return type of <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Operation"/>
+    /// from <see cref="IExecutionStrategyOptions{TDbContext,TResult}"/></typeparam>
+    /// <returns>Result that you return from <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Operation"/>
+    /// of <see cref="IExecutionStrategyOptions{TDbContext,TResult}"/></returns>
     public static Task<TResult> ExecuteExtendedAsync<TDbContext, TResult>(this TDbContext context,
         IExecutionStrategyOptions<TDbContext, TResult> options) where TDbContext : DbContext
     {
@@ -55,9 +71,4 @@ public static class CoreExtensions
     {
         return (args) => middleware(operation, args);
     }
-}
-
-public struct Void
-{
-    public static Void Instance { get; } = new Void();
 }

@@ -41,11 +41,21 @@ internal class ExecutionStrategyOptionsBuilder<TDbContext, TResult> : IExecution
     }
 }
 
+/// <summary>
+/// Options builder.
+/// </summary>
+/// <typeparam name="TDbContext">Type of your DbContext</typeparam>
+/// <typeparam name="TResult">Type of result from your operation</typeparam>
 public interface IExecutionStrategyOptionsBuilder<TDbContext, TResult> : 
     IBuilderWithMiddlewares<TDbContext, TResult, IExecutionStrategyOptionsBuilder<TDbContext, TResult>>, 
     IBuilderWithData, 
     IBuilderWithVerifySucceeded<TDbContext, TResult, IExecutionStrategyOptionsBuilder<TDbContext, TResult>> 
     where TDbContext : DbContext
 {
+    /// <summary>
+    /// Provides cancellation token.
+    /// </summary>
+    /// <param name="token">Cancellation token.</param>
+    /// <returns>Builder.</returns>
     IExecutionStrategyOptionsBuilder<TDbContext, TResult> WithCancellationToken(CancellationToken token);
 }

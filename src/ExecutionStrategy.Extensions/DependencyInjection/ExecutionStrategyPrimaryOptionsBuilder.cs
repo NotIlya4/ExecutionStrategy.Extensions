@@ -23,6 +23,10 @@ internal class ExecutionStrategyPrimaryOptionsBuilder<TDbContext> : IExecutionSt
     }
 }
 
+/// <summary>
+/// Default options builder.
+/// </summary>
+/// <typeparam name="TDbContext"></typeparam>
 public interface IExecutionStrategyPrimaryOptionsBuilder<TDbContext> :
     IBuilderWithMiddlewares<TDbContext, object, IExecutionStrategyPrimaryOptionsBuilder<TDbContext>>, 
     IBuilderWithData

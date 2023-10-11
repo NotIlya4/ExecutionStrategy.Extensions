@@ -2,28 +2,50 @@
 
 namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
-public record ExecutionStrategyOperationArgs<TDbContext> : IExecutionStrategyOperationArgs<TDbContext>
+/// <inheritdoc />
+public record ExecutionStrategyOperationArgs<TDbContext>(
+    IExecutionStrategyData Data, 
+    TDbContext Context, 
+    int Attempt,
+    CancellationToken CancellationToken) : IExecutionStrategyOperationArgs<TDbContext>
     where TDbContext : DbContext
 {
-    public IExecutionStrategyData Data { get; set; }
-    public TDbContext Context { get; set; }
-    public int Attempt { get; set; }
-    public CancellationToken CancellationToken { get; set; }
+    /// <inheritdoc />
+    public IExecutionStrategyData Data { get; set; } = Data;
 
-    public ExecutionStrategyOperationArgs(IExecutionStrategyData data, TDbContext context, int attempt,
-        CancellationToken cancellationToken)
-    {
-        Data = data;
-        Context = context;
-        Attempt = attempt;
-        CancellationToken = cancellationToken;
-    }
+    /// <inheritdoc />
+    public TDbContext Context { get; set; } = Context;
+
+    /// <inheritdoc />
+    public int Attempt { get; set; } = Attempt;
+
+    /// <inheritdoc />
+    public CancellationToken CancellationToken { get; set; } = CancellationToken;
 }
 
+/// <summary>
+/// Operation args.
+/// </summary>
+/// <typeparam name="TDbContext">Type of your DbContext</typeparam>
 public interface IExecutionStrategyOperationArgs<out TDbContext> where TDbContext : DbContext
 {
+    /// <summary>
+    /// Context instance that can be overriden inside middleware.
+    /// </summary>
     public TDbContext Context { get; }
+    
+    /// <summary>
+    /// Retry attempt number.
+    /// </summary>
     public int Attempt { get; }
+    
+    /// <summary>
+    /// Cancellation token.
+    /// </summary>
     public CancellationToken CancellationToken { get; }
+    
+    /// <summary>
+    /// Data instance that can be used for any custom data passed from middlewares or in default options.
+    /// </summary>
     public IExecutionStrategyData Data { get; }
 }
