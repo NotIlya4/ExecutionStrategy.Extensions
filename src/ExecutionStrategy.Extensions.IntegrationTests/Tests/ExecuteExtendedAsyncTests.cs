@@ -192,4 +192,39 @@ public class ExecuteExtendedAsyncTests
             Assert.Equal("asd", args.Data["asd"]);
         });
     }
+
+    [Fact]
+    public async Task ExecuteExtendedAsync_UseWithTransactionThrowException_DontSaveChanges()
+    {
+        var context = _fixture.CreateDbContextWithClearChangeTracker();
+
+        try
+        {
+            await context.ExecuteExtendedAsync(async () =>
+            {
+                context.Users.Add(new User(0, "asd", false));
+                await context.SaveChangesAsync();
+                throw new Exception();
+            });
+        }
+        catch (Exception) { }
+        
+        context.ChangeTracker.Clear();
+        Assert.Equal(0, await context.Users.CountAsync());
+    }
+    
+    [Fact]
+    public async Task ExecuteExtendedAsync_UseWithTransaction_ChangesSaved()
+    {
+        var context = _fixture.CreateDbContextWithClearChangeTracker();
+
+        await context.ExecuteExtendedAsync(async () =>
+        {
+            context.Users.Add(new User(0, "asd", false));
+            await context.SaveChangesAsync();
+        });
+        
+        context.ChangeTracker.Clear();
+        Assert.Equal(1, await context.Users.CountAsync());
+    }
 }
