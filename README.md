@@ -48,3 +48,29 @@ strategy.ExecuteAsync(
 	});
 ```
 And to avoid it you need to recreate `DbContext` but it might be inconvenient in most of the cases because you need to recreate a new instances of services to provide them new `DbContext`, instead you can clear change tracker on existing `DbContext` and reuse it.
+
+## Transactions
+You can manage transactions yourself or by using extension method on action builder:
+```csharp
+await context.ExecuteExtendedAsync(async () =>
+{
+    context.Users.Add(new User(0, "asd"));
+    await context.SaveChangesAsync();
+}, builder =>
+{
+    builder.WithTransaction(IsolationLevel.Serializable);
+});
+```
+
+## Middlewares
+If you need to customize clear change tracker behavior you could do so by providing custom middleware in builder, actually this is how it works in `WithTransaction` too:
+```csharp
+builder.WithMiddleware(async (next, args) =>
+{
+    args.Context.ChangeTracker.Clear();
+    return await next(args);
+});
+```
+
+## Default options
+Options provided inside `DbContextOptionsBuilder` considered as default and will be applied for each execution. Besides `WithClearChangeTrackerOnRetry` you can provide any middleware to it and it will be called in each `context.ExecuteExtendedAsync`.
