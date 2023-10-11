@@ -6,7 +6,7 @@ public class Hooker
 {
     private readonly Action _action;
     private readonly int _triggerOn;
-    private int _inc = 0;
+    private int _inc;
 
     public Hooker(Action action, int triggerOn)
     {

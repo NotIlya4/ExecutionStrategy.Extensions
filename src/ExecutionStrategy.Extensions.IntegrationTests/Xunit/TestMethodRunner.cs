@@ -7,8 +7,6 @@ namespace ExecutionStrategy.Extensions.IntegrationTests.Xunit;
 
 public class TestMethodRunner : XunitTestMethodRunner
 {
-    private readonly IServiceProvider _serviceProvider;
-    private readonly ConstructorInfo _constructorInfo;
     private readonly IMessageSink _diagnosticMessageSink;
     private readonly object[] _constructorArguments;
 
@@ -18,8 +16,6 @@ public class TestMethodRunner : XunitTestMethodRunner
         CancellationTokenSource cancellationTokenSource, object[] constructorArguments) : base(testMethod, @class,
         method, testCases, diagnosticMessageSink, messageBus, aggregator, cancellationTokenSource, constructorArguments)
     {
-        _serviceProvider = serviceProvider;
-        _constructorInfo = constructorInfo;
         _diagnosticMessageSink = diagnosticMessageSink;
 
         var ctorParameters = constructorInfo.GetParameters().Select(p =>
