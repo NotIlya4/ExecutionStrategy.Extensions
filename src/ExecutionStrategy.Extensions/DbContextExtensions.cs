@@ -10,7 +10,7 @@ namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 public static class DbContextExtensions
 {
     /// <summary>
-    /// Executes your <see cref="operation"/> wrapped with <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Middlewares"/> inside <see cref="IExecutionStrategy"/> and if any transient exception occured retries operation.
+    /// Executes your <paramref name="operation"/> wrapped with <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Middlewares"/> inside <see cref="IExecutionStrategy"/> and if any transient exception occured retries operation.
     /// </summary>
     /// <param name="context">Your context instance.</param>
     /// <param name="operation">Operation.</param>
@@ -31,7 +31,7 @@ public static class DbContextExtensions
     }
     
     /// <summary>
-    /// Executes your <see cref="operation"/> wrapped with <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Middlewares"/> inside <see cref="IExecutionStrategy"/> and if any transient exception occured retries operation.
+    /// Executes your <paramref name="operation"/> wrapped with <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Middlewares"/> inside <see cref="IExecutionStrategy"/> and if any transient exception occured retries operation.
     /// </summary>
     /// <param name="context">Your context instance.</param>
     /// <param name="operation">Operation.</param>
@@ -47,7 +47,7 @@ public static class DbContextExtensions
     }
     
     /// <summary>
-    /// Executes your <see cref="operation"/> wrapped with <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Middlewares"/> inside <see cref="IExecutionStrategy"/> and if any transient exception occured retries operation.
+    /// Executes your <paramref name="operation"/> wrapped with <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Middlewares"/> inside <see cref="IExecutionStrategy"/> and if any transient exception occured retries operation.
     /// </summary>
     /// <param name="context">Your context instance.</param>
     /// <param name="operation">Operation.</param>
@@ -66,7 +66,7 @@ public static class DbContextExtensions
     }
     
     /// <summary>
-    /// Executes your <see cref="operation"/> wrapped with <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Middlewares"/> inside <see cref="IExecutionStrategy"/> and if any transient exception occured retries operation.
+    /// Executes your <paramref name="operation"/> wrapped with <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Middlewares"/> inside <see cref="IExecutionStrategy"/> and if any transient exception occured retries operation.
     /// </summary>
     /// <param name="context">Your context instance.</param>
     /// <param name="operation">Operation.</param>

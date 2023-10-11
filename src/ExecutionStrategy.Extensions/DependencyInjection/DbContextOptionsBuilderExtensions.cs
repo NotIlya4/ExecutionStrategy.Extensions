@@ -10,7 +10,7 @@ namespace EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
 public static class DbContextOptionsBuilderExtensions
 {
     /// <summary>
-    /// Registers required services inside <see cref="TDbContext"/> and allows you to add some default options that will be applied on each ExecuteExtendedAsync call.
+    /// Registers required services inside <typeparamref name="TDbContext"/> and allows you to add some default options that will be applied on each ExecuteExtendedAsync call.
     /// </summary>
     /// <param name="builder">Builder.</param>
     /// <param name="action">Options builder action.</param>
