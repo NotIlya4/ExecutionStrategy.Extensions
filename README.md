@@ -47,4 +47,4 @@ strategy.ExecuteAsync(
 		await context.SaveChangesAsync();
 	});
 ```
-And to avoid it you need to recreate `DbContext` but it might be inconvenient in most of the cases because you need to recreate a new instances of services to provide them new DbContext
+And to avoid it you need to recreate `DbContext` but it might be inconvenient in most of the cases because you need to recreate a new instances of services to provide them new `DbContext`, instead you can clear change tracker on existing `DbContext` and reuse it.
