@@ -7,21 +7,12 @@ namespace ExecutionStrategy.Extensions.Demo;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddAppDbContext(this IServiceCollection services, IDbContextOptions options)
+    public static IServiceCollection AddAppDbContext(this IServiceCollection services, string conn)
     {
         services.AddDbContext<AppDbContext>(builder =>
         {
-            switch (options)
-            {
-                case PostgresDbContextOptions postgres:
-                    builder.UseNpgsql(postgres.Conn, contextOptionsBuilder => contextOptionsBuilder.EnableRetryOnFailure());
-                    break;
-                
-                case SqliteDbContextOptions:
-                    builder.UseSqlite("Filename=:memory:");
-                    break;
-            }
-
+            builder.UseNpgsql(conn, contextOptionsBuilder => contextOptionsBuilder.EnableRetryOnFailure());
+            
             builder.UseExecutionStrategyExtensions<AppDbContext>(
                 primaryOptionsBuilder => primaryOptionsBuilder.WithClearChangeTrackerOnRetry());
         });
@@ -29,15 +20,3 @@ public static class ServiceCollectionExtensions
         return services;
     }
 }
-
-public class PostgresDbContextOptions : IDbContextOptions
-{
-    public required string Conn { get; set; }
-}
-
-public class SqliteDbContextOptions : IDbContextOptions
-{
-    
-}
-
-public interface IDbContextOptions { }

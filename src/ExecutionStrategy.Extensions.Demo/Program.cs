@@ -7,14 +7,16 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
-var config = builder.Configuration;
 
-services.AddAppDbContext(new SqliteDbContextOptions());
+services.AddAppDbContext(builder.Configuration.GetConnectionString("Postgres")!);
 services.AddScoped<UserService>();
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/users", async ([FromServices] UserService service, [FromServices] AppDbContext context) =>
+{
+    await context.ExecuteExtendedAsync(async () => { await service.GetUsers(); });
+});
 
 app.MapPost("/users",
     async (User user, [FromServices] UserService service, [FromServices] AppDbContext context) =>

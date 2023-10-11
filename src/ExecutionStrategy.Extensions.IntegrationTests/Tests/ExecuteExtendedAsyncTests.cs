@@ -64,7 +64,11 @@ public class ExecuteExtendedAsyncTests
         var checker = Substitute.For<IChecker>();
         var context = _fixture.CreateDbContextWithEmptyUse();
 
-        await context.ExecuteExtendedAsync(async () => { checker.Check(); });
+        await context.ExecuteExtendedAsync(() =>
+        {
+            checker.Check();
+            return Task.CompletedTask;
+        });
 
         Received.InOrder(() => { checker.Check(); });
     }
@@ -75,8 +79,11 @@ public class ExecuteExtendedAsyncTests
         var checker = Substitute.For<IChecker>();
         var context = _fixture.CreateDbContextWithEmptyUse();
 
-        await context.ExecuteExtendedAsync(
-            async () => { checker.Check("3"); },
+        await context.ExecuteExtendedAsync(() =>
+            {
+                checker.Check("3");
+                return Task.CompletedTask;
+            },
             builder =>
             {
                 builder
@@ -110,12 +117,16 @@ public class ExecuteExtendedAsyncTests
         var checker = Substitute.For<IChecker>();
         var context = _fixture.CreateDbContextWithEmptyUse();
 
-        await context.ExecuteExtendedAsync(
-            async () => checker.Check(),
-            builder => builder.WithMiddleware(async (_, _) =>
+        await context.ExecuteExtendedAsync(() =>
+            {
+                checker.Check();
+                return Task.CompletedTask;
+            },
+            builder => builder.WithMiddleware((_, _) =>
             {
                 checker.Check("1");
                 checker.Check("2");
+                return Task.CompletedTask;
             }));
 
         Received.InOrder(() =>
@@ -132,12 +143,15 @@ public class ExecuteExtendedAsyncTests
         var thrower = Hooker.ThrowTransientOnce();
         var context = _fixture.CreateDbContextWithEmptyUse();
 
-        await context.ExecuteExtendedAsync(
-            async () => thrower.Trigger(),
-            builder => builder.WithVerifySucceeded(async _ =>
+        await context.ExecuteExtendedAsync(() =>
+            {
+                thrower.Trigger();
+                return Task.CompletedTask;
+            },
+            builder => builder.WithVerifySucceeded(_ =>
             {
                 checker.Check();
-                return true;
+                return Task.FromResult(true);
             }));
 
         Received.InOrder(() =>
@@ -164,9 +178,10 @@ public class ExecuteExtendedAsyncTests
             });
         });
 
-        await context.ExecuteExtendedAsync(async () =>
+        await context.ExecuteExtendedAsync(() =>
         {
             checker.Check("2");
+            return Task.CompletedTask;
         });
         
         Received.InOrder(() =>
@@ -188,9 +203,10 @@ public class ExecuteExtendedAsyncTests
             });
         });
 
-        await context.ExecuteExtendedAsync(async (args) =>
+        await context.ExecuteExtendedAsync((args) =>
         {
             Assert.Equal("asd", args.Data["asd"]);
+            return Task.CompletedTask;
         });
     }
 
