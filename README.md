@@ -63,7 +63,7 @@ await context.ExecuteExtendedAsync(async () =>
 ```
 
 ## Middlewares
-If you need to customize clear change tracker behavior you could do so by providing custom middleware in builder, actually this is how it works in `WithTransaction` too:
+If you need to customize `WithClearChangeTrackerOnRetry` behavior you could do so by providing custom middleware in builder, actually `WithTransaction` works on top of middlewares too:
 ```csharp
 builder.WithMiddleware(async (next, args) =>
 {
