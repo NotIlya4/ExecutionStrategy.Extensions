@@ -11,10 +11,11 @@ public static class ServiceCollectionExtensions
     {
         services.AddDbContext<AppDbContext>(builder =>
         {
-            builder.UseNpgsql(conn, contextOptionsBuilder => contextOptionsBuilder.EnableRetryOnFailure());
-            
+            builder.UseNpgsql(conn, builder => 
+                builder.EnableRetryOnFailure());
+
             builder.UseExecutionStrategyExtensions<AppDbContext>(
-                primaryOptionsBuilder => primaryOptionsBuilder.WithClearChangeTrackerOnRetry());
+                builder => builder.WithClearChangeTrackerOnRetry());
         });
         
         return services;

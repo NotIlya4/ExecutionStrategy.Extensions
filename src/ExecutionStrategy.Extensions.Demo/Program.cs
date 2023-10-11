@@ -4,6 +4,7 @@ using ExecutionStrategy.Extensions.Demo.EntityFramework;
 using ExecutionStrategy.Extensions.Demo.Models;
 using ExecutionStrategy.Extensions.Demo.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -21,7 +22,12 @@ app.MapGet("/users", async ([FromServices] UserService service, [FromServices] A
 app.MapPost("/users",
     async (User user, [FromServices] UserService service, [FromServices] AppDbContext context) =>
     {
-        await context.ExecuteExtendedAsync(async () => { await service.AddUser(user); });
+        var strategy = context.Database.CreateExecutionStrategy();
+        await strategy.ExecuteAsync(async () =>
+        {
+            context.ChangeTracker.Clear();
+            await service.AddUser(user);
+        });
     });
 
 app.MapDelete("/users",
