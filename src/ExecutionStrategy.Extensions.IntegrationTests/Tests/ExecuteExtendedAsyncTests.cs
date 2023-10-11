@@ -1,4 +1,5 @@
-﻿using EntityFrameworkCore.ExecutionStrategy.Extensions;
+﻿using System.Data;
+using EntityFrameworkCore.ExecutionStrategy.Extensions;
 using EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
 using ExecutionStrategy.Extensions.IntegrationTests.EntityFramework;
 using ExecutionStrategy.Extensions.IntegrationTests.Helpers;
@@ -205,6 +206,9 @@ public class ExecuteExtendedAsyncTests
                 context.Users.Add(new User(0, "asd", false));
                 await context.SaveChangesAsync();
                 throw new Exception();
+            }, builder =>
+            {
+                builder.WithTransaction(IsolationLevel.Serializable);
             });
         }
         catch (Exception) { }
@@ -222,6 +226,9 @@ public class ExecuteExtendedAsyncTests
         {
             context.Users.Add(new User(0, "asd", false));
             await context.SaveChangesAsync();
+        }, builder =>
+        {
+            builder.WithTransaction(IsolationLevel.Serializable);
         });
         
         context.ChangeTracker.Clear();
