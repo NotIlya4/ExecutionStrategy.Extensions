@@ -9,7 +9,7 @@ public class ExecutionStrategyData : Dictionary<object, object>, IExecutionStrat
 }
 
 /// <summary>
-/// Class that represents data that can be used for any custom data. You can pass it from <see cref="DbContextOptionsBuilder{TContext}"/> or inside action builder
+/// It can be used for any custom data. You can pass it from <see cref="DbContextOptionsBuilder{TContext}"/> or inside action builder.
 /// </summary>
 public interface IExecutionStrategyData : IDictionary<object, object>
 {

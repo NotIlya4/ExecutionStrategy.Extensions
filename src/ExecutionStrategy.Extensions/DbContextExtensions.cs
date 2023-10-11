@@ -12,12 +12,12 @@ public static class DbContextExtensions
     /// <summary>
     /// Executes your <see cref="operation"/> wrapped with <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Middlewares"/> inside <see cref="IExecutionStrategy"/> and if any transient exception occured retries operation.
     /// </summary>
-    /// <param name="context"><see cref="TDbContext"/> instance</param>
-    /// <param name="operation">Operation</param>
-    /// <param name="action">Action builder</param>
-    /// <typeparam name="TDbContext">Type of your DbContext</typeparam>
-    /// <typeparam name="TResult">Result type</typeparam>
-    /// <returns>Operation result</returns>
+    /// <param name="context">Your context instance.</param>
+    /// <param name="operation">Operation.</param>
+    /// <param name="action">Options builder action.</param>
+    /// <typeparam name="TDbContext">Type of your <see cref="DbContext"/>.</typeparam>
+    /// <typeparam name="TResult">Return type of <paramref name="operation"/>.</typeparam>
+    /// <returns>Result from <paramref name="operation"/>.</returns>
     public static Task<TResult> ExecuteExtendedAsync<TDbContext, TResult>(this TDbContext context,
         ExecutionStrategyNext<TDbContext, TResult> operation,
         Action<IExecutionStrategyOptionsBuilder<TDbContext, TResult>>? action = null) where TDbContext : DbContext
@@ -31,14 +31,14 @@ public static class DbContextExtensions
     }
     
     /// <summary>
-    /// <inheritdoc cref="ExecuteExtendedAsync{TDbContext,TResult}(TDbContext,ExecutionStrategyNext{TDbContext,TResult},Action{IExecutionStrategyOptionsBuilder{TDbContext,TResult}}?)"/>
+    /// Executes your <see cref="operation"/> wrapped with <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Middlewares"/> inside <see cref="IExecutionStrategy"/> and if any transient exception occured retries operation.
     /// </summary>
-    /// <param name="context"><see cref="TDbContext"/> instance</param>
-    /// <param name="operation">Operation</param>
-    /// <param name="action">Action builder</param>
-    /// <typeparam name="TDbContext">Type of your DbContext</typeparam>
-    /// <typeparam name="TResult">Result type</typeparam>
-    /// <returns>Operation result</returns>
+    /// <param name="context">Your context instance.</param>
+    /// <param name="operation">Operation.</param>
+    /// <param name="action">Options builder action.</param>
+    /// <typeparam name="TDbContext">Type of your <see cref="DbContext"/>.</typeparam>
+    /// <typeparam name="TResult">Return type of <paramref name="operation"/>.</typeparam>
+    /// <returns>Result from <paramref name="operation"/>.</returns>
     public static Task<TResult> ExecuteExtendedAsync<TDbContext, TResult>(this TDbContext context,
         ExecutionStrategyNext<TResult> operation,
         Action<IExecutionStrategyOptionsBuilder<TDbContext, TResult>>? action = null) where TDbContext : DbContext
@@ -47,13 +47,13 @@ public static class DbContextExtensions
     }
     
     /// <summary>
-    /// <inheritdoc cref="ExecuteExtendedAsync{TDbContext,TResult}(TDbContext,ExecutionStrategyNext{TDbContext,TResult},Action{IExecutionStrategyOptionsBuilder{TDbContext,TResult}}?)"/>
+    /// Executes your <see cref="operation"/> wrapped with <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Middlewares"/> inside <see cref="IExecutionStrategy"/> and if any transient exception occured retries operation.
     /// </summary>
-    /// <param name="context"><see cref="TDbContext"/> instance</param>
-    /// <param name="operation">Operation</param>
-    /// <param name="action">Action builder</param>
-    /// <typeparam name="TDbContext">Type of your DbContext</typeparam>
-    /// <returns>Operation result</returns>
+    /// <param name="context">Your context instance.</param>
+    /// <param name="operation">Operation.</param>
+    /// <param name="action">Options builder action.</param>
+    /// <typeparam name="TDbContext">Type of your <see cref="DbContext"/>.</typeparam>
+    /// <returns>Result from <paramref name="operation"/>.</returns>
     public static Task ExecuteExtendedAsync<TDbContext>(this TDbContext context,
         ExecutionStrategyVoidNext<TDbContext> operation,
         Action<IExecutionStrategyOptionsBuilder<TDbContext, Void>>? action = null) where TDbContext : DbContext
@@ -66,13 +66,13 @@ public static class DbContextExtensions
     }
     
     /// <summary>
-    /// <inheritdoc cref="ExecuteExtendedAsync{TDbContext,TResult}(TDbContext,ExecutionStrategyNext{TDbContext,TResult},Action{IExecutionStrategyOptionsBuilder{TDbContext,TResult}}?)"/>
+    /// Executes your <see cref="operation"/> wrapped with <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Middlewares"/> inside <see cref="IExecutionStrategy"/> and if any transient exception occured retries operation.
     /// </summary>
-    /// <param name="context"><see cref="TDbContext"/> instance</param>
-    /// <param name="operation">Operation</param>
-    /// <param name="action">Action builder</param>
-    /// <typeparam name="TDbContext">Type of your DbContext</typeparam>
-    /// <returns>Operation result</returns>
+    /// <param name="context">Your context instance.</param>
+    /// <param name="operation">Operation.</param>
+    /// <param name="action">Options builder action.</param>
+    /// <typeparam name="TDbContext">Type of your <see cref="DbContext"/>.</typeparam>
+    /// <returns>Result from <paramref name="operation"/>.</returns>
     public static Task ExecuteExtendedAsync<TDbContext>(this TDbContext context,
         ExecutionStrategyVoidNext operation,
         Action<IExecutionStrategyOptionsBuilder<TDbContext, Void>>? action = null) where TDbContext : DbContext

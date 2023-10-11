@@ -1,12 +1,12 @@
 ﻿namespace EntityFrameworkCore.ExecutionStrategy.Extensions;
 
 /// <summary>
-/// Void type for non Result extensions
+/// Void type for Operations with void return.
 /// </summary>
 public struct Void
 {
     /// <summary>
-    /// Singleton instance
+    /// Singleton instance.
     /// </summary>
     public static Void Instance { get; } = new Void();
 }

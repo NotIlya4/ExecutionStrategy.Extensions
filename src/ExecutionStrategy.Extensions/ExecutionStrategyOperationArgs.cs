@@ -26,7 +26,7 @@ public record ExecutionStrategyOperationArgs<TDbContext>(
 /// <summary>
 /// Operation args.
 /// </summary>
-/// <typeparam name="TDbContext">Type of your DbContext</typeparam>
+/// <typeparam name="TDbContext">Type of your <see cref="DbContext"/>.</typeparam>
 public interface IExecutionStrategyOperationArgs<out TDbContext> where TDbContext : DbContext
 {
     /// <summary>
@@ -45,7 +45,7 @@ public interface IExecutionStrategyOperationArgs<out TDbContext> where TDbContex
     public CancellationToken CancellationToken { get; }
     
     /// <summary>
-    /// Data instance that can be used for any custom data passed from middlewares or in default options.
+    /// Custom data that can be accessed anytime.
     /// </summary>
     public IExecutionStrategyData Data { get; }
 }

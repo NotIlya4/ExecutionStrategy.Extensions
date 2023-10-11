@@ -29,19 +29,19 @@ public record ExecutionStrategyOptions<TDbContext, TResult>(
 }
 
 /// <summary>
-/// Options interface for core extension method
+/// Options for core extension method.
 /// </summary>
-/// <typeparam name="TDbContext">Type of DbContext that will be used</typeparam>
-/// <typeparam name="TResult">Result of your execution</typeparam>
+/// <typeparam name="TDbContext">Type of your <see cref="DbContext"/>.</typeparam>
+/// <typeparam name="TResult">Return type of <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Operation"/>.</typeparam>
 public interface IExecutionStrategyOptions<TDbContext, TResult> where TDbContext : DbContext
 {
     /// <summary>
-    /// Custom data that can be passed from default options or between middlewares.
+    /// Custom data that can be accessed anytime.
     /// </summary>
     public IExecutionStrategyData Data { get; set; }
     
     /// <summary>
-    /// Middlewares that will be called in ascending order. First middleware called first.
+    /// Middlewares that will be called in descending order. Last middleware called first.
     /// </summary>
     public List<ExecutionStrategyMiddleware<TDbContext, TResult>> Middlewares { get; set; }
     
@@ -56,7 +56,7 @@ public interface IExecutionStrategyOptions<TDbContext, TResult> where TDbContext
     public CancellationToken CancellationToken { get; set; }
     
     /// <summary>
-    /// Verify succeeded that will be passed to <see cref="IExecutionStrategy"/>
+    /// Verify succeeded that will be passed to <see cref="IExecutionStrategy"/>.
     /// </summary>
     public ExecutionStrategyNext<TDbContext, ExecutionResult<TResult>>? VerifySucceeded { get; set; }
 }

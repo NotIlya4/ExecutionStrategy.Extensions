@@ -5,17 +5,17 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 namespace EntityFrameworkCore.ExecutionStrategy.Extensions.DependencyInjection;
 
 /// <summary>
-/// <see cref="DbContextOptionsBuilder"/> extensions for ExecutionStrategy.Extensions 
+/// <see cref="DbContextOptionsBuilder"/> extensions.
 /// </summary>
 public static class DbContextOptionsBuilderExtensions
 {
     /// <summary>
-    /// <inheritdoc cref="UseExecutionStrategyExtensions"/>
+    /// Registers required services inside <see cref="TDbContext"/> and allows you to add some default options that will be applied on each ExecuteExtendedAsync call.
     /// </summary>
-    /// <param name="builder"><inheritdoc cref="UseExecutionStrategyExtensions"/></param>
-    /// <param name="action"><inheritdoc cref="UseExecutionStrategyExtensions"/></param>
-    /// <typeparam name="TDbContext">Your DbContext type</typeparam>
-    /// <returns></returns>
+    /// <param name="builder">Builder.</param>
+    /// <param name="action">Options builder action.</param>
+    /// <typeparam name="TDbContext">Type of your <see cref="DbContext"/>.</typeparam>
+    /// <returns>Builder.</returns>
     public static DbContextOptionsBuilder UseExecutionStrategyExtensions<TDbContext>(
         this DbContextOptionsBuilder builder,
         Action<IExecutionStrategyPrimaryOptionsBuilder<TDbContext>>? action = null) where TDbContext : DbContext
@@ -30,11 +30,11 @@ public static class DbContextOptionsBuilderExtensions
     }
     
     /// <summary>
-    /// Registers required services inside <see cref="DbContext"/> and allows you to add some default options that will be applied on each ExecuteExtendedAsync
+    /// Registers required services inside <see cref="DbContext"/> and allows you to add some default options that will be applied on each ExecuteExtendedAsync call.
     /// </summary>
-    /// <param name="builder">Options builder</param>
-    /// <param name="action">Builder action</param>
-    /// <returns>Options builder</returns>
+    /// <param name="builder">Builder.</param>
+    /// <param name="action">Options builder action.</param>
+    /// <returns>Builder.</returns>
     public static DbContextOptionsBuilder UseExecutionStrategyExtensions(
         this DbContextOptionsBuilder builder,
         Action<IExecutionStrategyPrimaryOptionsBuilder<DbContext>>? action = null)

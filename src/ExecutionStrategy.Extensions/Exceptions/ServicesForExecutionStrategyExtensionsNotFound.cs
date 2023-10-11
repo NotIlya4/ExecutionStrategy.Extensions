@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EntityFrameworkCore.ExecutionStrategy.Extensions.Exceptions;
 
 /// <summary>
-/// Exception that thrown when you try to use ExecuteExtendedAsync without registering services inside <see cref="DbContextOptionsBuilder{TContext}"/>
+/// Exception that thrown when you try to use ExecuteExtendedAsync without registering services inside <see cref="DbContextOptionsBuilder{TContext}"/>.
 /// </summary>
 public class ServicesForExecutionStrategyExtensionsNotFound : InvalidOperationException
 {

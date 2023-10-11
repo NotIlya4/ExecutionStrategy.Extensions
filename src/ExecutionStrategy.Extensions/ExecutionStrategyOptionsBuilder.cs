@@ -44,8 +44,8 @@ internal class ExecutionStrategyOptionsBuilder<TDbContext, TResult> : IExecution
 /// <summary>
 /// Options builder.
 /// </summary>
-/// <typeparam name="TDbContext">Type of your DbContext</typeparam>
-/// <typeparam name="TResult">Type of result from your operation</typeparam>
+/// <typeparam name="TDbContext">Type of your <see cref="DbContext"/>.</typeparam>
+/// <typeparam name="TResult">Return type of <see cref="IExecutionStrategyOptions{TDbContext,TResult}.Operation"/>.</typeparam>
 public interface IExecutionStrategyOptionsBuilder<TDbContext, TResult> : 
     IBuilderWithMiddlewares<TDbContext, TResult, IExecutionStrategyOptionsBuilder<TDbContext, TResult>>, 
     IBuilderWithData, 

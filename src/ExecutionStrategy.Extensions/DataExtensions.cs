@@ -6,36 +6,36 @@
 public static class DataExtensions
 {
     /// <summary>
-    /// Set data by its type name.
+    /// Set data using its type name as a key.
     /// </summary>
-    /// <param name="dictionary">Data</param>
-    /// <param name="value">Value</param>
-    /// <typeparam name="T">Value type</typeparam>
-    public static void Set<T>(this IExecutionStrategyData dictionary, T value)
+    /// <param name="data">Data.</param>
+    /// <param name="value">Value.</param>
+    /// <typeparam name="T">Value type.</typeparam>
+    public static void Set<T>(this IExecutionStrategyData data, T value)
     {
-        dictionary[typeof(T).Name] = value!;
+        data[typeof(T).Name] = value!;
     }
     
     /// <summary>
-    /// Get data by its type name.
+    /// Get data using its type name as a key.
     /// </summary>
-    /// <param name="dictionary">Data</param>
-    /// <typeparam name="T">Value type</typeparam>
-    /// <returns></returns>
-    public static T Get<T>(this IExecutionStrategyData dictionary)
+    /// <param name="data">Data.</param>
+    /// <typeparam name="T">Value type.</typeparam>
+    /// <returns>Value.</returns>
+    public static T Get<T>(this IExecutionStrategyData data)
     {
-        return (T)dictionary[typeof(T).Name];
+        return (T)data[typeof(T).Name];
     }
 
     /// <summary>
-    /// Try get data by its type name.
+    /// Try get data using its type name as a key.
     /// </summary>
-    /// <param name="dictionary">Data</param>
-    /// <typeparam name="T">Value type</typeparam>
-    /// <returns>Value</returns>
-    public static T? TryGet<T>(this IExecutionStrategyData dictionary)
+    /// <param name="data">Data.</param>
+    /// <typeparam name="T">Value type.</typeparam>
+    /// <returns>Value.</returns>
+    public static T? TryGet<T>(this IExecutionStrategyData data)
     {
-        if (dictionary.TryGetValue(typeof(T).Name, out var ret))
+        if (data.TryGetValue(typeof(T).Name, out var ret))
         {
             return (T)ret;
         }
@@ -44,26 +44,26 @@ public static class DataExtensions
     }
     
     /// <summary>
-    /// Set data under provided key.
+    /// Set data using provided key.
     /// </summary>
-    /// <param name="dictionary">Data</param>
-    /// <param name="key">Key</param>
-    /// <param name="value">Value</param>
-    /// <typeparam name="T">Value type</typeparam>
-    public static void Set<T>(this IExecutionStrategyData dictionary, string key, T value)
+    /// <param name="data">Data.</param>
+    /// <param name="key">Key.</param>
+    /// <param name="value">Value.</param>
+    /// <typeparam name="T">Value type.</typeparam>
+    public static void Set<T>(this IExecutionStrategyData data, string key, T value)
     {
-        dictionary[key] = value!;
+        data[key] = value!;
     }
     
     /// <summary>
-    /// Get data under key.
+    /// Get data using provided key.
     /// </summary>
-    /// <param name="dictionary">Data</param>
-    /// <param name="key">Key</param>
-    /// <typeparam name="T">Value type</typeparam>
-    /// <returns>Value</returns>
-    public static T Get<T>(this IExecutionStrategyData dictionary, string key)
+    /// <param name="data">Data.</param>
+    /// <param name="key">Key.</param>
+    /// <typeparam name="T">Value type.</typeparam>
+    /// <returns>Value.</returns>
+    public static T Get<T>(this IExecutionStrategyData data, string key)
     {
-        return (T)dictionary[key];
+        return (T)data[key];
     }
 }
