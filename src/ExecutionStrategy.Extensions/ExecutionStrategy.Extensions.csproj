@@ -20,6 +20,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <IncludeSymbols>true</IncludeSymbols>
         <PackageTags>ef-core iexecutionstrategy extensions</PackageTags>
+        <PackageIcon>box.png</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -34,6 +35,10 @@
 
     <ItemGroup>
         <Content Include="..\..\README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </Content>
+        <Content Include="..\..\assets\box.png">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
         </Content>
