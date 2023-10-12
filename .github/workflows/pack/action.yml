@@ -1,0 +1,14 @@
+name: pack
+description: packs project
+inputs:
+  version:
+    description: pack version
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: 📦️ pack
+      shell: bash
+      working-directory: src/ExecutionStrategy.Extensions
+      run: |
+        dotnet pack --configuration Release --output ./artifacts -p:PackageVersion=${{ inputs.version }}

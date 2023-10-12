@@ -1,23 +1,20 @@
 name: pull request
 
-on:
-  pull_request:
-    branches: []
+on: pull_request
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: ⬇️ checkout
         uses: actions/checkout@v3
 
-      - name: Test
-        run: dotnet test . --configuration Release
+      - name: 🛠️ build
+        uses: ./.github/workflows/build
+
+      - name: 🧪 test
+        uses: ./.github/workflows/test
       
-      - name: Upload Test Results
+      - name: 📁 upload verify results
         if: failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: verify-test-results
-          path: |
-            **/*.received.*
+        uses: ./.github/workflows/verify-result

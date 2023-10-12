@@ -1,0 +1,12 @@
+name: build
+description: builds project
+runs:
+  using: "composite"
+  steps:
+    - name: 🛠️ build
+      shell: bash
+      working-directory: src/ExecutionStrategy.Extensions
+      env:
+        PACKAGE_VERSION: ${{ github.event.release.tag_name }}
+      run: |
+        dotnet build --configuration Release

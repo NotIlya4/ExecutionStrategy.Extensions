@@ -1,0 +1,9 @@
+name: test
+description: runs integration tests
+runs:
+  using: "composite"
+  steps:
+    - name: 🧪 test
+      shell: bash
+      run: |
+        dotnet test . --configuration Release

@@ -1,0 +1,12 @@
+name: upload verify results
+description: uploads verify results from failed tests
+runs:
+  using: "composite"
+  steps:
+    - name: 📁 upload verify results
+      shell: bash
+      uses: actions/upload-artifact@v2
+      with:
+        name: verify-test-results
+        path: |
+          **/*.received.*
