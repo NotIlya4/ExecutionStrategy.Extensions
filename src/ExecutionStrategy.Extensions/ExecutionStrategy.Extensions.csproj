@@ -12,6 +12,7 @@
         <Authors>NotIlya</Authors>
         <Description>Little convenient wrapper for IExecutionStrategy</Description>
         <Copyright>MIT</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageProjectUrl>https://github.com/NotIlya4/ExecutionStrategy.Extensions</PackageProjectUrl>
         <RepositoryUrl>https://github.com/NotIlya4/ExecutionStrategy.Extensions</RepositoryUrl>
