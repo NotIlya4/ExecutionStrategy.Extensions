@@ -1,4 +1,4 @@
-# 🔄 ExecutionStrategy.Extensions
+# 📦 ExecutionStrategy.Extensions
 Little convenient wrapper for `IExecutionStrategy`.
 
 ## Getting started
@@ -14,7 +14,7 @@ builder.UseExecutionStrategyExtensions<AppDbContext>(
 ```
 
 Once you've configured it, you can use it inside your controllers like this:
-```csharp
+```csharp[README.md](README.md)
 await context.ExecuteExtendedAsync(async () =>
 {
     await service.AddUser(user);

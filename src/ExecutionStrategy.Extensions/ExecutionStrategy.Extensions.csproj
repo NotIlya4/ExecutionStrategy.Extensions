@@ -1,41 +1,42 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+    
     <PropertyGroup>
-        <Authors>NotIlya</Authors>
-        <Description>Little convenient wrapper for IExecutionStrategy</Description>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <LangVersion>latest</LangVersion>
-        <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
-        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-        <Nullable>enable</Nullable>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <IncludeSymbols>true</IncludeSymbols>
-        <Copyright>MIT</Copyright>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <AssemblyName>EntityFrameworkCore.ExecutionStrategy.Extensions</AssemblyName>
         <RootNamespace>EntityFrameworkCore.ExecutionStrategy.Extensions</RootNamespace>
+        <LangVersion>latest</LangVersion>
+        <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+        <TreatWarningsAsErrors Condition="$(Configuration) == 'Release'">True</TreatWarningsAsErrors>
+    </PropertyGroup>
+    
+    <PropertyGroup Label="Nuget">
+        <Authors>NotIlya</Authors>
+        <Description>Little convenient wrapper for IExecutionStrategy</Description>
+        <Copyright>MIT</Copyright>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageProjectUrl>https://github.com/NotIlya4/ExecutionStrategy.Extensions</PackageProjectUrl>
         <RepositoryUrl>https://github.com/NotIlya4/ExecutionStrategy.Extensions</RepositoryUrl>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <RepositoryType>git</RepositoryType>
-        <PackageTags>ef-core iexecutionstrategy extensions</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <IncludeSymbols>true</IncludeSymbols>
+        <PackageTags>ef-core iexecutionstrategy extensions</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.0" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-        <PackageReference Include="PolySharp" Version="1.13.2">
+        <PackageReference Condition="$(TargetFramework) == 'net6.0'" Include="PolySharp" Version="1.13.2">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="..\..\README.md">
+        <Content Include="..\..\README.md">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
-        </None>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
