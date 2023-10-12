@@ -1,6 +1,17 @@
 # 📦 ExecutionStrategy.Extensions
 Little convenient wrapper for `IExecutionStrategy`.
 
+## Instalation
+ExceptionCatcherMiddleware is [available on NuGet](https://www.nuget.org/packages/EntityFrameworkCore.ExecutionStrategy.Extensions) and can be installed via the below commands:
+```
+$ Install-Package EntityFrameworkCore.ExecutionStrategy.Extensions
+```
+or via the .NET Core CLI:
+
+```
+$ dotnet add package EntityFrameworkCore.ExecutionStrategy.Extensions
+```
+
 ## Getting started
 Add this to your `DbContextOptionsBuilder`:
 ```csharp
